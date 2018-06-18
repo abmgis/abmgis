@@ -1,0 +1,10 @@
+# Main .gitignore file. Don't use any others!
+
+# ********** Global stuff **********
+
+# Mac crap
+.DS_Store
+
+# Vim swap files
+*.swp
+
