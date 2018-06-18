@@ -1,3 +1,3 @@
-# Chapter 7 - Modelling Human Behaviour
+# Appendix A - A Gallery of Applications
 
-This folder includes the accompanying resources for the chatper. For full book details, see: [http://www.abmgis.org/](http://www.abmgis.org/).
+For full book details, see: [http://www.abmgis.org/](http://www.abmgis.org/).
