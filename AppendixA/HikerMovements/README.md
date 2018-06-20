@@ -1,4 +1,4 @@
-# Appendix A - A Gallery of Applications
+# Appendix A2 - Hiker Movements in the Dolomites UNESCO World Heritage Site (Italy)
 
 
 
@@ -9,4 +9,5 @@ Orsi and Geneletti (2016) developed a model in NetLogo to explore how different 
 
 ![GUI logo](https://github.com/abmgis/abmgis/blob/master/AppendixA/HikerMovements/FigureA2.png)
 
-Model Available at: <http://dx.doi.org/10.1016/j.compenvurbsys.2016.07.008>Reference:Orsi, F. and Geneletti, D. (2016), 'Transportation as a Protected Area Management Tool:An Agent-based Model to Assess the Eect of Travel Mode Choices on Hiker Movements',Computers, Environment and Urban Systems, 60: 12-22.
+**Model Available at:** <http://dx.doi.org/10.1016/j.compenvurbsys.2016.07.008>**Reference:**
+Orsi, F. and Geneletti, D. (2016), '[Transportation as a Protected Area Management Tool:An Agent-based Model to Assess the Effect of Travel Mode Choices on Hiker Movements] (https://www.sciencedirect.com/science/article/pii/S0198971516301387)', *Computers, Environment and Urban Systems*, 60: 12-22.
