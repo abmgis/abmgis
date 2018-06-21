@@ -1,0 +1,3 @@
+[submodule "lib/joda-time"]
+	path = lib/joda-time
+	url = git://joda-time.git.sourceforge.net/gitroot/joda-time/joda-time
