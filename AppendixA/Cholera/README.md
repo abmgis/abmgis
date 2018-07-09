@@ -9,7 +9,7 @@ Crooks and Hailegiorgis (2014) developed a cholera disease model implemented in 
 
 ![GUI logo](https://github.com/abmgis/abmgis/blob/master/AppendixA/Cholera/FigureA1.png)
 Graphical User interface of the model. From top left clockwise: Legend, Simulation display,health status of individual camp dwellers, agents activities, household size composition, parameter settings,and a clock recording the time.
-**Model Available at:** <http://css1.gmu.edu/Cholera/> Alternatively for a more upto date version of the model see: <https://github.com/eclab/mason/tree/master/contrib/geomason/sim/app/geo>. **Reference:**
+**Model Available at:** <http://css1.gmu.edu/Cholera/>. Alternatively for a more upto date version of the model see: <https://github.com/eclab/mason/tree/master/contrib/geomason/sim/app/geo>. **Reference:**
 Crooks, A.T. and Hailegiorgis, A.B. (2014), '[An Agent-based Modelling Approach Applied tothe Spread of Cholera](https://www.sciencedirect.com/science/article/pii/S1364815214002515)', *Environmental Modelling and Software*, 62: 164-177.
 
 Click on the image below to see a YouTube movie of the model:
