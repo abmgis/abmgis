@@ -1,4 +1,4 @@
-# A.5 Understanding Artificial Anasazi
+# A.5 Understanding the Artificial Anasazi
 
 
 
