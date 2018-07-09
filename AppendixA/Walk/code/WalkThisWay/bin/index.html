@@ -1,0 +1,35 @@
+<!-- saved from url=(0022)http://internet.e-mail -->
+<html><head>
+</head><body>
+<table border=0 cellspacing=0 cellpadding=6>
+<tr>
+<td valign=top><td valign=top>
+<h2>WalkThisWay Pedestrian Model</h2> 
+</table>
+
+<h3>OVERVIEW:</h3>
+<p>This is a generative model of simple pedestrian behaviors. Agents move through the landscape toward their chosen exits, avoiding obstacles and one another.</p>
+
+<h3>DATA:</h3>
+
+<p> The user may choose which dataset will inform the agents. Three full days of data exist, as well as one day with an hour of rush-hour traffic removed from the analysis. This last is labeled "August 26 W/ GAP", the period from 8-9AM being absent.
+</p> 
+
+<h3>SCENARIOS:</h3>
+
+<p>A number of different scenarios exist for the user to explore.
+
+<h4>Scenario 1: No Information</h4>
+<p>In this scenario, we run the model to understand its basic functionality without feeding any data about entrance and exit probabilities or heat maps. We do this to compare how the addition of information improves (or reduces) our ability to greater explain movement within our scene.
+</p>
+<h4>Scenario 2: Realistic Entrance and Exit Probabilities But Disabled Heat Maps</h4>
+<p>In this scenario, we explore what affect introducing realistic entrance and exit probabilities has on the model. In the sense that by harvesting the scene activity information (see Section 3) we can derive entrance probabilities (as shown in Table 1 and entrances and exit pairs (as presented in Table 2). These probabilities are then used to add agents to the scene via a specific entrance and then used for them to select a specific exit. For instance, from the scene activity analysis an agent has a 14% chance of entering the scene from entrance 5 and if an agent is entering from entrance 5, as shown in Figure 4A it would have a 19.4% probability of leaving the scene via exit 12 or 1.5% of using exit 15 (Figure 4B).
+</p>
+<h4>Scenario 3: Heat Maps Enabled But Disabled Entrance-exit Probabilities</h4>
+<p>In this scenario we use only heat maps, as in the previous experiments agents used distance-based gradients (i.e. each agent chose an exit and walked the shortest route to that exit as discussed in Section 4.4.2.1). In this scenario we use activity heat map-informed gradients derived from harvesting the scene activity data, however entrance and exit probabilities are turned off. In a sense one could consider this a very simple form of learning whereby agents walk on paths more frequently traveled.
+</p>
+<h4>Scenario 4: Both Realistic Entrance-exit Probabilities and Heat Maps Enabled</h4>
+
+</body></html>
+
+
