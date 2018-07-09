@@ -12,5 +12,5 @@ Graphical User interface of the model. From top left clockwise: Legend, Simulati
 **Model Available at:** <http://css1.gmu.edu/Cholera/> Alternatively for a more upto date version of the model see: <https://github.com/eclab/mason/tree/master/contrib/geomason/sim/app/geo> **Reference:**
 Crooks, A.T. and Hailegiorgis, A.B. (2014), '[An Agent-based Modelling Approach Applied tothe Spread of Cholera](https://www.sciencedirect.com/science/article/pii/S1364815214002515)', *Environmental Modelling and Software*, 62: 164-177.
 
-Click on the image belwo to see a YouTube movie of the model:
+Click on the image below to see a YouTube movie of the model:
 [![](http://img.youtube.com/vi/3GCminsqQgM/0.jpg)](http://www.youtube.com/watch?v=3GCminsqQgM "Cholera")

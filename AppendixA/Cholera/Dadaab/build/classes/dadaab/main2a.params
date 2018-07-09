@@ -1,0 +1,47 @@
+print-params=true
+
+#this is a comment (it starts with #)
+# main.params
+#
+# default set of parameters for the Dadaab simulation
+#
+# $Id: main.params 02 201-02-20 0Z Ates$
+
+
+##  Global Parameters
+#################################
+initialRefugeeNumber = 100000
+PercentageOfAsymptomatic = 70
+recovery_To_Susceb_Rate = 0.000001
+MaxDistanceLaterine = 20
+maximum_occupancy_Threshold = 1000
+Maximum_Water_Requirement = 15
+Minimum_Water_Requirement = 2
+MaximumNumberRelative = 15
+CROWED_LEVEL_THRESHOLD = 4000
+WaterContaminationThreshold = 10000.0
+probabilityOfEffectiveNessofmedicine = 0.9
+bacteriaErosionRate = 0.8
+vibrioCholeraePerHealthyPerson = 100.0
+vibrioCholeraePerExposedPerson = 100000.0
+vibrioCholeraePerInfectedPerson = 1000000000.0
+choleraInfectionDurationMAX = 72
+choleraInfectionDurationMIN = 12
+healthDepreciation = 0.001
+waterCapacityBorehole = 20
+boreHoleDischareRate = 0.8
+probabilityGuestContaminationRate = 0.005
+waterSourcePreferenceBorehole = 0.75
+waterSourcePreferenceRiver = 0.25
+waterCoverageRate = 0.6
+healthFacilityCapacity = 1000
+laterineCoverage = 0.6
+rainfallInMM = 4.5
+rainDuration = 25
+firstRainfallDay = 0
+rainfallFrequency = 25
+absorbtionRatePerMinute = 10.33
+
+
+
+
