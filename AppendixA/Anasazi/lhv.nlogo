@@ -203,8 +203,8 @@ to-report determinebestfarm
 ; the agent likes to go to the potential farm which is closest nearby existing farm
   let existingfarm patch farmx farmy
   let distancetns 1000
-  foreach potfarms [
-    ask ? [
+  foreach potfarms [ [?1] ->
+    ask ?1 [
       if (distance existingfarm < distancetns)
       [
         set bestfarm self
@@ -251,17 +251,17 @@ to load-map-data
   cp ct
   let yy 119
   let xx 0
-  foreach map-data [
-  ask patch xx yy [set value first ?]
-  if first ? = 0 [ask patch xx yy [set pcolor black set zone "General" set maizeZone "Yield_2"]]  ; General Valley
-  if first ? = 10 [ask patch xx yy [set pcolor red set zone "North" set maizeZone "Yield_1"]] ; North Valley
-  if first ? = 15 [ask patch xx yy [set pcolor white set zone "North Dunes" set maizeZone "Sand_dune"]] ; North Valley ; Dunes
-  if first ? = 20 [ask patch xx yy [set pcolor gray set zone "Mid" ifelse (xx <= 74) [set maizeZone "Yield_1"][set maizeZone "Yield_2"]]] ; Mid Valley
-  if first ? = 25 [ask patch xx yy [set pcolor white set zone "Mid Dunes" set maizeZone "Sand_dune"]] ; Mid Valley ; Dunes
-  if first ? = 30 [ask patch xx yy [set pcolor yellow set zone "Natural" set maizeZone "No_Yield"]] ; Natural
-  if first ? = 40 [ask patch xx yy [set pcolor blue set zone "Uplands" set maizeZone "Yield_3"]] ; Uplands Arable
-  if first ? = 50 [ask patch xx yy [set pcolor pink set zone "Kinbiko" set maizeZone "Yield_1"]] ; Kinbiko Canyon
-  if first ? = 60 [ask patch xx yy [set pcolor white set zone "Empty" set maizeZone "Empty"]] ; Empty
+  foreach map-data [ [?1] ->
+  ask patch xx yy [set value first ?1]
+  if first ?1 = 0 [ask patch xx yy [set pcolor black set zone "General" set maizeZone "Yield_2"]]  ; General Valley
+  if first ?1 = 10 [ask patch xx yy [set pcolor red set zone "North" set maizeZone "Yield_1"]] ; North Valley
+  if first ?1 = 15 [ask patch xx yy [set pcolor white set zone "North Dunes" set maizeZone "Sand_dune"]] ; North Valley ; Dunes
+  if first ?1 = 20 [ask patch xx yy [set pcolor gray set zone "Mid" ifelse (xx <= 74) [set maizeZone "Yield_1"][set maizeZone "Yield_2"]]] ; Mid Valley
+  if first ?1 = 25 [ask patch xx yy [set pcolor white set zone "Mid Dunes" set maizeZone "Sand_dune"]] ; Mid Valley ; Dunes
+  if first ?1 = 30 [ask patch xx yy [set pcolor yellow set zone "Natural" set maizeZone "No_Yield"]] ; Natural
+  if first ?1 = 40 [ask patch xx yy [set pcolor blue set zone "Uplands" set maizeZone "Yield_3"]] ; Uplands Arable
+  if first ?1 = 50 [ask patch xx yy [set pcolor pink set zone "Kinbiko" set maizeZone "Yield_1"]] ; Kinbiko Canyon
+  if first ?1 = 60 [ask patch xx yy [set pcolor white set zone "Empty" set maizeZone "Empty"]] ; Empty
    ifelse yy > 0 [set yy yy - 1][set xx xx + 1 set yy 119] ]
 
  ;  SARG number, meters north, meters east, start date, end date, median date (1950 - x), type, size, description, room count, elevation, baseline households
@@ -277,20 +277,20 @@ to load-map-data
   ]
   [ user-message "There is no settlements.txt file in current directory!" ]
 
-  foreach settlements-data [
+  foreach settlements-data [ [?1] ->
     create-hissettlements 1 [
-      set SARG first ?
-      set meterNorth item 1 ?
-      set meterEast item 2 ?
-      set startdate item 3 ?
-      set enddate item 4 ?
-      set mediandate (1950 - item 5 ?)
-      set typeset item 6 ?
-      set sizeset item 7 ?
-      set description item 8 ?
-      set roomcount item 9 ?
-      set elevation item 10 ?
-      set baselinehouseholds last ? ]]
+      set SARG first ?1
+      set meterNorth item 1 ?1
+      set meterEast item 2 ?1
+      set startdate item 3 ?1
+      set enddate item 4 ?1
+      set mediandate (1950 - item 5 ?1)
+      set typeset item 6 ?1
+      set sizeset item 7 ?1
+      set description item 8 ?1
+      set roomcount item 9 ?1
+      set elevation item 10 ?1
+      set baselinehouseholds last ?1 ] ]
 
   ;    number, meters north, meters east, type, start date, end date
   ifelse ( file-exists? "water.txt" )
@@ -305,14 +305,14 @@ to load-map-data
   ]
   [ user-message "There is no water.txt file in current directory!" ]
 
-  foreach water-data [
+  foreach water-data [ [?1] ->
     create-waterpoints 1 [
-      set sarg first ?
-      set meterNorth item 1 ?
-      set meterEast item 2 ?
-      set typewater item 3 ?
-      set startdate item 4 ?
-      set enddate item 5 ?]]
+      set sarg first ?1
+      set meterNorth item 1 ?1
+      set meterEast item 2 ?1
+      set typewater item 3 ?1
+      set startdate item 4 ?1
+      set enddate item 5 ?1] ]
 
    ask waterpoints [
        set xcor 24.5 + int ((meterEast - 2392) / 93.5)
@@ -549,8 +549,8 @@ end
 GRAPHICS-WINDOW
 435
 10
-765
-521
+763
+499
 -1
 -1
 4.0
@@ -740,7 +740,7 @@ DeathAge
 DeathAge
 26
 40
-38
+38.0
 1
 1
 NIL
@@ -755,7 +755,7 @@ FertilityEndsAge
 FertilityEndsAge
 26
 36
-34
+34.0
 1
 1
 NIL
@@ -1138,9 +1138,8 @@ false
 0
 Polygon -7500403 true true 270 75 225 30 30 225 75 270
 Polygon -7500403 true true 30 75 75 30 270 225 225 270
-
 @#$#@#$#@
-NetLogo 5.3.1
+NetLogo 6.0.1
 @#$#@#$#@
 need-to-manually-make-preview-for-this-model
 @#$#@#$#@
@@ -1157,7 +1156,6 @@ true
 0
 Line -7500403 true 150 150 90 180
 Line -7500403 true 150 150 210 180
-
 @#$#@#$#@
 1
 @#$#@#$#@
