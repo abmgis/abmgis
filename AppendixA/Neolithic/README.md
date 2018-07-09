@@ -12,4 +12,4 @@ Graphical user interface of exploring the origins of agriculture Iberian Peninsu
 
 
 **Model Available at**: <https://www.openabm.org/model/4447>**Reference**:
-Gordo, S.P., Aubn, J.B., Puchol, O.G., Barton, M. and Bergin, S.M. (2015), '[The Origins ofAgriculture in Iberia: A Computational Model](https://revije.ff.uni-lj.si/DocumentaPraehistorica/article/view/4949)', *Documenta Praehistorica*, 42: 117-131.
+Gordo S.P., Aubn, J.B., Puchol, O.G., Barton, M. and Bergin, S.M. (2015), '[The Origins ofAgriculture in Iberia: A Computational Model](https://revije.ff.uni-lj.si/DocumentaPraehistorica/article/view/4949)', *Documenta Praehistorica*, 42: 117-131.
