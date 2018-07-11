@@ -16,5 +16,6 @@ Graphical user interface of the Slumulation Model including input praters (left)
 
 Patel, A., Crooks, A.T. and Koizumi, N. (2018). '[Spatial Agent-based Modelling to Explore Slum Formation Dynamics in Ahmedabad, India](https://link.springer.com/chapter/10.1007/978-3-319-59511-5_8)' in Thill J.C. and Drajicavic, S. (eds.), *Geocomputational Analysis and Modeling of Regional Systems*, Springer, New York, NY, pp 121-141.
 
+Click on the image below to see a YouTube movie of the model:
 
 [![Agent-based model of Ahmedabad](http://img.youtube.com/vi/hUidTmyLczQ/0.jpg)](http://www.youtube.com/watch?v=hUidTmyLczQ "Agent-based model of Ahmedabad")
