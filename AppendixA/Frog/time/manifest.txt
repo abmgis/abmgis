@@ -1,4 +1,0 @@
-Manifest-Version: 1.0
-Extension-Name: time
-Class-Manager: TimeExtension
-NetLogo-Extension-API-Version: 5.0
