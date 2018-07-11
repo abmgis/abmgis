@@ -15,7 +15,7 @@ Graphical user interface of the humanitarian relief model. Clockwise from top le
 
 
 
-**Model Available at:**  <http://www.css.gmu.edu/haiti/> . Alternatively for a more upto date version of the model see: <https://github.com/eclab/mason/tree/master/contrib/geomason/sim/app/geo>.**Reference:**
+**Model Available at:**  <http://www.css.gmu.edu/haiti/>. Alternatively for a more upto date version of the model see: <https://github.com/eclab/mason/tree/master/contrib/geomason/sim/app/geo>.**Reference:**
 
 Crooks, A.T. and Wise, S. (2013), [GIS and Agent-Based models for Humanitarian Assistance](https://www.sciencedirect.com/science/article/pii/S0198971513000550), *Computers, Environment and Urban Systems*, 41: 100-111.
 
