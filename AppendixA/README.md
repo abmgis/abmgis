@@ -17,4 +17,4 @@ While the entirety of this book has given a readers a selection of models (mainl
 
 If you have any models (along with data) that you would like to contribute to this appendix please let us know.
 
-* [Contrubted Models](https://github.com/abmgis/abmgis/tree/master/AppendixA/AdditionalModels)
+* [Contributed Models](https://github.com/abmgis/abmgis/tree/master/AppendixA/AdditionalModels)
