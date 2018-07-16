@@ -10,6 +10,6 @@ Within this folder you will find:
 * [A selection of models to highlight core concepts](https://github.com/abmgis/abmgis/tree/master/Chapter02-IntroToABM/Models):
 	* The Segregation Model
 	* The Sugarscape Wealth Distribution model
-	* A Basic Trafic Model
+	* A Basic Trafic Model.
 
 
