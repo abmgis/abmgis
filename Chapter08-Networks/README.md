@@ -5,3 +5,7 @@ This folder includes the accompanying resources for the chatper. For full book d
 
 
 The NetLogo links documentation <https://ccl.northwestern.edu/netlogo/docs/programming.html#links> is very comprehensive and worth reading
+
+NetLogo’s Network Extension toolkit <https://github.com/NetLogo/Network-Extension>
+
+upto Box 8.3
