@@ -9,3 +9,6 @@ The NetLogo links documentation <https://ccl.northwestern.edu/netlogo/docs/progr
 NetLogo’s Network Extension toolkit <https://github.com/NetLogo/Network-Extension>
 
 upto Box 8.3
+
+
+Wilensky, U. (2005). NetLogo Preferential Attachment model. http://ccl.northwestern.edu/netlogo/models/PreferentialAttachment. Center for Connected Learning and Computer-Based Modeling, Northwestern University, Evanston, IL.
