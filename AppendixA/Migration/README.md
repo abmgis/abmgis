@@ -7,7 +7,7 @@
 
 Hu (2016) developed a  geographically explicit agent-based model using MASON and GeoMason  to explore individual movement paths for the Syrian refugee crisis whish is shown in the Figure below. The model was built utilising open data on migration routes, sources of refugees, numbers etc. (e.g. United Nations High Commissioner for Refugees, International Organisation for Migration , OpenStreetMap) and individual agent goal selection in accordance with the theory of intervening opportunities (Stouffer, 1940). Results from such a model could provide guidance for policy and humanitarian decisions in the sense, that if past migration routes and number of migrants can be predicated, we can ask ''\textit{what if}'' questions, for example, if a certain sea route is closed how will the refugees change their routes and thus where to place aid centres etc.
 
-![GUI logo](https://github.com/abmgis/abmgis/blob/master/AppendixA/Migration/FigureA15.png)
+![GUI logo](FigureA15.png)
 
 Graphical User interface of the model: Top: The spatial environment, where the lines represent migration routes, and the nodes represent number of migrants. Purple nodes represent final destinations, red nodes show migrant deaths and green nodes show migrants en route, while on the bottom there are charts recoding average financial status of the migrants and the number that have died en-route.
 

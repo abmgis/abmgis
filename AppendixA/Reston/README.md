@@ -7,7 +7,7 @@
 
 Swartz (2015) developed an spatially explicit agent-based model in NetLogo as shown in Figure below to explore how altering the mode of transportation for impacts individual agents commuting behaviour in the suburban Washington DC area of Reston, Virginia, USA. The model generates typical traffic conditions for the area and explores the potential impact on residential development on travel times as more residents move into the area including identifying bottlenecks at major intersection from such growth.
 
-![GUI logo](https://github.com/abmgis/abmgis/blob/master/AppendixA/Reston/FigureA10.png)
+![GUI logo](FigureA10.png)
 Graphical user interface of the Reston commuter model, from left to right: Input parameters, visual display and model outputs during a representative model run.
 
 **Model Available at:** Here.

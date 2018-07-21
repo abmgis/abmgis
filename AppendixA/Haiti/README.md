@@ -10,7 +10,7 @@ Natural disasters such as earthquakes and tsunamis occur all over the world, alt
 While such data is extremely useful, as it is allows us to assess damage and thus aid the distribution ofrelief, it tells us little about how the people in such areas will react to the devastation. In the model developed shown in the Figure below by Crooks and Wise (2013) using MASON and data from several different sources (e.g. OpenStreetMap), they demonstrate how crowdsourced geographic information can be used to study the aftermath of a catastrophic event. The specic case modelled here was the Haiti earthquake of January 2010. The model demonstrates the importance of exploring of human-environment interactions and the positioning of aid centres after a natural disaster and how different aid centre configurations impact the health of the surviving population.
 
 
-![GUI logo](https://github.com/abmgis/abmgis/blob/master/AppendixA/Haiti/FigureA8.png)
+![GUI logo](FigureA8.png)
 Graphical user interface of the humanitarian relief model. Clockwise from top left: The spatialenvironment and its various layers; charts recording agent-deaths, food levels and densities at various aid centres and agent activities; model information.
 
 

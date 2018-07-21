@@ -7,7 +7,7 @@
 
 The NorthLands model by Cioffi-Revilla et al. (2015, 2016) explores the potential effects of climate change in the Boreal and Arctic regions on its inhabitants (i.e. over 205 million people in approximately 30 million households). The model integrates two main modules: a physical permafrost module and a movement module, in order to study human migratory movements utilising MASON and GeoMason. To give a sense of what the model looks like, in the Figure below we show it's GUI. Specifically in the model, the permafrost module allows one to explore how the land surface properties (e.g. load-bearing capacity, infrastructure stability etc.) may be impacted due to thawing brought on by climate change using past records and future projections for temperature from the Community Earth System Model ([Hurrell et al., 2013](https://journals.ametsoc.org/doi/10.1175/BAMS-D-12-00121.1)) and how it such changes can impact both urban and rural households? decision-making and potentially causing migration (via the movement module). This combination of modules allows one to see how biophysical events in the natural system affect both the physical infrastructure and the human population. 
 
-![GUI logo](https://github.com/abmgis/abmgis/blob/master/AppendixA/NorthLands/FigureA16.png)
+![GUI logo](FigureA16.png)
 Graphical User interface of the NorthLands Model. Clockwise from left: The spatial environment showing the region of Canada with population distribution in the year 1921; parameter settings and a output time series measuring rural (red) and urban (blue) households.
 
 **Model Available at:** <https://github.com/eclab/mason/tree/master/contrib/geomason/sim/app/geo>. 
