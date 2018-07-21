@@ -1,104 +1,213 @@
-extensions[gis]
+extensions [gis]
 
 globals[
- world-size  ;;shapefile of the entire area, used to set world size
- population-dataset
- lake-dataset
+  upper  ;;the upper edge of exit
+  lower  ;;the lower edge of exit
+  move-speed ;;how many patches did people move in last tick on average. max = 1 patch/tick
+  alist  ;;used in calculating the shortest distance to exits
+  the-row         ;;used in export-data. it is the row being written
+
+  elevation-dataset
+  path-dataset
 ]
 
-patches-own [
- popu  ;;population at this patch
- popu_round  ;;rounded population (round up)
- IsLake  ;;1 if it's lake, 0 if not
+turtles-own[
+  moved? ;;if it moved in this tick
+]
+
+patches-own[
+  exit  ;;1 if it is an exit, 0 if it is not
+  elelist ;;a list of elevations to the exits
+  elevation  ;;elevation at this point is equal to shortest distance to exits
+  path  ;;how many times it has been chosen as a path
 ]
 
 to setup
+ ca
+ reset-ticks
+ file-close
 
-  ca
-  reset-ticks
-  resize-world 0 108 0 108
-  set-patch-size 5
+  ;draw-gridlines
 
-  load_maps
+  ifelse Number_of_exits = 2 [
+  set elevation-dataset gis:load-dataset "data/mincosf1.asc"][
 
-  ask patches [   if popu > 0 and islake = 0 [set  popu_round ceiling (popu ) sprout popu_round] ]
-  ;;only sprout outside of lakes
-  ;;rounding up, so for example, 0.3 persons = 1 person
+  set elevation-dataset gis:load-dataset "data/costdist_lower.asc"]
+
+  gis:set-world-envelope gis:envelope-of elevation-dataset
+
+  gis:apply-raster elevation-dataset elevation
+
+
+  ask patches with [elevation = 0 ][set exit 1]
+  ask patches [ifelse (elevation <= 0) or (elevation >= 0)[][set elevation 9999999]]
+
+  show_elevation
+
+ ;;create people
+ ask n-of people patches with [elevation < 9999999 and exit != 1][sprout 1 [set color red set shape "square"]]
+
+ ;;to show different colors in different areas
+ ;ask turtles with [xcor < -5 and ycor > 5][set color yellow]
+ ;ask turtles with [xcor < -5 and ycor < -5][set color green]
+ ;ask turtles with [xcor >= -5][set color blue]
 
 end
+
 
 to go
+  if count turtles > 0 [set move-speed count turtles with [moved? = true] / count turtles]
+  if count turtles = 0 [print "the time taken:" print ticks reset-ticks stop]
 
-  ask turtles [move-to one-of neighbors with [islake = 0]]
+  ask patches with [exit = 1] [ask turtles-here[die]]
+
+  ask turtles [
+    set moved? false
+    let target min-one-of neighbors [ elevation + ( count turtles-here * 9999999) ]
+
+    if [elevation + (count turtles-here * 9999999)] of target < [elevation] of patch-here
+    [ face target
+      move-to target
+      set moved? true
+      if UsePath? = false [ask target [set path path + 1]]]
+  ]
+
+
+      ;;if it can not move towards lower elevation, just move to a path where more people moved to (follow people)
+    if UsePath? [ask turtles with [moved? = false][
+
+    let target max-one-of neighbors [ path - ( count turtles-here * 9999999) ]
+
+    if [path - (count turtles-here * 9999999)] of target > [path] of patch-here
+    [ face target
+      move-to target
+      set moved? true
+      ask target [set path path + 1]]
+  ]]
+
+
+  if Show_path? [ask patches with [elevation < 9999999][let thecolor (9.9 - (path * 0.15)) if thecolor < 0.001 [set thecolor 0.001] set pcolor thecolor]]
+
+  tick
 end
 
 
-to load_maps
+to crt-people
 
-  ;;loading populations
-  set population-dataset gis:load-dataset "files/popu.asc"
-  gis:set-world-envelope gis:envelope-of population-dataset
-  gis:apply-raster population-dataset popu
-
-  ;;set world size using the clip shapefile, which was used to clip population and lakes
-  set world-size gis:load-dataset "files/clip.shp"
-  gis:set-world-envelope gis:envelope-of world-size
-
-  ;;load lake shapefile and copy informaton to patches (convert vector to raster)
-  set lake-dataset gis:load-dataset "files/lake.shp"
-  gis:apply-coverage lake-dataset "NAME" IsLake
-  ask patches [ifelse IsLake = "Lake Victoria" [set IsLake 1][set IsLake 0]]   ;;1 if it's lake, 0 if not
-
-  ask patches with [islake = 1][set pcolor blue]
+   ask n-of people patches with [elevation < 9999999 and exit != 1][sprout 1 [set color red set shape "square"]]
 
 end
 
+to move-right
+  set heading 90
+  fd 1
+end
 
-to plot_popu
-  ask patches [
-    ifelse popu > 0 or popu < 0 [][set popu 0]]  ;;set no data to 0
+to move-down
+  set heading 180
+  fd 1
+end
 
-      let min-e [popu] of min-one-of patches [popu]
-      let max-e [popu] of max-one-of patches [popu]
-      ask patches [set pcolor scale-color black popu min-e max-e]
+to move-up
+  set heading 0
+  fd 1
+end
+
+to draw-gridlines
+
+let x min-pxcor
+repeat world-width - 1 [
+  crt 1 [
+    set ycor min-pycor
+    set xcor x + 0.5
+    set color 0
+    set heading 0
+    pd
+    fd world-height - 1
+    die
+  ]
+      set x x + 1]
+
+set x min-pycor
+repeat world-height - 1[
+  crt 1[
+    set xcor min-pxcor
+    set ycor x + 0.5
+    set color 0
+    set heading 90
+    pd
+    fd world-width - 1
+    die
+
+  ] set x x + 1]
+end
 
 
-  ask turtles [ht]
+to show_elevation
+  let min-e min [elevation] of patches with [elevation < 9999999]
+  let max-e max [elevation] of patches with [elevation < 9999999]
 
+  ask patches [ifelse elevation < 9999999 [set pcolor scale-color blue elevation max-e min-e][set pcolor 65]]
+end
+
+to export_data
+
+  file-close
+  if file-exists? "data/result.asc" [ file-delete "data/result.asc"]
+  file-open "data/result.asc"
+  file-print "ncols         205   \r\n"
+  file-print "nrows         129   \r\n"
+  file-print "xllcorner     -122.26638888878   \r\n"
+  file-print "yllcorner     42.855833333   \r\n"
+  file-print  "cellsize      0.0011111111111859   \r\n"
+  file-print  "NODATA_value  -9999   \r\n"
+
+  let y max-pycor
+  while [y >= 0 - max-pycor]
+    [ let x 0 - max-pxcor
+      while [x <= max-pxcor][
+        ask patch x y [file-write path]
+
+        set x x + 1]
+      file-print " "
+      set y y - 1
+
+      ]
+  file-close
 end
 @#$#@#$#@
 GRAPHICS-WINDOW
-184
-10
-737
-564
+203
+32
+980
+525
 -1
 -1
-5.0
+3.752
 1
 10
 1
 1
 1
 0
-1
-1
-1
-0
-108
-0
-108
 0
 0
 1
-ticks
+-102
+102
+-64
+64
+0
+0
+1
+seconds
 30.0
 
 BUTTON
-15
-94
-78
-127
+21
+41
+84
+74
 NIL
 setup
 NIL
@@ -112,84 +221,13 @@ NIL
 1
 
 BUTTON
-14
-133
-77
-166
-step
-go
-NIL
-1
-T
-OBSERVER
-NIL
-NIL
-NIL
-NIL
-1
-
-TEXTBOX
-15
-319
-165
-496
-Width of each patch (cell) is 0.000833333 decimal degrees (approx 100m at the equator).\n\nWorld size is approximately 10km by 10km.\n\nUnit of population: Estimated persons per grid square.
-11
-0.0
-1
-
-BUTTON
-14
-179
-147
-212
-Show Population
-plot_popu
-NIL
-1
-T
-OBSERVER
-NIL
-NIL
-NIL
-NIL
-1
-
-BUTTON
-12
-271
-140
-304
-Show the model
-ask turtles [st]\nask patches [if islake = 1 [set pcolor blue]]
-NIL
-1
-T
-OBSERVER
-NIL
-NIL
-NIL
-NIL
-1
-
-TEXTBOX
-14
-222
-147
-278
-Shows a density map of population and hides the agents and the lake.
-11
-0.0
-1
-
-BUTTON
-85
-133
-148
-166
+20
+88
+83
+121
 NIL
 go
-T
+NIL
 1
 T
 OBSERVER
@@ -199,53 +237,232 @@ NIL
 NIL
 1
 
-MONITOR
-15
-515
-141
-560
-Number of Agents
-count turtles
+SLIDER
 17
+242
+174
+275
+people
+people
+0
+5000
+1500.0
 1
+1
+NIL
+HORIZONTAL
+
+BUTTON
+102
+87
+165
+120
+NIL
+go
+T
+1
+T
+OBSERVER
+NIL
+NIL
+NIL
+NIL
+1
+
+SWITCH
+18
+292
+174
+325
+Show_path?
+Show_path?
+0
+1
+-1000
+
+BUTTON
+19
+148
+169
+181
+show elevation graph
+show_elevation
+NIL
+1
+T
+OBSERVER
+NIL
+NIL
+NIL
+NIL
+1
+
+PLOT
+1039
+37
+1239
+187
+Number of people left
+NIL
+NIL
+0.0
+10.0
+0.0
+10.0
+true
+false
+"" ""
+PENS
+"default" 1.0 0 -16777216 true "" "plot count turtles"
+
+TEXTBOX
+22
+194
+172
+222
+The darker the higher the \"elevation\" is.
 11
+0.0
+1
+
+PLOT
+1038
+223
+1238
+384
+Average moving speed
+NIL
+NIL
+0.0
+10.0
+0.0
+1.0
+true
+false
+"" ""
+PENS
+"default" 1.0 0 -16777216 true "" "plot move-speed"
+
+BUTTON
+1042
+414
+1175
+447
+export path graph
+export_data
+NIL
+1
+T
+OBSERVER
+NIL
+NIL
+NIL
+NIL
+0
+
+TEXTBOX
+1043
+467
+1193
+495
+Export the path frequency to an asc file.
+11
+0.0
+1
+
+CHOOSER
+16
+346
+173
+391
+Number_of_exits
+Number_of_exits
+1 2
+1
+
+SWITCH
+15
+418
+171
+451
+UsePath?
+UsePath?
+1
+1
+-1000
+
+BUTTON
+104
+42
+192
+75
+NIL
+crt-people
+NIL
+1
+T
+OBSERVER
+NIL
+NIL
+NIL
+NIL
+1
+
+TEXTBOX
+21
+464
+171
+548
+Use path frequency map from last trial. After at least one trial, turn this on, click crt-people, and observe if the total time taken decreases. Also compare the plots.
+11
+0.0
+1
 
 @#$#@#$#@
 ## WHAT IS IT?
 
-(a general understanding of what the model is trying to show or explain)
+This is a model of pedestrains who try to leave the floor through one or two exits. The map being used is from GMU's Krasnow Institute. The model records the frequency of each cell being chosen as a path and draws the result into a path graph, which can be exported to ArcGIS for further analysis.
+
+Here is a graph showing the path graph opened in ArcGIS:
+
+![Picture not found](file:data/path2.jpg)
 
 ## HOW IT WORKS
 
-(what rules the agents use to create the overall behavior of the model)
+Each pacth has a variable called elevation, which is determined by (1) the shortest distance to the exit; (2)if it is in a room, elevation is lower being closer to gate. If there are more than one exit patches, the elevation is equal to the shortest distance to closest one of the exit patches.
+
+People use the follow the gradient/ cost surface (always flow to lower elevation, if space is available) to move to the exit.
+
+The model records the frequency of each patch being chosen as a path, and draws a "path frequency map".
+
+When UsePath is turned on, people will move to a cell where the path frequency is higher, when they can not move to a cell with lower elevation.
 
 ## HOW TO USE IT
 
-(how to use the model, including a description of each of the items in the Interface tab)
+Basics:
+1. Use the sliders to adjust the number of the exits and the number of people.
+2. Press setup to load the floor plan, exit, and randomly distribute people on the floor.
+3. Turn show_path? on to show the path frequency.
+4. Press go to make people move 1 patch each tick, if path available.
+5. Use the export function to export the path frequency graph to an asc file.
 
-## THINGS TO NOTICE
-
-(suggested things for the user to notice while running the model)
-
-## THINGS TO TRY
-
-(suggested things for the user to try to do (move sliders, switches, etc.) with the model)
+To use the path frequency map (frequency of being chosen as a path):
+1. Run the model once wth UsePath off.
+2. Turn UsePath on.
+3. Use crt-people to create same amount of people as last run.
+4. Run the model and observe if the time taken to clear decreases.
 
 ## EXTENDING THE MODEL
 
-(suggested things to add or change in the Code tab to make the model more complicated, detailed, accurate, etc.)
+Can you add an obstacle in the middle of the room? How would that affect the result?
 
 ## NETLOGO FEATURES
 
-(interesting or unusual features of NetLogo that the model uses, particularly in the Code tab; or where workarounds were needed for missing features)
+In this model, the "elevation" of a patch is decided by its distance to exits as well as how close it is located to the gate of the room, so that people can run out if rooms. When running the model, people always try to move to lower elevation. This algorithm can also be used to build a rainfall model to analyze the movement of rain drops on the ground.
 
 ## RELATED MODELS
 
-(models in the NetLogo Models Library and elsewhere which are of related interest)
-
-## CREDITS AND REFERENCES
-
-(a reference to the model's URL on the web if it has one, as well as any other necessary credits, citations, and links)
+See the Grand Canyon in the NetLogo models library.
 @#$#@#$#@
 default
 true

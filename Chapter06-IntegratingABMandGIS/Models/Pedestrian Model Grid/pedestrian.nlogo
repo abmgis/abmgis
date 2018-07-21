@@ -1,93 +1,183 @@
-extensions[gis]
-
 globals[
- world-size  ;;shapefile of the entire area, used to set world size
- population-dataset
- lake-dataset
+  upper  ;;the upper edge of exit
+  lower  ;;the lower edge of exit
+  move-speed ;;how many patches did people move in last tick on average. max = 1 patch/tick
+  alist  ;;used in calculating the shortest distance to exits
+  the-row         ;;used in export-data. it is the row being written
 ]
 
-patches-own [
- popu  ;;population at this patch
- popu_round  ;;rounded population (round up)
- IsLake  ;;1 if it's lake, 0 if not
+turtles-own[
+  moved? ;;if it moved in this tick
+]
+
+patches-own[
+  exit  ;;1 if it is an exit, 0 if it is not
+  elelist ;;a list of elevations to the exits
+  elevation  ;;elevation at this point is equal to shortest distance to exits
+  path  ;;how many times it has been chosen as a path
 ]
 
 to setup
+ ca
+ reset-ticks
+ file-close
 
-  ca
-  reset-ticks
-  resize-world 0 108 0 108
-  set-patch-size 5
+ draw-gridlines
+ ;;set up the bounding wall
+ ask patches [set pcolor white set path 0]
+ ask patches with [pxcor = 20 or pxcor = -20][set pcolor black]
+ ask patches with [pycor = 20 or pycor = -20][set pcolor black]
 
-  load_maps
+ set upper round (exit_width / 2)
+ set lower 0 - (exit_width - upper)
 
-  ask patches [   if popu > 0 and islake = 0 [set  popu_round ceiling (popu ) sprout popu_round] ]
-  ;;only sprout outside of lakes
-  ;;rounding up, so for example, 0.3 persons = 1 person
+ ask patches with [pxcor = 20 and pycor < upper and pycor >= lower ][set pcolor white set exit 1]
+
+
+ ;;set up elevation
+
+ ask patches [
+   set alist []
+   ask patches with [exit = 1][
+     set alist lput distance myself alist]
+
+   set elevation min alist]
+
+ ask patches with [pcolor = black] [set elevation 999999999]
+
+ ;;create people
+ ask n-of people patches with [pcolor = white and pxcor != 20][sprout 1 [set color red set shape "square"]]
+
+ ;;to show different colors in different areas
+ ;ask turtles with [xcor < -5 and ycor > 5][set color yellow]
+ ;ask turtles with [xcor < -5 and ycor < -5][set color green]
+ ;ask turtles with [xcor >= -5][set color blue]
 
 end
+
 
 to go
+  if count turtles > 0 [set move-speed count turtles with [moved? = true] / count turtles]
+  if count turtles = 0 [stop]
+  ask patches with [exit = 1] [ask turtles-here[die]]
 
-  ask turtles [move-to one-of neighbors with [islake = 0]]
+  ask turtles [
+    set moved? false
+    let target min-one-of neighbors [ elevation + ( count turtles-here * 9999999) ]
+
+    if [elevation + (count turtles-here * 9999999)] of target < [elevation] of patch-here
+    [ face target
+      move-to target
+      set moved? true
+      ask target [set path path + 1]]
+  ]
+
+  if Show_paths? [ask patches with [pcolor != black][let thecolor (9.9 - (path * 0.15)) if thecolor < 0.001 [set thecolor 0.001] set pcolor thecolor]]
+  tick
 end
 
 
-to load_maps
+to move-right
+  set heading 90
+  fd 1
+end
 
-  ;;loading populations
-  set population-dataset gis:load-dataset "files/popu.asc"
-  gis:set-world-envelope gis:envelope-of population-dataset
-  gis:apply-raster population-dataset popu
+to move-down
+  set heading 180
+  fd 1
+end
 
-  ;;set world size using the clip shapefile, which was used to clip population and lakes
-  set world-size gis:load-dataset "files/clip.shp"
-  gis:set-world-envelope gis:envelope-of world-size
+to move-up
+  set heading 0
+  fd 1
+end
 
-  ;;load lake shapefile and copy informaton to patches (convert vector to raster)
-  set lake-dataset gis:load-dataset "files/lake.shp"
-  gis:apply-coverage lake-dataset "NAME" IsLake
-  ask patches [ifelse IsLake = "Lake Victoria" [set IsLake 1][set IsLake 0]]   ;;1 if it's lake, 0 if not
+to draw-gridlines
 
-  ask patches with [islake = 1][set pcolor blue]
+let x min-pxcor
+repeat world-width - 1 [
+  crt 1 [
+    set ycor min-pycor
+    set xcor x + 0.5
+    set color 0
+    set heading 0
+    pd
+    fd world-height - 1
+    die
+  ]
+      set x x + 1]
 
+set x min-pycor
+repeat world-height - 1[
+  crt 1[
+    set xcor min-pxcor
+    set ycor x + 0.5
+    set color 0
+    set heading 90
+    pd
+    fd world-width - 1
+    die
+
+  ] set x x + 1]
 end
 
 
-to plot_popu
-  ask patches [
-    ifelse popu > 0 or popu < 0 [][set popu 0]]  ;;set no data to 0
+to show_elevation
+  let min-e min [elevation] of patches with [pcolor != black and exit != 1]
+  let max-e max [elevation] of patches with [pcolor != black and exit != 1]
+  print min-e
+  print max-e
+  ask patches with [pcolor != black][set pcolor scale-color blue elevation (max-e + 1) min-e]
 
-      let min-e [popu] of min-one-of patches [popu]
-      let max-e [popu] of max-one-of patches [popu]
-      ask patches [set pcolor scale-color black popu min-e max-e]
+end
 
+to export_data
 
-  ask turtles [ht]
+  file-close
+  if file-exists? "data/result.asc" [ file-delete "data/result.asc"]
+  file-open "data/result.asc"
+  file-print "ncols         41   \r\n"
+  file-print "nrows         41   \r\n"
+  file-print "xllcorner     -122.26638888878   \r\n"
+  file-print "yllcorner     42.855833333   \r\n"
+  file-print  "cellsize      0.0011111111111859   \r\n"
+  file-print  "NODATA_value  -9999   \r\n"
 
+  let y 20
+  while [y >= -20]
+    [ let x -20
+      while [x <= 20][
+        ask patch x y [file-write path]
+
+        set x x + 1]
+      file-print " "
+      set y y - 1
+
+      ]
+  file-close
 end
 @#$#@#$#@
 GRAPHICS-WINDOW
-184
+201
 10
-737
-564
+662
+472
 -1
 -1
-5.0
+11.05
 1
 10
 1
 1
 1
 0
-1
-1
-1
 0
-108
 0
-108
+1
+-20
+20
+-20
+20
 0
 0
 1
@@ -95,10 +185,10 @@ ticks
 30.0
 
 BUTTON
-15
-94
-78
-127
+21
+41
+84
+74
 NIL
 setup
 NIL
@@ -112,11 +202,11 @@ NIL
 1
 
 BUTTON
-14
-133
-77
-166
-step
+20
+88
+83
+121
+NIL
 go
 NIL
 1
@@ -128,65 +218,41 @@ NIL
 NIL
 1
 
-TEXTBOX
-15
-319
+SLIDER
+18
+240
+174
+273
+exit_width
+exit_width
+0
+41
+1.0
+1
+1
+NIL
+HORIZONTAL
+
+SLIDER
+18
+287
+175
+320
+people
+people
+0
+1000
+500.0
+1
+1
+NIL
+HORIZONTAL
+
+BUTTON
+102
+87
 165
-487
-Width of each patch (cell) is 0.000833333 decimal degrees (approx 100m at the equator).\n\nWorld size is approximately 10km by 10km.\n\nUnit of population: Estimated persons per grid square.
-11
-0.0
-1
-
-BUTTON
-14
-179
-147
-212
-Show Population
-plot_popu
-NIL
-1
-T
-OBSERVER
-NIL
-NIL
-NIL
-NIL
-1
-
-BUTTON
-12
-271
-140
-304
-Show the model
-ask turtles [st]\nask patches [if islake = 1 [set pcolor blue]]
-NIL
-1
-T
-OBSERVER
-NIL
-NIL
-NIL
-NIL
-1
-
-TEXTBOX
-14
-222
-147
-278
-Shows a density map of population and hides the agents and the lake.
-11
-0.0
-1
-
-BUTTON
-85
-133
-148
-166
+120
 NIL
 go
 T
@@ -199,53 +265,141 @@ NIL
 NIL
 1
 
-MONITOR
-14
-485
-140
-530
-Number of Agents
-count turtles
-17
+SWITCH
+19
+337
+155
+370
+Show_paths?
+Show_paths?
+0
 1
+-1000
+
+BUTTON
+19
+148
+169
+181
+show elevation graph
+show_elevation
+NIL
+1
+T
+OBSERVER
+NIL
+NIL
+NIL
+NIL
+1
+
+PLOT
+690
+15
+890
+165
+Number of people  remaining
+NIL
+NIL
+0.0
+10.0
+0.0
+10.0
+true
+false
+"" ""
+PENS
+"default" 1.0 0 -16777216 true "" "plot count turtles"
+
+TEXTBOX
+22
+194
+172
+222
+The darker the cell, the higher the \"elevation\" is.
 11
+0.0
+1
+
+PLOT
+689
+201
+889
+362
+Average moving speed
+NIL
+NIL
+0.0
+10.0
+0.0
+1.0
+true
+false
+"" ""
+PENS
+"default" 1.0 0 -16777216 true "" "plot move-speed"
+
+BUTTON
+693
+392
+826
+425
+export path graph
+export_data
+NIL
+1
+T
+OBSERVER
+NIL
+NIL
+NIL
+NIL
+0
+
+TEXTBOX
+694
+445
+844
+473
+Export the path frequency to an asc file.
+11
+0.0
+1
 
 @#$#@#$#@
 ## WHAT IS IT?
 
-(a general understanding of what the model is trying to show or explain)
+This is a model of pedestrains who try to leave the room through the exit on the right hand side. The model also records the frequency of each cell being chosen as a path and draws the result into a path graph, which can be exported to GIS for further analysis.
+
+Here is a graph showing the path graph opened in GIS:
+
+![Picture not found](file:data/path_frequency.jpg)
 
 ## HOW IT WORKS
 
-(what rules the agents use to create the overall behavior of the model)
+Each pacth has a variable called elevation, which is determined by the shortest distance to the exit. If there are more than one exit patches, the elevation is equal to the shortest distance to closest one of the exit patches. 
+
+People use the follow the gradient/ cost surface (always flow to lower elevation, if space is available) to move to the exit.
 
 ## HOW TO USE IT
 
-(how to use the model, including a description of each of the items in the Interface tab)
-
-## THINGS TO NOTICE
-
-(suggested things for the user to notice while running the model)
-
-## THINGS TO TRY
-
-(suggested things for the user to try to do (move sliders, switches, etc.) with the model)
+1. Use the sliders to adjust the width of the exit and the number of people.
+2. Press setup to build the boundary, exit, and randomly distribute people in the room.
+3. Turn show_path? on to show the path frequency.
+4. Press go to make people move 1 patch each tick, if path available.
+5. Use the export function to export the path frequency graph to GIS.
 
 ## EXTENDING THE MODEL
 
-(suggested things to add or change in the Code tab to make the model more complicated, detailed, accurate, etc.)
+Can you add an obstacle in the middle of the room? What if there are more than one exit?
 
 ## NETLOGO FEATURES
 
-(interesting or unusual features of NetLogo that the model uses, particularly in the Code tab; or where workarounds were needed for missing features)
+In order to calculate the "elevation", each patch calculates its distance to each exit patch, and set the lowest distance as elevation. When running the model, people always try to move to lower elevation. This algorithm can also be used to build a rainfall model to analyze the movement of rain drops on the ground.
 
 ## RELATED MODELS
 
-(models in the NetLogo Models Library and elsewhere which are of related interest)
-
-## CREDITS AND REFERENCES
-
-(a reference to the model's URL on the web if it has one, as well as any other necessary credits, citations, and links)
+Grand Canyon in the NetLogo models library.
 @#$#@#$#@
 default
 true
