@@ -16,5 +16,5 @@ The repisitory is organised around the format of the book. Whereby each subdirec
 * **Chapter 10**: [Evaluating Our Models: Verification, Calibration, Validation]()
 * **Chapter 11**: [Alternative Modelling Approaches]()
 * **Chapter 12**: [Summary and Outlook]()
-* **Appendix**: [A Gallery of Applications (i.e. example models)](abmgis/blob/master/AppendixA/README.md)
+* **Appendix**: [A Gallery of Applications (i.e. example models)](AppendixA/README.md)
 
