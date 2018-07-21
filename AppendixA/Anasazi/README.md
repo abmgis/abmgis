@@ -9,7 +9,7 @@ While many of the examples in this book focus on the current day, one area of ac
 
 While the links to the original model are not active, several replications of the model including one in Ascape (<http://ascape.sourceforge.net/>), a Java based agent-based modelling toolkit created by Miles Parker, who was also the original programmer. However, the one we show in the Figure below is by Janssen (2009) which replicates the model via NetLogo.
 
-![GUI logo](https://github.com/abmgis/abmgis/blob/master/AppendixA/Anasazi/FigureA5.png)
+![GUI logo](FigureA5.png)
 Graphical user interface of the Understanding Artifcial Anasazi Model.**Model Available at**: <https://www.openabm.org/model/2222/>
 **Reference**:
 Janssen, M.A. (2009), 'Understanding Artificial Anasazi', *Journal of Artificial Societies andSocial Simulation*, 12(4), Available at <http://jasss.soc.surrey.ac.uk/12/4/13.html>.
