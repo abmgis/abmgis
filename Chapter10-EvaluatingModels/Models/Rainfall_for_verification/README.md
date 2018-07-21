@@ -1,13 +1,17 @@
-# Chapter - Evaluating Models: Verification, Calibration, Validation
+#Verification: Rainfall Example
+
 
 ## Introduction
 
-Model evaluation is one of the central challenges associated with agent-based models.  A key question that all modellers face is "*how well does this model simulate the phenomenon of interest?*". While there are no universally accepted methods for evaluating agent-based models, researchers often adopt the same three stage process of verification, calibration and validation.  This chapter presents an overview of the methods that are commonly used within each of these stages.  The overarching aim of this chapter is to provide the reader with the knowledge to design their own approach to evaluating agent-based models.
+By subjecting agents to a simplified environmental conditions, it is possible to clearly identify the behaviours that do not align with expectations. 
 
-## Models
+An example of this form of verification can be found in the Rainfall model. While the model is designed to operate using a GIS raster input, which defines the behaviour of raindrops in relation to their flow and accumulation within the model environment. 
 
-* **[BehaviorSpace](Models/BehaviorSpace)**: Simple example taking [NetLogo's Segregation model](http://ccl.northwestern.edu/netlogo/models/Segregation) and adding a BehaviorSpace experiemtnation to it to explore the parameter space.
-* **[Rainfall for verification](Models/Rainfall_for_verification)**: Demonstrates how verification can be carred out.
-* **[WalkThisWay](Models/WalkThisWay)**: Provides an example of quantitative calibration using a model reimplimented NetLogo ([See Appendix A7 for the orignal MASON model](AppendixA/Walk))
+We also allow abstract spaces. These include **flat** **plane**, a **cone** **shape**, and a **simple hill** as shown in the figure below
 
-## References
+![GUI logo](Rainfall_verification.png)
+
+
+These "*simplified*" environments allow the movement of agents to be easily seen, and performance judged accordingly. 
+
+Experiment with the Rainfall Model. If you change the landscape (**MapType**) to Flat, Cone, and Hill, does the water behave as expected?
