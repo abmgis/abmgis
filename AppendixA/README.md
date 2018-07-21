@@ -10,11 +10,11 @@ While the entirety of this book has given a readers a selection of models (mainl
 
 ## Example Models
 
-* [A.1 Disease Dynamics in a Refugee Camp](AppendixA/Cholera)* [A.2 Hiker Movements in the Dolomites UNESCO World Heritage Site (Italy)](s://github.com/abmgis/abmgis/tree/master/AppendixA/HikerMovements)* [A.3 Modelling the Emergence of Riots](AppendixA/Riots)* [A.4 The Foothill Yellow-legged Frog Assessment Model (FYFAM)](AppendixA/Frog)* [A.5 Understanding Articial Anasazi](AppendixA/Anasazi)
-* [A.6 The Spread of Agriculture during the Neolithic period](AppendixA/Neolithic)* [A.7 Walk this Way](AppendixA/Walk)* [A.8 Natural Disasters and Humanitarian Relief](AppendixA/Haiti)* [A.9 Using Social Media Content To Inform Agent-based Models For Humanitarian Crisis Response](AppendixA/Hotspots)* [A.10 Modeling Transportation and Development for Reston, VA](AppendixA/Reston)* [A.11 Agent-Based Modeling for Community Resource Management](AppendixA/Acequias)* [A.12 Agent-Based Modeling of Conflict Diamonds](AppendixA/Diamonds)* [A.13 Exploring the Growth of Slums](AppendixA/Slums)* [A.14 RiftLand: Analyzing Conflict, Disasters, and Humanitarian Crises in East Africa](AppendixA/RiftLand)* [A.15 Modelling Forced Migration](AppendixA/Migration)* [A.16 Studying Coupled Human- Articial- Natural Systems in Boreal and Arctic Regions](AppendixA/NorthLands)
+* [A.1 Disease Dynamics in a Refugee Camp](Cholera)* [A.2 Hiker Movements in the Dolomites UNESCO World Heritage Site (Italy)](s://github.com/abmgis/abmgis/tree/master/HikerMovements)* [A.3 Modelling the Emergence of Riots](Riots)* [A.4 The Foothill Yellow-legged Frog Assessment Model (FYFAM)](Frog)* [A.5 Understanding Articial Anasazi](Anasazi)
+* [A.6 The Spread of Agriculture during the Neolithic period](Neolithic)* [A.7 Walk this Way](Walk)* [A.8 Natural Disasters and Humanitarian Relief](Haiti)* [A.9 Using Social Media Content To Inform Agent-based Models For Humanitarian Crisis Response](Hotspots)* [A.10 Modeling Transportation and Development for Reston, VA](Reston)* [A.11 Agent-Based Modeling for Community Resource Management](Acequias)* [A.12 Agent-Based Modeling of Conflict Diamonds](Diamonds)* [A.13 Exploring the Growth of Slums](Slums)* [A.14 RiftLand: Analyzing Conflict, Disasters, and Humanitarian Crises in East Africa](RiftLand)* [A.15 Modelling Forced Migration](Migration)* [A.16 Studying Coupled Human- Articial- Natural Systems in Boreal and Arctic Regions](NorthLands)
 
 ## Contribute 
 
 If you have any models (along with data) that you would like to contribute to this appendix please let us know.
 
-* [Contributed Models](AppendixA/AdditionalModels)
+* [Contributed Models](AdditionalModels)
