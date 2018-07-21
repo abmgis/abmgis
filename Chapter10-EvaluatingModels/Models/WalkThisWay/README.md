@@ -1,13 +1,15 @@
-# Chapter - Evaluating Models: Verification, Calibration, Validation
+# Walk this Way Model
 
 ## Introduction
 
-Model evaluation is one of the central challenges associated with agent-based models.  A key question that all modellers face is "*how well does this model simulate the phenomenon of interest?*". While there are no universally accepted methods for evaluating agent-based models, researchers often adopt the same three stage process of verification, calibration and validation.  This chapter presents an overview of the methods that are commonly used within each of these stages.  The overarching aim of this chapter is to provide the reader with the knowledge to design their own approach to evaluating agent-based models.
+The original model was published by Crooks *et al*. (2015) and the model itself was created in MASON ([See Appendix A7 for the orignal MASON model and more details](AppendixA/Walk))
 
-## Models
+Here we show the model reimplemented in NetLogo. The aim of the model was to simulate the movement of people as they cross a environment (i.e. a scene) and to calibrate the model against observed pedestrian movement paths derived from trajectory data extracted from CCTV data.
 
-* **[BehaviorSpace](Models/BehaviorSpace)**: Simple example taking [NetLogo's Segregation model](http://ccl.northwestern.edu/netlogo/models/Segregation) and adding a BehaviorSpace experiemtnation to it to explore the parameter space.
-* **[Rainfall for verification](Models/Rainfall_for_verification)**: Demonstrates how verification can be carred out.
-* **[WalkThisWay](Models/WalkThisWay)**: Provides an example of quantitative calibration using a model reimplimented NetLogo ([See Appendix A7 for the orignal MASON model](AppendixA/Walk))
+
+![GUI logo](WalkthisWayNetLogo.png)
 
 ## References
+For the oringal model and more information see: 
+
+**Crooks, A.T., Croitoru, A., Lu, X., Wise, S., Irvine, J. and Stefanidis, A. (2015)**,  [Walk this Way: Improving Pedestrian Agent-Based Models through Scene Activity Analysis](http://www.mdpi.com/2220-9964/4/3/1627/htm),  *ISPRS International Journal of Geo-Information*, 4(3): 1627-1656

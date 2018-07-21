@@ -1,13 +1,19 @@
-# Chapter - Evaluating Models: Verification, Calibration, Validation
+# BehaviorSpace Example: Using the Segregation Model
 
 ## Introduction
 
-Model evaluation is one of the central challenges associated with agent-based models.  A key question that all modellers face is "*how well does this model simulate the phenomenon of interest?*". While there are no universally accepted methods for evaluating agent-based models, researchers often adopt the same three stage process of verification, calibration and validation.  This chapter presents an overview of the methods that are commonly used within each of these stages.  The overarching aim of this chapter is to provide the reader with the knowledge to design their own approach to evaluating agent-based models.
+[BehaviorSpace](https://ccl.northwestern.edu/netlogo/docs/behaviorspace.html) in NetLogo offers an easy-to-use tool for simulating the effect of different parameter values on model outcomes.
 
-## Models
+In this example we take [NetLogo's Segregation model](http://ccl.northwestern.edu/netlogo/models/Segregation) and simply add varaibles and commands to be carried out to explore the parameter space (as shown in the figre below).
 
-* **[BehaviorSpace](Models/BehaviorSpace)**: Simple example taking [NetLogo's Segregation model](http://ccl.northwestern.edu/netlogo/models/Segregation) and adding a BehaviorSpace experiemtnation to it to explore the parameter space.
-* **[Rainfall for verification](Models/Rainfall_for_verification)**: Demonstrates how verification can be carred out.
-* **[WalkThisWay](Models/WalkThisWay)**: Provides an example of quantitative calibration using a model reimplimented NetLogo ([See Appendix A7 for the orignal MASON model](AppendixA/Walk))
+![GUI logo](BehaviorSpace.png)
 
-## References
+To run BehaviorSpace:
+
+* Open the model in NetLogo
+* Select "Tools" -> BehaviorSpace -> press "Run"
+* To edit edit the experiment press "Edit"
+
+## Reference
+
+Wilensky, U. (1997). NetLogo Segregation model. <http://ccl.northwestern.edu/netlogo/models/Segregation>. Center for Connected Learning and Computer-Based Modeling, Northwestern University, Evanston, IL.
