@@ -8,6 +8,6 @@ Model evaluation is one of the central challenges associated with agent-based mo
 
 * **[BehaviorSpace](Models/BehaviorSpace)**: Simple example taking [NetLogo's Segregation model](http://ccl.northwestern.edu/netlogo/models/Segregation) and adding a BehaviorSpace experiemtnation to it to explore the parameter space.
 * **[Rainfall for verification](Models/Rainfall_for_verification)**: Demonstrates how verification can be carred out.
-* **[WalkThisWay](Models/WalkThisWay)**: Provides an example of quantitative calibration using a model reimplimented NetLogo ([See Appendix A7 for the orignal MASON model](./AppendixA/Walk))
+* **[WalkThisWay](Models/WalkThisWay)**: Provides an example of quantitative calibration using a model reimplimented NetLogo ([See Appendix A7 for the orignal MASON model](../AppendixA/Walk))
 
 ## References
