@@ -2,7 +2,7 @@
 
 ## Introduction
 
-This model extends the [GMU-Roads Model](GMU-Roads) to also add 
+This model extends the [GMU-Roads Model](../GMU-Roads) to also add 
 
 ![GUI logo](GMU-Social_GUI.png)
 
