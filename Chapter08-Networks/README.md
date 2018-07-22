@@ -8,7 +8,7 @@ Networks play a critical role in our lives in terms of physical networks we use 
 ## Models in the Chapter
 
 * **Undirected Network Demo**: A simple example of how to create a undirected network in NetLogo
-* **[Directed Network Demo](Models/Directed Network Demo.nlogo)**: A simple example of how to create a directed network in NetLogo
+* **[Directed Network Demo](Models/Directed%Network Demo.nlogo)**: A simple example of how to create a directed network in NetLogo
 * **Random Network Example**: A simple example of how to create a random networks in NetLogo
 * Networks in NetLogo:
 * **Preferential Attachment**: Demostrates how networks can grow where new nodes have a greter chance to be connected to nodes which have a high degree (i.e. number of conncetions
