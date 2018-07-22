@@ -7,7 +7,7 @@ Networks play a critical role in our lives in terms of physical networks we use 
 
 ## Models in the Chapter
 
-* **Undirected Network Demo**: A simple example of how to create a undirected network in NetLogo
+* **[Undirected Network Demo](Models)**: A simple example of how to create a undirected network in NetLogo
 * **[Directed Network Demo](Models)**: A simple example of how to create a directed network in NetLogo
 * **[Random Network Example](Models)**: A simple example of how to create a random networks in NetLogo
 * Networks in NetLogo:

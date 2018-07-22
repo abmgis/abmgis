@@ -1,14 +1,13 @@
-# Chapter 8 - Networks
+# GMU-Roads Model
 
-This folder includes the accompanying resources for the chatper. For full book details, see: [http://www.abmgis.org/](http://www.abmgis.org/).
+## Introduction
 
+This model is a simple path-finding model using an A-star algorithm to find the shortest path between two points.
 
+In the beginning, each agent (commuter) randomly selects a destination and then identifies the shortest path to the destination. 
 
-The NetLogo links documentation <https://ccl.northwestern.edu/netlogo/docs/programming.html#links> is very comprehensive and worth reading
+The A-star algorithm is used to find the shortest path in terms of distance. The commuters move one node in a tick. When they reach the destination, they stay there for one tick, and then find the next destination and move again.
 
-NetLogo’s Network Extension toolkit <https://github.com/NetLogo/Network-Extension>
+![GUI logo](GMU_Roads_GUI.png)
 
-upto Box 8.3
-
-
-Wilensky, U. (2005). NetLogo Preferential Attachment model. http://ccl.northwestern.edu/netlogo/models/PreferentialAttachment. Center for Connected Learning and Computer-Based Modeling, Northwestern University, Evanston, IL.
+A variation of this can be found in [Appendix A10 - Modeling Transportation and Development for Reston, VA](../AppendixA/Reston).
