@@ -173,8 +173,8 @@ to assign-leaders-extremists
 
   set extremists sublist lst 0 n-extremists-leaders
 
-  foreach extremists [
-    ask ? [
+  foreach extremists [ ?1 ->
+    ask ?1 [
     set anti-vaccine-sentiment 1
     set extremist? True
     set color cyan
@@ -195,15 +195,15 @@ to cyber-spread-extremism
   ;those who are connected with extremist opinion leaders are potential targets
 
   let potential-targets []
-  foreach extremists [
-    ask ? [
+  foreach extremists [ ?1 ->
+    ask ?1 [
       set potential-targets lput link-neighbors potential-targets
     ]
   ]
 
   ;If their anti-vaccination-sentiments are higher than a certain level, they will be turned into extremists under the influence
-  foreach potential-targets [
-    ask ? [
+  foreach potential-targets [ ?1 ->
+    ask ?1 [
       if anti-vaccine-sentiment >= threshold-sentiment [
 
         set extremist? True
@@ -230,15 +230,15 @@ end
 to local-spread-extremism
 
   let potential-targets []
-  foreach extremists [
-    ask ? [
+  foreach extremists [ ?1 ->
+    ask ?1 [
       set potential-targets lput local-neighbors potential-targets
     ]
   ]
 
 
-  foreach potential-targets [
-    ask ? [
+  foreach potential-targets [ ?1 ->
+    ask ?1 [
 
       if anti-vaccine-sentiment >= threshold-sentiment [
         set extremist? True
@@ -512,10 +512,10 @@ end
 GRAPHICS-WINDOW
 224
 10
-744
-551
-25
-25
+742
+529
+-1
+-1
 10.0
 1
 10
@@ -562,7 +562,7 @@ num-nodes-connected
 num-nodes-connected
 0
 2601
-2500
+2500.0
 1
 1
 NIL
@@ -707,7 +707,7 @@ n-extremists-leaders
 n-extremists-leaders
 0
 30
-30
+30.0
 1
 1
 NIL
@@ -1378,9 +1378,8 @@ false
 0
 Polygon -7500403 true true 270 75 225 30 30 225 75 270
 Polygon -7500403 true true 30 75 75 30 270 225 225 270
-
 @#$#@#$#@
-NetLogo 5.3.1
+NetLogo 6.0.1
 @#$#@#$#@
 @#$#@#$#@
 @#$#@#$#@
@@ -1444,7 +1443,6 @@ true
 0
 Line -7500403 true 150 150 90 180
 Line -7500403 true 150 150 210 180
-
 @#$#@#$#@
 0
 @#$#@#$#@
