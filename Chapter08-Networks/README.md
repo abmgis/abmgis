@@ -9,12 +9,12 @@ Networks play a critical role in our lives in terms of physical networks we use 
 
 * **Undirected Network Demo**: A simple example of how to create a undirected network in NetLogo
 * **[Directed Network Demo](Models)**: A simple example of how to create a directed network in NetLogo
-* **Random Network Example**: A simple example of how to create a random networks in NetLogo
+* **[Random Network Example](Models)**: A simple example of how to create a random networks in NetLogo
 * Networks in NetLogo:
-* **Preferential Attachment**: Demostrates how networks can grow where new nodes have a greter chance to be connected to nodes which have a high degree (i.e. number of conncetions
-* **GMU-Roads**: Demonstrates how to use the A-star algorithm, implemented in NetLogo to move agents along a vector road network.
-* **GMU-Social**: Extends the GMU-Roads model to show how one can link social and physical networks 
-* **From Cyber Space Opinion Leaders and the Spread of Anti-Vaccine Extremism to Physical Space Disease Vulnerable Clusters**: 
+* **[Preferential Attachment](Models)**: Demostrates how networks can grow where new nodes have a greter chance to be connected to nodes which have a high degree (i.e. number of conncetions
+* **[GMU-Roads](Models/GMU-Roads)**: Demonstrates how to use the A-star algorithm, implemented in NetLogo to move agents along a vector road network.
+* **[GMU-Social](Models/GMU-Social])**: Extends the GMU-Roads model to show how one can link social and physical networks 
+* **[From Cyber Space Opinion Leaders and the Spread of Anti-Vaccine Extremism to Physical Space Disease Vulnerable Clusters](Models)**: Model explores how does ones online social (i.e. cyber) network influences a persons willingness to be vaccinated, and how does this choice impact the spread of a disease in the physical environment.
 
 ## References
 
