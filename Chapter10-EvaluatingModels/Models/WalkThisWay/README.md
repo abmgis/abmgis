@@ -2,7 +2,7 @@
 
 ## Introduction
 
-The original model was published by Crooks *et al*. (2015) and the model itself was created in MASON ([See Appendix A7 for the orignal MASON model and more details](/abmgis/tree/master/AppendixA/Walk))
+The original model was published by Crooks *et al*. (2015) and the model itself was created in MASON ([See Appendix A7 for the orignal MASON model and more details](/master/AppendixA/Walk))
 
 Here we show the model reimplemented in NetLogo. The aim of the model was to simulate the movement of people as they cross a environment (i.e. a scene) and to calibrate the model against observed pedestrian movement paths derived from trajectory data extracted from CCTV data.
 
