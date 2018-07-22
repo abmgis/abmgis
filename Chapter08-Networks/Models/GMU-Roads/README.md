@@ -10,4 +10,4 @@ The A-star algorithm is used to find the shortest path in terms of distance. The
 
 ![GUI logo](GMU_Roads_GUI.png)
 
-A variation of this can be found in [Appendix A10 - Modeling Transportation and Development for Reston, VA](../AppendixA/Reston).
+A variation of this can be found in [Appendix A10 - Modeling Transportation and Development for Reston, VA](.../AppendixA/Reston).
