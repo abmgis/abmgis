@@ -1,4 +1,4 @@
-# # Appendix A7 - Walk this Way
+# Appendix A7 - Walk this Way
 
 
 
