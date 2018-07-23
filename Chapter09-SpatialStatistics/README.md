@@ -7,9 +7,8 @@ Within this folder you will find:
 * A [powerpoint](./Chapter9.pptx) to act as a teaching aid for this chapter (with links to other online resources)
 * [Resources](./Resources) that can be used to perform some of the statistical analyses described in the chapter. These include:
 
-   * An [R Markdown](./Resources/statistics.Rmd) file that is used to generate all of the graphs and most of the maps
-   * The [ArcMap document](./Resources/GIStar.mxd) that was used to run and display the GI* analysis.
-   * The publicly available [crime data](./Resources/data) that are used to create the examples
-   * 
+   * An [R Markdown](./Resources/statistics.Rmd) file that is used to generate all of the graphs and most of the maps;
+   * The [ArcMap document](./Resources/GIStar.mxd) that was used to run and display the GI* analysis;
+   * The publicly available [crime data](./Resources/data) that are used to create the examples.
 
 
