@@ -22,7 +22,8 @@ fontsize: 10pt
 
 ```{r initialise, message=FALSE, warning=FALSE}
 # Set the working directory to the directory that contains this script
-setwd("~/research/writing/ABM_Book/Writing/Chapter7a/resources/")
+# YOU WILL NEED TO CHANGE THIS SO THAT IT IS CORRECT FOR YOUR COMPUTER
+setwd("/Users/nick/research_not_syncd/git_projects/abmgis/abmgis/Chapter09-SpatialStatistics/Resources")
 
 # Remember the default margins (useful later when they need changing temporarily)
 default.mar <- par("mar")
