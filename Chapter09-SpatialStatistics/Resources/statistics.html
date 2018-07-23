@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+<meta name="author" content="Nick Malleson" />
+
+
+<title>Statistics and Graphs for ABMGIS Book, Chapter 7</title>
+
+<script src="statistics_files/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="statistics_files/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="statistics_files/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="statistics_files/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="statistics_files/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="statistics_files/navigation-1.1/tabsets.js"></script>
+<link href="statistics_files/highlightjs-1.1/default.css" rel="stylesheet" />
+<script src="statistics_files/highlightjs-1.1/highlight.js"></script>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs && document.readyState && document.readyState === "complete") {
+   window.setTimeout(function() {
+      hljs.initHighlighting();
+   }, 0);
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Statistics and Graphs for ABMGIS Book, Chapter 7</h1>
+<h4 class="author"><em>Nick Malleson</em></h4>
+<h4 class="date"><em>26 April, 2017 (06:51)</em></h4>
+
+</div>
+
+<div id="TOC">
+<ul>
+<li><a href="#download-example-data---crime-in-west-yorkshire">Download Example Data - Crime in West Yorkshire</a></li>
+<li><a href="#a-spatial-statistics-rss-r2-srmse">A-Spatial Statistics: RSS, R2, SRMSE</a></li>
+<li><a href="#spatial-statistics">Spatial Statistics</a><ul>
+<li><a href="#visual-comparison">Visual Comparison</a></li>
+<li><a href="#spatial-description---nni-and-k">Spatial Description - <em>NNI</em> and <em>K</em></a></li>
+<li><a href="#lisa-statistics">LISA Statistics</a></li>
+<li><a href="#multi-scale-error-analysis">Multi-Scale Error Analysis</a></li>
+</ul></li>
+</ul>
+</div>
+
+<pre class="r"><code># Set the working directory to the directory that contains this script
+setwd(&quot;~/research/writing/ABM_Book/Writing/Chapter7a/resources/&quot;)
+
+# Remember the default margins (useful later when they need changing temporarily)
+default.mar &lt;- par(&quot;mar&quot;)
+
+library(GISTools)   # A great GIS package; lots of other useful dependencies loaded as well
+library(rgdal)      # For reading shapefiles
+library(hydroGOF)   # Has an rmse() function
+library(pander)     # For printing tables nicely
+library(classInt)   # Jenks natural breaks
+library(spatstat)   # For Ripley&#39;s K and others
+library(spatialEco) # For Nearest Neighbour Indea
+library(raster)     # For generating raster grids
+library(parallel)   # For doing more than one thing at a time (quicker when you have a multi-core CPU)
+library(spdep)      # For GI*</code></pre>
+<p>This document runs the examples of different statistics that can be used to calculate the error between two data sets (i.e. a model output and ‘real’ observed data).</p>
+<div id="download-example-data---crime-in-west-yorkshire" class="section level1">
+<h1>Download Example Data - Crime in West Yorkshire</h1>
+<p>The examples here will make use of three example datasets that are similar, but not identical. These are all the crimes that occurred in West Yorkshire in May 2013, May 2014 and May 2015. They are available to download from <a href="https://data.police.uk/">data.police.uk</a>.</p>
+<p>Henceforth the data will be used as follows:</p>
+<ul>
+<li>May 2014 will be the observed (‘real’) data</li>
+<li>May 2013 will be the hypothetical results from a simulation run (simulated1). These will be randomised a bit so that simulated1 appears to be worse than simulated2</li>
+<li>May 2015 will be the hypothetical results from a different simulation run (simulated2)</li>
+</ul>
+<p>Some of the examples will use statistics that require aggregate data, so the following will also read LSOA boundaries and aggreagte the crime data. These were downloaded from <a href="https://data.gov.uk/dataset/lower_layer_super_output_area_lsoa_boundaries">data.gov.uk</a> and West Yorkshire was extracted separately.</p>
+<pre class="r"><code># Because there is some randomisation in the crime data, only re-read it if this is the first time the script has run.
+# Otherwise the results will be slightly different each time.
+
+if (file.exists(&quot;./statistics.RData&quot;)) {
+  print(&quot;Loading data from RData file&quot;)
+  load(&quot;./statistics.RData&quot;)
+} else {
+  print(&quot;Re-reading data and re-randomising&quot;)
+  # Read crime from May 2015
+  crime.15 &lt;- read.csv(&quot;data/2015-05-west-yorkshire-street.csv&quot;)
+  # Remove the &#39;context&#39; column and get rid of any incomplete rows
+  crime.15$Context &lt;- NULL
+  crime.15 &lt;- crime.15[complete.cases(crime.15),]
+  # Create a spatial polygons data frame
+  crime.15.spdf &lt;- SpatialPointsDataFrame(coords=crime.15[,c(&quot;Longitude&quot;,&quot;Latitude&quot;)], data=crime.15, proj4string = CRS(&quot;+init=epsg:4326&quot;))
+  # Transform that data to the British National Grid coordinate system and rename it &#39;simulated&#39; (i.e. simulated data) 
+  # (Note that the proj4string for BNG came from: http://spatialreference.org/ref/epsg/osgb-1936-british-national-grid/)
+  simulated2 &lt;- spTransform(crime.15.spdf, CRS(&quot;+proj=tmerc +lat_0=49 +lon_0=-2 +k=0.9996012717 +x_0=400000 +y_0=-100000 +ellps=airy +datum=OSGB36 +units=m +no_defs &quot;))
+  
+  
+  # Do the same for from May 2014 and 2013
+  crime.14 &lt;- read.csv(&quot;data/2014-05-west-yorkshire-street.csv&quot;)
+  crime.14$Context &lt;- NULL
+  crime.14 &lt;- crime.14[complete.cases(crime.14),]
+  crime.14.spdf &lt;- SpatialPointsDataFrame(coords=crime.14[,c(&quot;Longitude&quot;,&quot;Latitude&quot;)], data=crime.14, proj4string = CRS(&quot;+init=epsg:4326&quot;))
+  observed &lt;- spTransform(crime.14.spdf, CRS(&quot;+proj=tmerc +lat_0=49 +lon_0=-2 +k=0.9996012717 +x_0=400000 +y_0=-100000 +ellps=airy +datum=OSGB36 +units=m +no_defs &quot;))
+  crime.13 &lt;- read.csv(&quot;data/2013-05-west-yorkshire-street.csv&quot;)
+  crime.13$Context &lt;- NULL
+  crime.13 &lt;- crime.13[complete.cases(crime.13),]
+  crime.13.spdf &lt;- SpatialPointsDataFrame(coords=crime.13[,c(&quot;Longitude&quot;,&quot;Latitude&quot;)], data=crime.13, proj4string = CRS(&quot;+init=epsg:4326&quot;))
+  simulated1 &lt;- spTransform(crime.13.spdf, CRS(&quot;+proj=tmerc +lat_0=49 +lon_0=-2 +k=0.9996012717 +x_0=400000 +y_0=-100000 +ellps=airy +datum=OSGB36 +units=m +no_defs &quot;))
+  
+  # Randomise the simulated1 points by upto NUDGE meters because simulated1 data should be &#39;worse&#39; than simulated2.
+  NUDGE &lt;- 400
+  simulated1@coords[,&#39;Longitude&#39;] &lt;- simulated1@coords[,&#39;Longitude&#39;] + runif(nrow(simulated1), -1*NUDGE, NUDGE)
+  simulated1@coords[,&#39;Latitude&#39;] &lt;- simulated1@coords[,&#39;Latitude&#39;] + runif(nrow(simulated1), -1*NUDGE, NUDGE)
+
+  # Read the LSOA boundaries and LAD boundaries
+  lsoa &lt;- readOGR(dsn = &quot;./data&quot;, &quot;west_yorkshire_lsoa_2011&quot; )
+  lad &lt;- readOGR(&quot;./data/&quot;, &quot;West_Yorkshire_lad_2011&quot;)
+  # The boundaries are British National Grid, but the proj4string varies slightly so use the same one as the crime data
+  proj4string(lsoa) &lt;- CRS(&quot;+proj=tmerc +lat_0=49 +lon_0=-2 +k=0.9996012717 +x_0=400000 +y_0=-100000 +ellps=airy +datum=OSGB36 +units=m +no_defs&quot;)
+  proj4string(lad) &lt;- CRS(&quot;+proj=tmerc +lat_0=49 +lon_0=-2 +k=0.9996012717 +x_0=400000 +y_0=-100000 +ellps=airy +datum=OSGB36 +units=m +no_defs&quot;)
+  
+  # Remove any points from outside of the boundaries (as these will make the maps look funny)
+  
+  observed &lt;- gIntersection(observed, lad, byid=T)
+  simulated1 &lt;- gIntersection(simulated1, lad, byid=T)
+  simulated2 &lt;- gIntersection(simulated2, lad, byid=T)
+  
+  # Now aggregate the points
+  lsoa@data$observed &lt;- 0 # Get the new colum ready
+  lsoa@data$simulated1 &lt;- 0 # Get the new colum ready
+  lsoa@data$simulated2 &lt;- 0 # Get the new colum ready
+  lsoa@data$observed &lt;- poly.counts(observed, lsoa)
+  lsoa@data$simulated1 &lt;- poly.counts(simulated1, lsoa)
+  lsoa@data$simulated2 &lt;- poly.counts(simulated2, lsoa)
+  
+  save.image(file=&quot;statistics.RData&quot;)
+}</code></pre>
+<pre><code>## [1] &quot;Loading data from RData file&quot;</code></pre>
+<p>Do a graph to show the differences between the two data sets</p>
+<pre class="r"><code># Some x values
+x &lt;- lsoa@data$observed
+# Identical y values so that the linear model (line of best fit) is a straight line through the origin
+y &lt;- x 
+# Some &#39;modelled&#39; data with randomness
+y1 &lt;- lsoa@data$simulated1
+# Line of best fit
+m &lt;- lm( y ~ x )
+# Residuals
+res1 &lt;- signif(residuals(m), 5)
+pre1 &lt;- predict(m)
+
+# Another model with some more randomness
+y2 &lt;- lsoa@data$simulated2
+res2 &lt;- signif(residuals(m), 5)
+pre2 &lt;- predict(m)
+
+# Plot the data and regression line
+doplot &lt;- function () {
+  par(mfrow=c(1,2))
+  
+  # First model
+  plot(x,y1, main = &quot;Hypothetical Model A&quot;, xlab=&quot;Observed Data&quot;, ylab=&quot;Simulated Data&quot;, ylim=c(50,210), xlim=c(50,210), cex=1.2)
+  abline(m, col=&quot;red&quot;)
+  # Add residuals
+  segments(x, y1, x, pre1, col=&quot;gray&quot;)
+  
+  # Second model
+  plot(x,y2, main=&quot;Hypothetical Model B&quot;, xlab=&quot;Observed Data&quot;, ylab=&quot;Simulated Data&quot;,  ylim=c(50,210), xlim=c(50,210), cex=1.2)
+  abline(m, col=&quot;red&quot;)
+  segments(x, y2, x, pre2, col=&quot;gray&quot;)
+
+  par(mfrow=c(1,1))
+}
+
+
+
+# Plot for the knitr&#39;d document
+doplot()</code></pre>
+<p><img src="statistics_files/figure-html/plotData-1.png" width="864" /></p>
+<pre class="r"><code># And a pdf for the book:
+pdf(file=&quot;regression_graph.pdf&quot;, width=9, height=5)
+doplot()
+dev.off()</code></pre>
+<pre><code>## quartz_off_screen 
+##                 2</code></pre>
+<p>And also do a map</p>
+<pre class="r"><code>doplot &lt;- function() {
+
+par(mfrow=c(2,3))
+plot(observed, main = &quot;Hypothetical Observed Data&quot;, cex.main=2.0, cex=0.2)
+plot(simulated1, main = &quot;Model A&quot;, cex.main=2.0, cex=0.2)
+plot(simulated1, main = &quot;Model B&quot;, cex.main=2.0, cex=0.2)
+
+choropleth(lsoa, lsoa$observed, border=NA)
+choropleth(lsoa, lsoa$simulated1, border=NA)
+choropleth(lsoa, lsoa$simulated2, border=NA)
+
+} # doPlot
+
+
+
+# Plot for the knitr&#39;d document
+doplot()</code></pre>
+<p><img src="statistics_files/figure-html/mapData-1.png" width="864" /></p>
+<pre class="r"><code># And a pgn for the book:
+png(file=&quot;hypothetical_data.png&quot;, width = 1080, height = 720, units = &quot;px&quot;)
+doplot()
+dev.off()</code></pre>
+<pre><code>## quartz_off_screen 
+##                 2</code></pre>
+</div>
+<div id="a-spatial-statistics-rss-r2-srmse" class="section level1">
+<h1>A-Spatial Statistics: RSS, R2, SRMSE</h1>
+<p>Generate some non-spatial statistics.</p>
+<p>First, <strong>Residual Sum of Squares (RSS)</strong>. This is easy, just add up the square of the differences.</p>
+<pre class="r"><code>rss1 &lt;- sum( ( lsoa@data$observed - lsoa@data$simulated1 )^2 )
+rss2 &lt;- sum( ( lsoa@data$observed - lsoa@data$simulated2 )^2 )</code></pre>
+<p>The RSS for model 1 is and for model 2 is . It appears that model 2 is slightly better.</p>
+<p>Now do <strong>R-Squared</strong>.</p>
+<pre class="r"><code># Get r.squared by creating a linear regression model (with lm()) and calculating R^2 on the model
+r.squared1 &lt;- summary(lm(observed ~ simulated1, data=lsoa@data))$r.squared
+r.squared2 &lt;- summary(lm(observed ~ simulated2, data=lsoa@data))$r.squared</code></pre>
+<p>The R-squared values are and .</p>
+<p>Now do <strong>RMSE</strong>.</p>
+<pre class="r"><code>rmse1 &lt;- rmse(lsoa@data$simulated1, lsoa@data$observed)
+rmse2 &lt;- rmse(lsoa@data$simulated2, lsoa@data$observed)</code></pre>
+<p>The R-squared values are and .</p>
+<p>Summarise those results in a table:</p>
+<pre class="r"><code>pander(
+  data.frame( 
+    &quot;Model&quot; = c(&quot;Simulation 1&quot;, &quot;Simulation 2&quot;),
+    &quot;RSS&quot;  = c(rss1, rss2),
+    &quot;R-squared&quot; = c(r.squared1, r.squared2),
+    &quot;RMSE&quot; = c(rmse1, rmse2)
+  )
+)</code></pre>
+<table style="width:53%;">
+<colgroup>
+<col width="18%" />
+<col width="9%" />
+<col width="16%" />
+<col width="8%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center">Model</th>
+<th align="center">RSS</th>
+<th align="center">R.squared</th>
+<th align="center">RMSE</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">Simulation 1</td>
+<td align="center">107929</td>
+<td align="center">0.8011</td>
+<td align="center">8.818</td>
+</tr>
+<tr class="even">
+<td align="center">Simulation 2</td>
+<td align="center">85758</td>
+<td align="center">0.855</td>
+<td align="center">7.86</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="spatial-statistics" class="section level1">
+<h1>Spatial Statistics</h1>
+<div id="visual-comparison" class="section level2">
+<h2>Visual Comparison</h2>
+<p>Compare points, density, and area counts.</p>
+<pre class="r"><code># Standard shading across all maps
+COLOURS &lt;- brewer.pal(9,&#39;Blues&#39;)
+BREAKS &lt;- 8
+WIDTH &lt;- 17
+WIDTH.png &lt;- 1080
+HEIGHT &lt;- 5
+HEIGHT.png &lt;- 420
+TITLE_SIZE &lt;- 3.0
+
+
+# Points
+
+plot.points &lt;- function() {
+  par(mfrow=c(1,3))
+  plot(lad, lwd=0.5)
+  plot(observed, add=T, pch=1, cex=0.35)
+  title(&quot;Observed Data&quot;, cex.main=TITLE_SIZE)
+  plot(lad, lwd=0.5)
+  plot(simulated1, add=T, pch=1, cex=0.35)
+  title(&quot;Simulated 1&quot;, cex.main=TITLE_SIZE)
+  plot(lad, lwd=0.5)
+  plot(simulated2, add=T, pch=1, cex=0.35)
+  title(&quot;Simulated 2&quot;, cex.main=TITLE_SIZE)
+  par(mfrow=c(1,1))
+}
+
+plot.points() # For knitr</code></pre>
+<p><img src="statistics_files/figure-html/visual.comparison-1.png" width="1440" /></p>
+<pre class="r"><code>pdf(file=&quot;visual-points.pdf&quot;, width=WIDTH, height=HEIGHT) # For the book
+plot.points()
+dev.off()</code></pre>
+<pre><code>## quartz_off_screen 
+##                 2</code></pre>
+<pre class="r"><code># Aggregate
+
+# Calculate shading
+agg.interval &lt;- classIntervals(lsoa@data$observed / poly.areas(lsoa), n = BREAKS, style = &#39;kmeans&#39;)$brks
+agg.shades &lt;- shading(agg.interval, cols=COLOURS)
+
+# Plot aggregate
+plot.aggregate &lt;- function() {
+  par(mfrow=c(1,3))
+  choropleth(lsoa, lsoa@data$observed / poly.areas(lsoa), shading=agg.shades, lty=0)
+  title(&quot;Observed Data&quot;, cex.main=TITLE_SIZE)
+  plot(lad, add=T, lwd=0.5, col=rgb(1, 1, 1, 0.0)) # (White fill and fully transparent)
+  
+  choropleth(lsoa, lsoa@data$simulated1 / poly.areas(lsoa), shading=agg.shades, lty=0)
+  title(&quot;Simulated1&quot;, cex.main=TITLE_SIZE)
+  plot(lad, add=T, lwd=0.5, col=rgb(1, 1, 1, 0.0)) # (White fill and fully transparent)
+  
+  choropleth(lsoa, lsoa@data$simulated2 / poly.areas(lsoa), shading=agg.shades, lty=0)
+  title(&quot;Simulated 2&quot;, cex.main=TITLE_SIZE)
+  plot(lad, add=T, lwd=0.5, col=rgb(1, 1, 1, 0.0)) # (White fill and fully transparent)
+  par(mfrow=c(1,1))
+}
+plot.aggregate() # For knitr</code></pre>
+<p><img src="statistics_files/figure-html/visual.comparison-2.png" width="1440" /></p>
+<pre class="r"><code>#pdf(file=&quot;visual-aggregate.pdf&quot;, width=WIDTH, height=HEIGHT) # For the book
+png(file=&quot;visual-aggregate.png&quot;, width = WIDTH.png, height = HEIGHT.png, units = &quot;px&quot;)
+plot.aggregate() # For knitr
+dev.off()</code></pre>
+<pre><code>## quartz_off_screen 
+##                 2</code></pre>
+<pre class="r"><code># KDE
+
+# Compute KDE
+observed.kde &lt;- kde.points(  pts=observed,   h=3000, n=100, lims=lad) # 250m bandwidth and 100x100 grid
+simulated1.kde &lt;- kde.points(pts=simulated1, h=3000, n=100, lims=lad) # 250m bandwidth and 100x100 grid
+simulated2.kde &lt;- kde.points(pts=simulated2, h=3000, n=100, lims=lad) # 250m bandwidth and 100x100 grid
+# Calculate shading
+kde.interval &lt;- classIntervals(observed.kde@data$kde, n = BREAKS, style = &#39;kmeans&#39;)$brks
+kde.shades &lt;- shading(kde.interval, cols=COLOURS)
+# Plot KDE
+plot.kde &lt;- function() {
+  par(mfrow=c(1,3))
+  # XXXX FIND OUT WHY SHADING DOESN&#39;T WORK
+  masker = poly.outer(simulated1.kde,lad,extend=100)
+  
+  level.plot(observed.kde)
+  add.masking(masker)
+  plot(lad, add=T, lwd=0.5, col=rgb(1, 1, 1, 0.0)) # (White fill and fully transparent)
+  title(&quot;Observed Data&quot;, cex.main=TITLE_SIZE)
+  
+  level.plot(simulated1.kde)
+  add.masking(masker)
+  plot(lad, add=T, lwd=0.5, col=rgb(1, 1, 1, 0.0)) # (White fill and fully transparent)
+  title(&quot;Simulated 1&quot;, cex.main=TITLE_SIZE)
+  
+  level.plot(simulated2.kde)
+  add.masking(masker)
+  plot(lad, add=T, lwd=0.5, col=rgb(1, 1, 1, 0.0)) # (White fill and fully transparent)
+  title(&quot;Simulated 2&quot;, cex.main=TITLE_SIZE)
+  par(mfrow=c(1,1))
+}
+plot.kde() # For knitr</code></pre>
+<pre><code>## Warning in RGEOSBinTopoFunc(spgeom1, spgeom2, byid, id, drop_lower_td,
+## unaryUnion_if_byid_false, : spgeom1 and spgeom2 have different proj4
+## strings</code></pre>
+<p><img src="statistics_files/figure-html/visual.comparison-3.png" width="1440" /></p>
+<pre class="r"><code>pdf(file=&quot;visual-kde.pdf&quot;, width=WIDTH, height=HEIGHT) # For the book
+#png(file=&quot;visual-kde.png&quot;, width = WIDTH.png, height = HEIGHT.png, units = &quot;px&quot;)
+plot.kde() </code></pre>
+<pre><code>## Warning in RGEOSBinTopoFunc(spgeom1, spgeom2, byid, id, drop_lower_td,
+## unaryUnion_if_byid_false, : spgeom1 and spgeom2 have different proj4
+## strings</code></pre>
+<pre class="r"><code>dev.off()</code></pre>
+<pre><code>## quartz_off_screen 
+##                 2</code></pre>
+</div>
+<div id="spatial-description---nni-and-k" class="section level2">
+<h2>Spatial Description - <em>NNI</em> and <em>K</em></h2>
+<pre class="r"><code># NNI
+observed.nni &lt;- nni(observed, win=&#39;extent&#39;)</code></pre>
+<pre><code>## Warning: data contain duplicated points</code></pre>
+<pre class="r"><code>simulated1.nni &lt;- nni(simulated1, win=&#39;extent&#39;)
+simulated2.nni &lt;- nni(simulated2, win=&#39;extent&#39;)</code></pre>
+<pre><code>## Warning: data contain duplicated points</code></pre>
+<pre class="r"><code># K
+observed.k &lt;- Kest(unique.ppp(as.ppp(observed)), correction=&#39;border&#39;)
+simulated1.k &lt;- Kest(unique.ppp(as.ppp(simulated1)), correction=&#39;border&#39;)
+simulated2.k &lt;- Kest(unique.ppp(as.ppp(simulated2)), correction=&#39;border&#39;)
+
+# Plot K
+WIDTH &lt;- 10
+HEIGHT &lt;- 5
+
+plot(observed.k$border, type=&#39;l&#39;, xlab=&quot;d&quot;, ylab=&quot;K(d)&quot;, axes=F)
+axis(1, labels=F)
+axis(2, labels=F)
+title(&quot;Ripley&#39;s K&quot;)
+lines(simulated1.k$border, type=&#39;l&#39;, col=&#39;red&#39;)
+lines(simulated2.k$border, type=&#39;l&#39;, col=&#39;blue&#39;)
+legend(&quot;topleft&quot;, legend = c(&#39;Observed&#39;, &#39;Simulated 1&#39;,&#39;Simulated 2&#39;), col=c(&quot;black&quot;,&quot;red&quot;,&quot;blue&quot;), lty=c(1,1,1))</code></pre>
+<p><img src="statistics_files/figure-html/spatial.description-1.png" width="672" /></p>
+<pre class="r"><code># Now for the book
+pdf(file=&quot;k_function.pdf&quot;, width=WIDTH, height=HEIGHT) 
+plot(observed.k$border, type=&#39;l&#39;, xlab=&quot;d&quot;, ylab=&quot;K(d)&quot;, axes=F)
+axis(1, labels=F)
+axis(2, labels=F)
+title(&quot;Ripley&#39;s K&quot;)
+lines(simulated1.k$border, type=&#39;l&#39;, col=&#39;red&#39;)
+lines(simulated2.k$border, type=&#39;l&#39;, col=&#39;blue&#39;)
+legend(&quot;topleft&quot;, legend = c(&#39;Observed&#39;, &#39;Simulated 1&#39;,&#39;Simulated 2&#39;), col=c(&quot;black&quot;,&quot;red&quot;,&quot;blue&quot;), lty=c(1,1,1))
+dev.off()</code></pre>
+<pre><code>## quartz_off_screen 
+##                 2</code></pre>
+<p>Nearest Neighbour Indices are:</p>
+<ul>
+<li>Observed: 0.2530316, -203.3406287, 0, 183.9911817, 46.5555884</li>
+<li>Simulated1: 0.5326359, -130.2044582, 0, 179.45352, 95.5833864</li>
+<li>Simulated2: 0.2371359, -218.5905778, 0, 175.2310725, 41.553572</li>
+</ul>
+</div>
+<div id="lisa-statistics" class="section level2">
+<h2>LISA Statistics</h2>
+<p>These statistics are used to identify clustering at a local (neighbourhood) level</p>
+<div id="dual-kde" class="section level3">
+<h3>Dual KDE</h3>
+<p>For this simple implementiont of Dual KDE, we simply take the observed KDE maps away from the simulated maps. The most complicated thing about this bit is getting the shading right.</p>
+<pre class="r"><code># Take one away from the other. Slightly convoluted because there is no overloaded &#39;minus&#39; operator
+kde.diff.1 &lt;- simulated1.kde
+kde.diff.1@data &lt;- simulated1.kde@data - observed.kde@data
+kde.diff.2 &lt;- simulated2.kde
+kde.diff.2@data &lt;- simulated2.kde@data - observed.kde@data
+
+# Map them. 
+# Calculate shading. Do this manually. Couldn&#39;t get this to work
+kde.diff.interval &lt;- c(
+ -0.000000002035, # Min
+ -0.000000001017,
+ -0.0000000005085,
+  0,
+  0.0000000002432,
+  0.0000000004864,
+  0.0000000009728 # Max
+)
+
+#kde.diff.interval.shades &lt;- shading(kde.diff.interval, cols=brewer.pal(length(kde.diff.interval)+1,&#39;RdYlBu&#39;))
+
+N.LEVELS &lt;- 10
+kde.diff.interval.shades &lt;- auto.shading(
+  x = kde.diff.1$kde, 
+  n=N.LEVELS, 
+  cols=brewer.pal(n=N.LEVELS+1 , name=&quot;RdYlBu&quot; ),
+  cutter = sdCuts
+  )
+
+plot.kde.diff &lt;- function() {
+  par(mfrow=c(1,2))
+  masker = poly.outer(simulated1.kde,lad,extend=100)
+  
+  level.plot(kde.diff.1, shades=kde.diff.interval.shades)
+  add.masking(masker)
+  plot(lad, add=T, lwd=0.5, col=rgb(1, 1, 1, 0.0)) # (White fill and fully transparent)
+  title(&quot;KDE Differences (Model 1)&quot;, cex.main=TITLE_SIZE)
+  #choro.legend(&quot;topleft&quot;, sh=kde.diff.interval.shades, cex=0.7)
+  
+  level.plot(kde.diff.2, shades=kde.diff.interval.shades)
+  add.masking(masker)
+  plot(lad, add=T, lwd=0.5, col=rgb(1, 1, 1, 0.0)) # (White fill and fully transparent)
+  title(&quot;KDE Differences (Model 2)&quot;, cex.main=TITLE_SIZE)
+}
+
+
+plot.kde.diff() # For knitr</code></pre>
+<pre><code>## Warning in RGEOSBinTopoFunc(spgeom1, spgeom2, byid, id, drop_lower_td,
+## unaryUnion_if_byid_false, : spgeom1 and spgeom2 have different proj4
+## strings</code></pre>
+<p><img src="statistics_files/figure-html/dual.kde-1.png" width="672" /></p>
+<pre class="r"><code>pdf(file=&quot;kde-diff.pdf&quot;, width=WIDTH, height=HEIGHT+1.5) # For the book
+#png(file=&quot;kde-diff..png&quot;, width = WIDTH.png, height = HEIGHT.png, units = &quot;px&quot;)
+plot.kde.diff() </code></pre>
+<pre><code>## Warning in RGEOSBinTopoFunc(spgeom1, spgeom2, byid, id, drop_lower_td,
+## unaryUnion_if_byid_false, : spgeom1 and spgeom2 have different proj4
+## strings</code></pre>
+<pre class="r"><code>dev.off()</code></pre>
+<pre><code>## quartz_off_screen 
+##                 2</code></pre>
+</div>
+<div id="gi" class="section level3">
+<h3>GI*</h3>
+<p>It is possible to coduct Getis-Ord GI* analysis in R, but in this case we have used ArcMap. All the script does here is write out the data so that it can be read by ArcGIS.</p>
+<pre class="r"><code>writeOGR(lsoa, dsn = &quot;gi_star&quot;, layer = &quot;lsoa&quot;, driver = &quot;ESRI Shapefile&quot;, overwrite_layer = TRUE)</code></pre>
+</div>
+</div>
+<div id="multi-scale-error-analysis" class="section level2">
+<h2>Multi-Scale Error Analysis</h2>
+<p>This is the R implementation of the Multiscale Spatial Error Assessment method (aka <a href="http://www.geog.leeds.ac.uk/courses/other/programming/practicals/general/modelling/validation/multiscale-code/2.html">Multiscale Validation</a>).</p>
+<p>It is based on the R code that is being developed as part of the <a href="https://github.com/nickmalleson/spatialtest">spatialtest</a> project. For the most up to date version, see: <a href="https://github.com/nickmalleson/spatialtest/blob/master/r/expanding_cell.Rmd" class="uri">https://github.com/nickmalleson/spatialtest/blob/master/r/expanding_cell.Rmd</a></p>
+<p>The aim of the method is to take two point-patterns, iteratively aggregate the points to cells of increasing size, and calculate the error between the two data sets at the different grid resoultions. See the right images for an example (from <a href="http://www.geog.leeds.ac.uk/courses/other/programming/practicals/general/modelling/validation/multiscale-code/2.html">here</a>).</p>
+<p>Thanks to Lex Comber and Chris Brunsdon for their excellent book ‘R for Spatial Analysis and Mapping’. I got most of the R GIS stuff from there.</p>
+<p>Brunsdon, C and Comber, L (2015) <em>An Introduction to R for Spatial Anaysis and Mapping</em>. Sage</p>
+<div id="define-the-error-assessment-method" class="section level3">
+<h3>Define the Error Assessment Method</h3>
+<p>The following funtion defines the method. See XX for the original code, comments, and documentation. This is a very cut-down version of the function.</p>
+<pre class="r"><code>msea &lt;- function(points1, points2, N=20, the.box=NULL) {
+  if ( proj4string(points1) != proj4string(points2) ) {
+    warning(&quot;The points1 and points2 projections are different, this will probably lead to catastrophic results!&quot;)
+  }
+  # A bounding box around all points
+  bb &lt;- if (is.null(the.box)) bbox(points1 + points1) else the.box
+  results &lt;- list()
+  cell.areas &lt;- c() # The area of the cells
+  num.cells &lt;- c()  # The number of cells in each iteration
+
+  # Create the grids - adapted from Brunsdon &amp; Comber (2015, p150)
+  for (i in seq(1,N)) {
+    cell.width &lt;- (bb[1,2] - bb[1,1]) / i
+    cell.height &lt;- (bb[2,2] - bb[2,1]) / i
+    for (shift in 1:3) { # Shift the grid. 1=no shift, 2=shift vertically, 3=shift horizontally
+      cell.areas &lt;- c(cell.areas, (cell.width * cell.height) ) # Also remember the cell area for later
+      
+      # Variables that change depending on the shift
+      offset &lt;- -1 # The centre of the lower-left cell
+      dimensions &lt;- c(-1,-1) # The number of cells (horizontal, vertical) 
+      
+      if (shift==1) { # This is the grid with no shifting (i.e. it fits perfectly over the study area)
+        
+        centre.x &lt;- bb[1,1] + ( cell.width / 2 )
+        centre.y &lt;- bb[2,1] + ( cell.height / 2 )
+        offset &lt;- c(centre.x, centre.y) #  No offset, the grid will just cover all the points
+        dimensions = c(i,i) # Number of cells. As no shifting, don&#39;t need to add an extra row or column
+        
+      } else if (shift ==2 ) {  # Shift vertically.
+        
+        centre.x &lt;- bb[1,1] + ( cell.width / 2 ) # (same as with no shifting)
+        centre.y &lt;- bb[2,1] #+ ( cell.height / 2 ) # (move grid down by exactly one half the height of a cell)
+        offset &lt;- c(centre.x, centre.y) # Now the grid will start slightly south of the points bounding box
+        dimensions = c(i,i+1) # Number of cells. One extra cell in vertical dimension.
+        
+      } else if (shift == 3) { # Shift horizontally
+        
+        centre.x &lt;- bb[1,1] #+ ( cell.width / 2 ) # (move grid left by exactly one half the heightwidth of a cell)
+        centre.y &lt;- bb[2,1] + ( cell.height / 2 )  # (same as with no shifting)
+        offset &lt;- c(centre.x, centre.y) # Now the grid will start slightly west of the points bounding box
+        dimensions = c(i+1,i) # Number of cells. One extra cell in horizontal dimension.
+        
+      } else {
+        stop(paste(&quot;Internal error in grid shifting - should not have shift:&quot;,shift))
+      }
+        
+      grd &lt;- GridTopology(
+        cellcentre.offset = offset, 
+        cellsize = c(cell.width, cell.height),
+        cells.dim = dimensions
+      )
+      number.of.cells &lt;- dimensions[1] * dimensions[2] # (will change with grid shifting)
+      num.cells &lt;- c(num.cells, number.of.cells) # Remember the number of cells in this iteration
+      spdf &lt;- SpatialPolygonsDataFrame(
+        as.SpatialPolygons.GridTopology(grd),
+        data = data.frame(c(1:number.of.cells)),
+        match.ID = FALSE
+      )
+      proj4string(spdf) &lt;- proj4string(points1)
+      names(spdf) &lt;- &quot;CellID&quot; # Name the column
+      spdf@data$points1 &lt;- poly.counts(points1, spdf)
+      spdf@data$points2 &lt;- poly.counts(points2, spdf)
+      spdf@data$p1.pct &lt;- 100 * spdf@data$points1 / sum(spdf@data$points1 )
+      spdf@data$p2.pct &lt;- 100 * spdf@data$points2 / sum(spdf@data$points2 )
+      spdf@data$diff &lt;- spdf@data$points1 - spdf@data$points2
+      spdf@data$abs.diff &lt;- abs(spdf@data$points1 - spdf@data$points2)
+      spdf@data$abs.pct.diff &lt;- abs(spdf@data$p1.pct - spdf@data$p2.pct)
+      
+      # Store the results, remembering that each iteration will make 3 different results grids due to shifting
+      # (thanks AE for working out this formula!)
+      results[[ shift + (3*(i-1)) ]] &lt;- spdf
+      
+    } # for shifting grids 
+  } # for cell sizes
+  
+  # Now calculte the errors
+  rss &lt;- c() # Residual sum of squares
+  r.squared &lt;- c()
+  rmse &lt;- c()
+  for (i in 1:length(results)) {
+    the.result &lt;- results[[i]]@data # Convenience for referring to the current result we&#39;re looking at
+    rss &lt;-  c(rss, sum( ( the.result$points1 - the.result$points2 )**2 ))
+    r.squared &lt;- c(r.squared, summary(lm(the.result$points1 ~ the.result$points2, data=the.result))$r.squared )
+    rmse &lt;- c(rmse, rmse(the.result$points1, the.result$points2) )
+  }
+  
+  # Return the results
+  r &lt;- list(
+    &quot;results&quot; = results,
+    &quot;cell.areas&quot; =cell.areas,
+    &quot;num.cells&quot; = num.cells,
+    &quot;rss&quot; = rss,
+    &quot;r.squared&quot; = r.squared,
+    &quot;rmse&quot; = rmse
+  )
+  return(r)
+} # function</code></pre>
+<p>Now run the function</p>
+<pre class="r"><code>N &lt;- 20
+box &lt;- bbox(observed+simulated1+simulated2) # Calculate once now to save re-calculating again later
+r1 &lt;- msea(observed, simulated1, N, the.box = box)
+r2 &lt;- msea(observed, simulated2, N, the.box = box)
+
+# Do the above in parallel ? (I&#39;m not sure that the arguments will be passed)
+#library(parallel)
+#no_cores &lt;- detectCores() - 1 # Calculate the number of cores
+#cl &lt;- makeCluster(no_cores) # Initiate cluster
+#msea.results &lt;- parLapply(
+#  cl, 
+#  list(c(observed, simulated1),c(observed,simulated2)),
+#  msea(a,b)
+#  )
+#r1 &lt;- msea.results[[1]]
+#r2 &lt;- msea.results[[2]]</code></pre>
+</div>
+<div id="map-the-results" class="section level3">
+<h3>Map the results</h3>
+<p>(Sanity) check that the shifting has worked for the first five grids</p>
+<pre class="r"><code>par(mfrow=c(5,3))
+par(mar=c(rep(0.1,4)))
+for (i in 1:15) {
+  choropleth(r1$results[[i]], 
+             r1$results[[i]]@data$abs.pct.diff,
+             xlim=c(380000,460000), ylim=c(400000,500000)
+      )
+  points(observed)
+}</code></pre>
+<p><img src="statistics_files/figure-html/check.shifting-1.png" width="672" /></p>
+<pre class="r"><code>par(mar=default.mar)</code></pre>
+<p>For a sanity check: map the total number of points for some different grids</p>
+<pre class="r"><code>par(mfrow=c(4,4))
+
+for (i in 4:1) {
+  index &lt;- round(length(r1$results) / i )
+  choropleth(r1$results[[index]], r1$results[[index]]@data$points1, main=paste(&quot;Observed (model one)&quot;,i))
+}
+
+for (i in 4:1) {
+  index &lt;- round(length(r2$results) / i )
+  choropleth(r2$results[[index]], r2$results[[index]]@data$points1, main=paste(&quot;Observed (model two)&quot;,i))
+}
+
+for (i in 4:1) {
+  index &lt;- round(length(r1$results) / i )
+  choropleth(r1$results[[index]], r1$results[[index]]@data$points2, main=paste(&quot;Simulated1 (model one)&quot;,i))
+}
+
+for (i in 4:1) {
+  index &lt;- round(length(r1$results) / i )
+  choropleth(r2$results[[index]], r2$results[[index]]@data$points2, main=paste(&quot;Simulated2 (model two)&quot;,i))
+}</code></pre>
+<p><img src="statistics_files/figure-html/map.totals-1.png" width="672" /></p>
+<p>Now map the difference in the proportions</p>
+<pre class="r"><code>par(mfrow=c(2,4))
+for (i in 4:1) {
+  index &lt;- round(length(r1$results) / i )
+  choropleth(r1$results[[index]], r1$results[[index]]@data$abs.pct.diff, main=paste(&quot;Abs % Diff (Model 1)&quot;,i))
+}
+for (i in 4:1) {
+  index &lt;- round(length(r2$results) / i )
+  choropleth(r2$results[[index]], r2$results[[index]]@data$abs.pct.diff, main=paste(&quot;Abs % Diff (Model 2)&quot;,i))
+}</code></pre>
+<p><img src="statistics_files/figure-html/map.abs.prop.diff-1.png" width="672" /></p>
+<p>Finally make a fuzzy grid of all results</p>
+<pre class="r"><code>map.fuzzy &lt;- function() { # A function so that it can be run once for knitr, and again for the book
+  par(mfrow=c(1,2))
+  
+  statistic &lt;- &quot;abs.prop.diff&quot; # The statistic to map
+  count &lt;- 1 # Just for the graph labels
+  num.results &lt;- length(r1$results) # The total number of results grids (3 for each resolution, i.r. 3*N)
+  
+  # Shading. I know that model 1 has the greatest difference, so use that one for shading.
+  # Pick the result of the smallest grid as this will probably have the greatest difference
+  # (TODO: work out which model has greatest difference)
+  shades &lt;- shading(
+      classIntervals(r1$results[[length(r1$results)]]@data$abs.pct.diff, n = 8, style = &#39;equal&#39;)$brks,
+      cols=add.alpha(brewer.pal(9,&#39;PuBu&#39;), (1/num.results) ) 
+  )
+  
+  for (r in list(r1,r2)) {
+    last.result &lt;- r$results[[length(r$results)]] # Convenience for list result generated (the smallest grid)
+    
+    # Draw the smallest grid
+    choropleth(
+      last.result, last.result@data$abs.pct.diff,
+      shading = shades,
+      main=paste(&quot;Fuzzy Absoulte difference in \n proportions (Model &quot;,count,&quot;)&quot;, sep=&quot;&quot;),
+      lty=0,
+      cex.main=2.0
+      )
+    
+    # Now do the remainder of them
+    for ( index in 1:(num.results-1)) {
+      choropleth( r$results[[index]], r$results[[index]]@data$abs.pct.diff,
+      shading = shades,
+      lty=0,
+      add=TRUE)
+    }
+    # Add the area boundaries with transparent fill
+    plot(lad, lwd=0.5, col=rgb(1, 1, 1, 0.0), add=T)
+    
+    # Finally the legend
+    #choro.legend(&quot;topleft&quot;, sh=shades, cex=0.7)
+
+    count &lt;- count + 1
+  }
+}
+# Make the figures
+
+map.fuzzy() # For knitr</code></pre>
+<p><img src="statistics_files/figure-html/map.abs.prop.diff.fuzzy-1.png" width="864" /></p>
+<pre class="r"><code>png(filename = &quot;map-fuzzy.png&quot;, width=1080, height=500) # For the book
+map.fuzzy()
+dev.off()</code></pre>
+<pre><code>## quartz_off_screen 
+##                 2</code></pre>
+</div>
+<div id="calculate-and-graph-the-errors" class="section level3">
+<h3>Calculate and graph the errors</h3>
+<p>Calculate the following errors:</p>
+<ul>
+<li><strong>Residual Sum of Squares (RSS)</strong> (This is easy, just add up the square of the differences)</li>
+<li><strong>R-Squared</strong></li>
+<li><strong>Root Mean Square Error (RMSE)</strong></li>
+</ul>
+<p>And then graph them using two difference x axes:</p>
+<ul>
+<li>The number of cells used</li>
+<li>The square area of an individual cell (smallest cells first)</li>
+</ul>
+<pre class="r"><code># Go through all of the results and calculate errors
+
+par(mfrow=c(4,3))
+
+count &lt;- 1
+for (r in list(r1,r2)) {
+  title &lt;- paste(&quot;(M&quot;,count,&quot;)&quot;,sep=&quot;&quot;)
+  plot(x=r$num.cells, y=r$rss, type=&#39;p&#39;, main=paste(&quot;RSS&quot;,title), xlab=&quot;Number of cells&quot;)
+  plot(x=r$num.cells, y=r$r.squared, type=&#39;p&#39;, main=paste(&quot;R-Squared&quot;,title), xlab=&quot;Number of cells&quot;)
+  plot(x=r$num.cells, y=r$rmse, type=&#39;p&#39;, main=paste(&quot;RMSE&quot;,title), xlab=&quot;Number of cells&quot;)
+  plot(x=rev(r$cell.areas), y=r$rss, type=&#39;p&#39;, main=paste(&quot;RSS&quot;,title), xlab=&quot;Square area of a cell&quot;)
+  plot(x=rev(r$cell.areas), y=r$r.squared, type=&#39;p&#39;, main=paste(&quot;R-Squared&quot;,title), xlab=&quot;Square area of a cell&quot;)
+  plot(x=rev(r$cell.areas), y=r$rmse, type=&#39;p&#39;, main=paste(&quot;RMSE&quot;,title), xlab=&quot;Square area of a cell&quot;)
+  count &lt;- count + 1
+}</code></pre>
+<p><img src="statistics_files/figure-html/graphError-1.png" width="672" /></p>
+<p>Finally graph the errors just for Model 2 (the better model).</p>
+<pre class="r"><code>r &lt;- r2
+
+title &lt;- &quot;(Model 2)&quot;
+xlim &lt;- c(5,30)
+xlab &lt;- &quot;Square area of a cell&quot;
+ylab &lt;- &quot;Error&quot;
+
+options(&quot;scipen&quot;=100, &quot;digits&quot;=4) # Encourage standard (rather than scientific) notation
+for (i in 1:2) { # Do once for knitr, once for the book
+  
+  if (i==2) pdf(file = &quot;graph_multiscale_error-final.pdf&quot;,  width=9, height=5 ) # For the book
+  
+  par(mfrow=c(1,2))
+  plot(x=rev(r$cell.areas/1000000), y=r$rss,       type=&#39;p&#39;, main=paste(&quot;RSS&quot;,title), xlab=xlab, xlim=xlim, ylab=ylab)
+  #plot(x=rev(r$cell.areas/1000000), y=r$r.squared, type=&#39;p&#39;, main=paste(&quot;R-Squared&quot;,title), xlab=xlab, xlim=xlim, ylab=ylab)
+  plot(x=rev(r$cell.areas/1000000), y=r$rmse,      type=&#39;p&#39;, main=paste(&quot;RMSE&quot;,title), xlab=xlab, xlim=xlim, ylab=ylab )
+  
+  if (i==2) dev.off()
+}</code></pre>
+<p><img src="statistics_files/figure-html/graph.multiscale.error-final-1.png" width="480" /></p>
+</div>
+</div>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
