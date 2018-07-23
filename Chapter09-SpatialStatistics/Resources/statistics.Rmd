@@ -1,5 +1,5 @@
 ---
-title: "Statistics and Graphs for ABMGIS Book, Chapter 9"
+title: "Statistics and Graphs for ABMGIS Book, Chapter 7"
 author: "Nick Malleson"
 date: '`r format(Sys.time(), "%d %B, %Y (%H:%M)")`'
 output:
@@ -22,8 +22,7 @@ fontsize: 10pt
 
 ```{r initialise, message=FALSE, warning=FALSE}
 # Set the working directory to the directory that contains this script
-# YOU WILL NEED TO CHANGE THIS TO YOUR OWN WORKING DIRECTORY
-setwd("~/research_not_syncd/git_projects/abmgis/abmgis/Chapter09-SpatialStatistics/Resources")
+setwd("~/research/writing/ABM_Book/Writing/Chapter7a/resources/")
 
 # Remember the default margins (useful later when they need changing temporarily)
 default.mar <- par("mar")
