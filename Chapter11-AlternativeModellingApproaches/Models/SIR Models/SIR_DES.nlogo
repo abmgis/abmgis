@@ -292,7 +292,7 @@ The model was inspired by the System Dynamics SIR model in:
 The orignal SD SIR model can be found on the accompanying website: <https://ics.wofford-ecs.org/dynamics/NetLogo> 
 
 
-Yang Zhou (http://geospatialcss.blogspot.com/) has re-built the original System Dynamics SIR model into three different models: Agent-Based Modeling; Cellular Automata; and Discrete Event Simulation.
+Yang Zhou (http://geospatialcss.blogspot.com/) under the guidance of Andrew Crooks has re-built the original System Dynamics SIR model into three different models: Agent-Based Modeling; Cellular Automata; and Discrete Event Simulation.
 
 ## CREDITS AND REFERENCES
 

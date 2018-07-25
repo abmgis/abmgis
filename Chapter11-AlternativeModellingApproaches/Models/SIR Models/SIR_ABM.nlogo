@@ -158,7 +158,7 @@ InfectionRate
 InfectionRate
 0
 0.1
-0.002
+0.022
 .001
 1
 NIL
@@ -235,7 +235,7 @@ dt
 dt
 0
 1
-0.001
+0.102
 0.001
 1
 NIL
@@ -276,7 +276,7 @@ The model was inspired by the System Dynamics SIR model in:
 The orignal SD SIR model can be found on the accompanying website: <https://ics.wofford-ecs.org/dynamics/NetLogo> 
 
 
-Yang Zhou (http://geospatialcss.blogspot.com/) has re-built the original System Dynamics SIR model into three different models: Discrete Event Simualtion; Cellular Automata; and Discrete Event Simulation.
+Yang Zhou (http://geospatialcss.blogspot.com/) under the guidance of Andrew Crooks has re-built the original System Dynamics SIR model into three different models: Discrete Event Simualtion; Cellular Automata; and Discrete Event Simulation.
 
 
 ## CREDITS AND REFERENCES
