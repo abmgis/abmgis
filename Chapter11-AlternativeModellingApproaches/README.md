@@ -29,8 +29,21 @@ More details about these models can be found [here](Models/SIR_Models/README.md)
 
 # Other Modeling Approaches
 
+Due to time and space limations, no models were created for Spatial Interaction or Microsimulation techniques. Readers who wish to gain more hands on experience with these are encouraged to keep reading below. 
+
 ## Spatial Interation Models: 
-For useful set of practicals and material on Spatial Interaction models readers are refered to <https://rpubs.com/adam_dennett> 
+
+For useful set of practicals and material on Spatial Interaction models (and how to implement them using R), readers are refered to <https://rpubs.com/adam_dennett> 
+
 
 ## Microsimulation:
-For useful set
+
+For a good summary of microsimulation, its application and its difference to agent-based models please see:
+
+* **Birkin, M. and Wu, B. (2012)**, ’[A Review of Microsimulation and Hybrid Agent-Based Approaches](https://link.springer.com/chapter/10.1007/978-90-481-8927-4_3)’, in Heppenstall, A., Crooks, A.T., See, L.M. and Batty, M. (eds.), *Agent-based Models of Geographical Systems*, Springer, New York, NY, pp. 51-68.
+
+For a good discussion of spatial microsimulation along with how to use R to carry out such modeling, please see:
+
+* **Lovelace, R. and Dumont, M. (2016)**. *Spatial Microsimulation with R*. CRC Press, Boca Raton, FL. 
+
+More inforation about the book can be found here: <http://spatial-microsim-book.robinlovelace.net/> along with the GitHub repository that hosts the code and data used <https://github.com/Robinlovelace/spatial-microsim-book>.
