@@ -7,7 +7,7 @@ To highlight some other modeling techiques in this foloder you will find three e
 
 1. **A Cellular Automata** (CA) model: The Game of Life model ([CA_LifeModifed_Example.nlogo](CA_LifeModifed_Example.nlogo))
 1. **A Discreet Event Simulation** (DES): [DES_Airport_Queue_Example.nlogo](DES_Airport_Queue_Example.nlogo)
-1. A System Dynamics (SD) Model: [System_Dynamics_Wolf_Sheep_Predation_Example.nlogo](System_Dynamics_Wolf_Sheep_Predation_Example.nlogo)
+1. **A System Dynamics** (SD) Model: [System_Dynamics_Wolf_Sheep_Predation_Example.nlogo](System_Dynamics_Wolf_Sheep_Predation_Example.nlogo)
 
 More details about the models, references and links can be seen below.
 
