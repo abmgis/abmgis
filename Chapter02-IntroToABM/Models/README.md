@@ -6,7 +6,7 @@ This folder includes models referenced in Chapter 2.
 
 **[The Segregation Model](Segregation_modified.nlogo)** was modified by [Brant Horio](https://cos.gmu.edu/cds/people/students/) who added some different movement rules to the one provided by Wilensky (1997). Specifically, the option to move to nearest cell where your preferences are met (rather than just random movement) along with different neighborhood configurations (i.e. Moore or von Neuman) when the agents are calculating their satisfaction) and the option to alter neighborhood cell sizes when looking at areas.
 
-**[The Sugarscape Wealth Distribution model](Sugarscape 3 Wealth Distribution.nlogo)** is the one found with NetLogo. 
+**[The Sugarscape Wealth Distribution model](Sugarscape_3_Wealth_Distribution.nlogo)** is the one found with NetLogo. 
 
 **[The Traffic Basic model](TrafficBasic.nlogo)** is the one found with NetLogo.
 

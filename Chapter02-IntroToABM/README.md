@@ -7,9 +7,9 @@ In this Chapter we introduce the key concepts behind agent-based modelling.  Wha
 Within this folder you will find:
 
 * A [powerpoint](https://github.com/abmgis/abmgis/blob/master/Chapter02-IntroToABM/Chapter2.pptx) to act as a teaching aid for this chapter (with links to other online resources)
-* [A selection of models to highlight core concepts](https://github.com/abmgis/abmgis/tree/master/Chapter02-IntroToABM/Models):
-	* The Segregation Model
-	* The Sugarscape Wealth Distribution model
-	* A Basic Trafic Model.
+* [A selection of models to highlight core concepts](/Models):
+	* [The Segregation Model](/Models/Segregation_modified.nlogo)
+	* [The Sugarscape Wealth Distribution model](/Models/Sugarscape_3_Wealth_Distribution.nlogo)
+	* [A Basic Trafic Model](/Models/TrafficBasic.nlogo).
 
 
