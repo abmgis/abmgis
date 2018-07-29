@@ -11,7 +11,7 @@ Within the folder you will find:
 
 * A simple NetLogo Model ([**ImportRasterSample**](Models/RasterExample)) which demostrates reading in raster data and creating a landscape.
 * Data used for Performing Spatial Operations [on the **Uganda Example**](Models/UgandaExample) and the reuslting agent-based model ([**UgandaExample**](Models/UgandaExample)) 
-* Data used to add a new column to a attribute table that underpins a vector layer using QGIS based on [**Washington DC.**](Data/DC_Data).
+* Data used to add a new column to a attribute table that underpins a vector layer using QGIS based on [**Washington DC.**](Data/DC_Data)
 
 
 ## Links
