@@ -1,5 +1,7 @@
 # Chapter - Evaluating Models: Verification, Calibration, Validation
 
+This folder includes the accompanying resources for the chatper. For full book details, see: [http://www.abmgis.org/](http://www.abmgis.org/).
+
 ## Introduction
 
 Model evaluation is one of the central challenges associated with agent-based models.  A key question that all modellers face is "*how well does this model simulate the phenomenon of interest?*". While there are no universally accepted methods for evaluating agent-based models, researchers often adopt the same three stage process of verification, calibration and validation.  This chapter presents an overview of the methods that are commonly used within each of these stages.  The overarching aim of this chapter is to provide the reader with the knowledge to design their own approach to evaluating agent-based models.

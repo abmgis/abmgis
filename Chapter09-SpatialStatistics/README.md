@@ -1,5 +1,9 @@
 # Chapter 9 - Spatial Statistics
 
+This folder includes the accompanying resources for the chatper. For full book details, see: [http://www.abmgis.org/](http://www.abmgis.org/).
+
+## Introduction 
+
 This chapter presents a range of statistics and algorithms that can be used to compare two spatial data sets. These are important for modelling because, at some point, it will be necessary to compare a model outcome to some real-world data in order to assess how reliable the model is. This chapter examines the statistics themselves, before [Chapter 10](../Chapter10-EvaluatingModels) elaborates on how to evaluate the success of a model more broadly, part of which includes making use of the methods discussed here.
 
 Within this folder you will find:
