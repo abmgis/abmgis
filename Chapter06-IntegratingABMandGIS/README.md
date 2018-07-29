@@ -16,7 +16,7 @@ RainFall_3D
 Rainfall
 Segregation_DC_1
 Segregation_DC_2
-UrbanGrowth
+**[UrbanGrowth](Models/UrbanGrowth)**: The model demonstrates how several raster layers can be used to initialize a NetLogo model and explore urban growth.
 
 ## Links
 
