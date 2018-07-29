@@ -1,23 +1,24 @@
-# Chapter 6 - Integrating Agent-Based Modelling and GIS
+# Rainfall Model
 
 This folder includes the accompanying resources for the chatper. For full book details, see: [http://www.abmgis.org/](http://www.abmgis.org/).
 
 ## Introduction
 
-Building on previous chapters outlining the fundamentals of GIS and agent-based modelling, what are the benefits to linking these approaches? How is this undertaken? This chapter will explain loose and tight coupling, critiquing the relative advantages and disadvantages of both. We present an overview of open source toolkits that can be used for the creation of geographically explicit agent-based models, before providing a critical look at where and how GIS and ABM should be combined, offering practical advice on best practice.
+The model demonstrates how rain can fall from the sky and flow to lower elevations by using a digital elevation model (DEM) -- i.e. a raster map where each pixel represents a height value.
 
-In the folder you will 
+If the water reaches a point from which it can flow no further (e.g. a depression) it pools until the depression if full, at which point the water will flow again. 
 
-An example of setting the patch size of NetLogo [PatchSize](Models/PatchSize)
+Additional features include allowing for erosion and exporting the altered landscape. 
 
-[Pedestrian_Model_Grid](Models/Pedestrian_Model_Grid)
-Pedestrians_Exiting_Building
-RainFall_3D
-Rainfall
-Segregation_DC_1
-Segregation_DC_2
-UrbanGrowth
+Below is the graphical user interface of the model: 
 
-## Links
+<img src="../Images/RainfallGUI.png" alt="GUI of Urban Growth Example" />
 
-NetLogo’s GIS Extension <https://ccl.northwestern.edu/netlogo/docs/gis.html>
+Click on the image below to see a YouTube movie of the model:
+
+[![Rainfall](http://img.youtube.com/vi/cjAW278TVww/0.jpg)](http://www.youtube.com/watch?v=cjAW278TVww "Rainfall")
+
+
+## Similar Models
+
+The model was inspired by the from NetLogo's Grand Canyon Model <http://ccl.northwestern.edu/netlogo/models/GrandCanyon>.

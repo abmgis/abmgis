@@ -8,15 +8,17 @@ Building on previous chapters outlining the fundamentals of GIS and agent-based 
 
 In the folder you will 
 
-An example of setting the patch size of NetLogo [PatchSize](Models/PatchSize)
+* [**PatchSize Model**](Models/PatchSize): An example of setting the patch size of NetLogo 
+* **[UrbanGrowth](Models/UrbanGrowth)**: The model demonstrates how several raster layers can be used to initialize a NetLogo model and explore urban growth.
+* **[Rainfall Model](Models/Rainfall)**: An exaple of how to use a digital elevation model (DEM) and make agents follow a gradient. 
+
 
 [Pedestrian_Model_Grid](Models/Pedestrian_Model_Grid)
 Pedestrians_Exiting_Building
 RainFall_3D
-Rainfall
+Rainfall Model: An exaple of how to use a digital elevation model (DEM) and make agents follow a gradient. 
 Segregation_DC_1
 Segregation_DC_2
-**[UrbanGrowth](Models/UrbanGrowth)**: The model demonstrates how several raster layers can be used to initialize a NetLogo model and explore urban growth.
 
 ## Links
 

@@ -10,7 +10,7 @@ The region of study is Santa Fe, New Mexico. The data was obtained from The Nati
 
 Below is the graphical user interface of the model: 
 
-<img src="../Images/UrbanGrowthGUI.png" alt="GUI of Import Raster Example" />
+<img src="../Images/UrbanGrowthGUI.png" alt="GUI of Urban Growth Example" />
 
 Click on the image below to see a YouTube movie of the model:
 
