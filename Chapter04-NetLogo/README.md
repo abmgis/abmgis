@@ -1,5 +1,9 @@
 # Chapter 4 - Building Agent-Based Models with NetLogo
 
+his folder includes the accompanying resources for the chatper. For full book details, see: [http://www.abmgis.org/](http://www.abmgis.org/).
+
+## Introduction
+
 This chapter provides an overview of the programming language and concepts that are used within [NetLogo](https://ccl.northwestern.edu/netlogo/). NetLogo basics, such as how to create a simple environment, commands and procedures, are presented with step by step instructions for creating a simple model. Following this basic model, more advanced features are introduced. The overall aim of this chapter is to provide an understanding of the main components that make a NetLogo program. Subsequent chapters build upon the basics presented here.
 
 There are two models available in the [Models](./Models) directory:
