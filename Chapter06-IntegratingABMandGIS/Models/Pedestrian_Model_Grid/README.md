@@ -1,23 +1,16 @@
-# Chapter 6 - Integrating Agent-Based Modelling and GIS
+# Pedestrian_Model_Grid
 
 This folder includes the accompanying resources for the chatper. For full book details, see: [http://www.abmgis.org/](http://www.abmgis.org/).
 
 ## Introduction
 
-Building on previous chapters outlining the fundamentals of GIS and agent-based modelling, what are the benefits to linking these approaches? How is this undertaken? This chapter will explain loose and tight coupling, critiquing the relative advantages and disadvantages of both. We present an overview of open source toolkits that can be used for the creation of geographically explicit agent-based models, before providing a critical look at where and how GIS and ABM should be combined, offering practical advice on best practice.
+A simple pedestrian evacuation model where agents are exiting a room, taking the shortest path (calculated via a cost surface). The idea behind this model is to highlight how changing the width of the exit (i.e. the door) can impact on the evacuation time.
 
-In the folder you will 
+Below is the graphical user interface of the model: 
 
-An example of setting the patch size of NetLogo [PatchSize](Models/PatchSize)
+<img src="../Images/Pedestrian_Model_Grid_GUI.png" alt="GUI of Pedestrian Grid Example" />
 
-[Pedestrian_Model_Grid](Models/Pedestrian_Model_Grid)
-Pedestrians_Exiting_Building
-RainFall_3D
-Rainfall
-Segregation_DC_1
-Segregation_DC_2
-UrbanGrowth
 
-## Links
+Click on the image below to see a YouTube movie of the model:
 
-NetLogo’s GIS Extension <https://ccl.northwestern.edu/netlogo/docs/gis.html>
+[![Pedestrian Modeling](http://img.youtube.com/vi/0T3fxV3N_Es/0.jpg)](http://www.youtube.com/watch?v=0T3fxV3N_Es "Pedestrian Modeling")
