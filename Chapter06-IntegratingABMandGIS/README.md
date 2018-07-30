@@ -11,17 +11,15 @@ In the folder you will find:
 * [**PatchSize Model**](Models/PatchSize): An example of setting the patch size of NetLogo 
 * **[UrbanGrowth](Models/UrbanGrowth)**: The model demonstrates how several raster layers can be used to initialize a NetLogo model and explore urban growth.
 * **[Rainfall Model](Models/Rainfall)**: An exaple of how to use a digital elevation model (DEM) and make agents follow a gradient. 
+	* [**RainFall_3D**](Models/RainFall_3D): An extension of the rainfall model to 3D (using Netlogo 3D.
 * [**Pedestrian_Model_Grid**](Models/Pedestrian_Model_Grid): Simple example of agents following a gradient to exit a room.
 * [**Pedestrians_Exiting_Building**](Models/Pedestrians_Exiting_Building): Simple pedestrian evacauion model based on a CAD file.
+* [**Segregation_DC_1**](Models/Segregation_DC_1): Segregation model where each vector polygon is an agent.
+* [**Segregation_DC_2**](Models/Segregation_DC_2): Builds on Segregation_DC_1 but has multiple agents per polygon.
 
-
-
-
-RainFall_3D
-Rainfall Model: An exaple of how to use a digital elevation model (DEM) and make agents follow a gradient. 
-Segregation_DC_1
-Segregation_DC_2
 
 ## Links
 
-NetLogo’s GIS Extension <https://ccl.northwestern.edu/netlogo/docs/gis.html>
+NetLogo’s GIS Extension: <https://ccl.northwestern.edu/netlogo/docs/gis.html>
+
+NetLogo's 3D Information: <https://ccl.northwestern.edu/netlogo/docs/3d.html>

@@ -1,23 +1,24 @@
-# Chapter 6 - Integrating Agent-Based Modelling and GIS
+# Segregation_DC_2
 
 This folder includes the accompanying resources for the chatper. For full book details, see: [http://www.abmgis.org/](http://www.abmgis.org/).
 
 ## Introduction
 
-Building on previous chapters outlining the fundamentals of GIS and agent-based modelling, what are the benefits to linking these approaches? How is this undertaken? This chapter will explain loose and tight coupling, critiquing the relative advantages and disadvantages of both. We present an overview of open source toolkits that can be used for the creation of geographically explicit agent-based models, before providing a critical look at where and how GIS and ABM should be combined, offering practical advice on best practice.
+Builing on [**Segregation_DC_1**](../Segregation_DC_1) this model uses attrubte information from the shapefile's .dbf i.e. the ```POPU``` colum to create agents.
 
-In the folder you will 
+In each tick, agents assess two neighborhoods (local 8 neighbours and also the the polygon its in) and decides whether they are happy or not. If either neighborhood has different neighbors more than the specified percentage to be unhappy, the agent will move to an unoccupied patch in a polygon that is unoccupied or has the same color with it. 
 
-An example of setting the patch size of NetLogo [PatchSize](Models/PatchSize)
+The colors of the polygons are decided by the majority of agents living in each of them, and the colors can change every tick.
 
-[Pedestrian_Model_Grid](Models/Pedestrian_Model_Grid)
-Pedestrians_Exiting_Building
-RainFall_3D
-Rainfall
-Segregation_DC_1
-Segregation_DC_2
-UrbanGrowth
+There are also functions to export the map to a GIS, and to calculate the Moran’s I.
 
-## Links
 
-NetLogo’s GIS Extension <https://ccl.northwestern.edu/netlogo/docs/gis.html>
+
+Below is the graphical user interface of the model: 
+
+<img src="../Images/Segregation_DC_2_GUI.png" alt="GUI of model" />
+
+
+Click on the image below to see a YouTube movie of the model:
+
+[![Segregation_DC_2_GUI](http://img.youtube.com/vi/WR-oQGi7D1Y/0.jpg)](http://www.youtube.com/watch?v=WR-oQGi7D1Y "Segregation_DC_2_GUI")

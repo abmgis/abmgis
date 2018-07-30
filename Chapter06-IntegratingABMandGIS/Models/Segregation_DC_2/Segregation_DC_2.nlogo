@@ -788,6 +788,8 @@ Segregation model in the library.
 
 ## CREDITS AND REFERENCES
 
+The model was created by Yang Zhou (http://geospatialcss.blogspot.com/) under the guidance of Andrew Crooks.
+
 Schelling, Thomas C. "Models of segregation." The American Economic Review (1969): 488-493.
 
 Moran, Patrick AP. "Notes on continuous stochastic phenomena." Biometrika (1950): 17-23.

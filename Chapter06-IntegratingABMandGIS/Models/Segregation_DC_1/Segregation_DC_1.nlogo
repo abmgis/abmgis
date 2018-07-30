@@ -443,6 +443,8 @@ Segregation model in the library.
 
 ## CREDITS AND REFERENCES
 
+The model was created by Yang Zhou (http://geospatialcss.blogspot.com/) under the guidance of Andrew Crooks.
+
 Schelling, T. C. (1969). Models of segregation. The American Economic Review, 488-493.
 @#$#@#$#@
 default
