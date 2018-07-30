@@ -12,12 +12,11 @@ In the folder you will find:
 * **[UrbanGrowth](Models/UrbanGrowth)**: The model demonstrates how several raster layers can be used to initialize a NetLogo model and explore urban growth.
 * **[Rainfall Model](Models/Rainfall)**: An exaple of how to use a digital elevation model (DEM) and make agents follow a gradient. 
 * [**Pedestrian_Model_Grid**](Models/Pedestrian_Model_Grid): Simple example of agents following a gradient to exit a room.
-* 
+* [**Pedestrians_Exiting_Building**](Models/Pedestrians_Exiting_Building): Simple pedestrian evacauion model based on a CAD file.
 
 
 
 
-Pedestrians_Exiting_Building
 RainFall_3D
 Rainfall Model: An exaple of how to use a digital elevation model (DEM) and make agents follow a gradient. 
 Segregation_DC_1

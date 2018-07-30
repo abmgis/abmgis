@@ -412,7 +412,7 @@ TEXTBOX
 21
 464
 171
-548
+570
 Use path frequency map from last trial. After at least one trial, turn this on, click crt-people, and observe if the total time taken decreases. Also compare the plots.
 11
 0.0
