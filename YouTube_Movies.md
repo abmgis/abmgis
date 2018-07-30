@@ -1,10 +1,10 @@
-#YouTube Movies of Models
+# YouTube Movies of Models
 
 This file includes the accompanying resources for the chatper. For full book details, see: [http://www.abmgis.org/](http://www.abmgis.org/).
 
 ## Introduction
 
-We have compiled a series of movies of some of the models introduced or disscssed in the book. [Click here to view the YouTube playlist](https://www.youtube.com/playlist?list=PLzcgS2zZIqJeDpTEkuBSLruiKay7rsjdY) or scroll down and click on any image to view the movie. Note we have also proivded examples of GeoMASON models which were designed to explore the same issue. 
+We have compiled a series of movies of some of the models introduced or disscssed in the book. [Click here to view the YouTube playlist](https://www.youtube.com/playlist?list=PLzcgS2zZIqJeDpTEkuBSLruiKay7rsjdY) or scroll down and click on any image to view the movie. Note we have also proivded some examples of [GeoMASON](https://cs.gmu.edu/~eclab/projects/mason/extensions/geomason/) models which were designed to explore the same issue as the NetLogo models. 
 
 Feel free to use these as you like.
 
@@ -55,13 +55,11 @@ Note this is the orignal model but shows how models from one environment can be 
 
 [![Walk this way Mason](http://img.youtube.com/vi/SQiveVnl8Xk/0.jpg)](http://www.youtube.com/watch?v=SQiveVnl8Xk "Walk this way Mason")
 
+## Segregation_DC_1
 
-
-Used:[]()
-More details: 
-YouTube URL:
-
-https://youtu.be/h-MusK8nlgQ
+* Used:[Chapter 6](Chapter06-IntegratingABMandGIS)
+* More details: [here](Chapter06-IntegratingABMandGIS/Models/Segregation_DC_1)
+* YouTube URL: <https://youtu.be/h-MusK8nlgQ>
 
 [![Segregation Polygon](http://img.youtube.com/vi/h-MusK8nlgQ/0.jpg)](http://www.youtube.com/watch?v=h-MusK8nlgQ "Segregation Polygon")
 
@@ -69,27 +67,33 @@ Used:[]()
 More details: 
 YouTube URL:
 
-https://youtu.be/uU71o8qeyFM
+## Segregation_DC_1 (Created in GeoMASON
 
+Note this is the orignal model built using MASON and GeoMASON but shows how models from one environment can be programmed in another. 
+
+* More details: [here](https://cs.gmu.edu/~eclab/projects/mason/extensions/geomason/)
+* YouTube URL: <https://youtu.be/uU71o8qeyFM>
 
 [![Seg Poly mason](http://img.youtube.com/vi/uU71o8qeyFM/0.jpg)](http://www.youtube.com/watch?v=uU71o8qeyFM "Seg Poly mason")
 
-Used:[]()
-More details: 
-YouTube URL:
+## Segregation_DC_2
 
-https://youtu.be/WR-oQGi7D1Y
+* Used: [Chapter 6](Chapter06-IntegratingABMandGIS)
+* More details: [here](Chapter06-IntegratingABMandGIS/Models/Segregation_DC_2)
+* YouTube URL: <https://youtu.be/WR-oQGi7D1Y>
 
 [![Segregation Points](http://img.youtube.com/vi/WR-oQGi7D1Y/0.jpg)](http://www.youtube.com/watch?v=WR-oQGi7D1Y "Segregation Points")
 
-Used:[]()
-More details: 
-YouTube URL:
+## Segregation_DC_2 (Created in GeoMASON
 
-https://youtu.be/kJAgQTdQX2M
+Note this is the orignal model built using MASON and GeoMASON but shows how models from one environment can be programmed in another. 
+
+* More details: [here](https://cs.gmu.edu/~eclab/projects/mason/extensions/geomason/)
+* YouTube URL: <https://youtu.be/kJAgQTdQX2M>
 
 [![Points in MASON](http://img.youtube.com/vi/kJAgQTdQX2M/0.jpg)](http://www.youtube.com/watch?v=kJAgQTdQX2M "Points in MASON")
 
+## Rainfall 
 
 Used:[]()
 More details: 
@@ -98,8 +102,12 @@ YouTube URL:
 https://youtu.be/xMHFYp2ng3c
 [![Rainfall verification](http://img.youtube.com/vi/xMHFYp2ng3c/0.jpg)](http://www.youtube.com/watch?v=xMHFYp2ng3c "Rainfall verification")
 
+## S
+
 https://youtu.be/hE98wcQfnW8
 [![Water mason](http://img.youtube.com/vi/hE98wcQfnW8/0.jpg)](http://www.youtube.com/watch?v=hE98wcQfnW8 "Water mason")
+
+## S
 
 Used:[]()
 More details: 
@@ -109,12 +117,16 @@ https://youtu.be/cjAW278TVww
 
 [![Rainfall Netlogo](http://img.youtube.com/vi/cjAW278TVww/0.jpg)](http://www.youtube.com/watch?v=cjAW278TVww "Rainfall")
 
+## S
+
 Used:[]()
 More details: 
 YouTube URL:
 
 https://youtu.be/j-fAvxIG9MM
 [![Rainfall example mason](http://img.youtube.com/vi/j-fAvxIG9MM/0.jpg)](http://www.youtube.com/watch?v=j-fAvxIG9MM "Rainfall example mason")
+
+## S
 
 Used:[]()
 More details: 
@@ -124,6 +136,8 @@ https://youtu.be/7O2fSZ0OwuE
 
 [![Rainfall 3D](http://img.youtube.com/vi/7O2fSZ0OwuE/0.jpg)](http://www.youtube.com/watch?v=7O2fSZ0OwuE "Rainfall 3D")
 
+## S
+
 Used:[]()
 More details: 
 YouTube URL:
@@ -132,6 +146,8 @@ https://youtu.be/N7aDSGhvAD8
 
 [![Urban Growth](http://img.youtube.com/vi/N7aDSGhvAD8/0.jpg)](http://www.youtube.com/watch?v=N7aDSGhvAD8 "Urban Growth")
 
+## S
+
 Used:[]()
 More details: 
 YouTube URL:
@@ -139,6 +155,8 @@ YouTube URL:
 https://youtu.be/rxH9ZtvqzMI
 
 [![Urban MASON](http://img.youtube.com/vi/rxH9ZtvqzMI/0.jpg)](http://www.youtube.com/watch?v=rxH9ZtvqzMI "Urban MASON")
+
+## S
 
 Used:[]()
 More details: 
