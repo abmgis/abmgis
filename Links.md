@@ -17,7 +17,7 @@ If you have any suggestions for extra links feel free to drop us a line.
 * [Computers, Environment and Urban Systems](https://www.journals.elsevier.com/computers-environment-and-urban-systems/)
 * [Systems](http://www.mdpi.com/journal/systems)
 * [Environmental Modelling and Software](https://www.journals.elsevier.com/environmental-modelling-and-software)
-* * [ISPRS International Journal of Geo-Information](http://www.mdpi.com/journal/ijgi)
+* [ISPRS International Journal of Geo-Information](http://www.mdpi.com/journal/ijgi)
 
 ## Conferences
 * [GeoComputation](http://www.geocomputation.org/)
@@ -51,8 +51,8 @@ If you have any suggestions for extra links feel free to drop us a line.
 
 ## ABM Platforms that support GIS
 
-NetLogo <https://ccl.northwestern.edu/netlogo/>
-SWARM <http://www.swarm.org/wiki/Main_Page>
-MASON <https://cs.gmu.edu/~eclab/projects/mason/>
-Repast <https://repast.github.io/>
-GAMA <https://gama-platform.github.io/>
+* NetLogo: <https://ccl.northwestern.edu/netlogo/>
+* SWARM: <http://www.swarm.org/wiki/Main_Page>
+* MASON: <https://cs.gmu.edu/~eclab/projects/mason/>
+* Repast: <https://repast.github.io/>
+* GAMA: <https://gama-platform.github.io/>
