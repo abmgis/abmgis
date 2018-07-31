@@ -18,6 +18,11 @@ The repisitory is organised around the format of the book. Whereby in each subdi
 * **Chapter 12**: [Summary and Outlook](Chapter12-SummaryAndOutlook)
 * **Appendix**: [A Gallery of Applications (i.e. example models)](AppendixA)
 
+In addtion we provide:
+
+* [Links to Movies of models used and discussed in the book](YouTube_Movies.md) 
+* [Links to other resources (e.g. journals, conferences, blogs, etc.) for ABM and GIS](Links.md). 
+
 To get full use of the book and what is provided here we suggest you download and install:
 
 * **NetLogo** (Verson 6.0.4) <https://ccl.northwestern.edu/netlogo/download.shtml>
