@@ -712,7 +712,7 @@ map.fuzzy <- function() { # A function so that it can be run once for knitr, and
     choropleth(
       last.result, last.result@data$abs.pct.diff,
       shading = shades,
-      main=paste("Fuzzy Absoulte difference in \n proportions (Model ",label[count],")", sep=""),
+      main=paste("Fuzzy absoulte difference in \n proportions (Model ",label[count],")", sep=""),
       lty=0,
       cex.main=2.0
       )
