@@ -244,7 +244,7 @@ Summarise those results in a table:
 
 pander(
   data.frame( 
-    "Model" = c("Simulation 1", "Simulation 2"),
+    "Model" = c("Model 1", "Model 2"),
     "RSS"  = c(rss1, rss2),
     "R-squared" = c(r.squared1, r.squared2),
     "RMSE" = c(rmse1, rmse2)
@@ -281,10 +281,10 @@ plot.points <- function() {
   title("Observed Data", cex.main=TITLE_SIZE)
   plot(lad, lwd=0.5)
   plot(simulated1, add=T, pch=1, cex=0.35)
-  title("Simulated 1", cex.main=TITLE_SIZE)
+  title("Model A", cex.main=TITLE_SIZE)
   plot(lad, lwd=0.5)
   plot(simulated2, add=T, pch=1, cex=0.35)
-  title("Simulated 2", cex.main=TITLE_SIZE)
+  title("Model B", cex.main=TITLE_SIZE)
   par(mfrow=c(1,1))
 }
 
@@ -308,11 +308,11 @@ plot.aggregate <- function() {
   plot(lad, add=T, lwd=0.5, col=rgb(1, 1, 1, 0.0)) # (White fill and fully transparent)
   
   choropleth(lsoa, lsoa@data$simulated1 / poly.areas(lsoa), shading=agg.shades, lty=0)
-  title("Simulated1", cex.main=TITLE_SIZE)
+  title("Model A", cex.main=TITLE_SIZE)
   plot(lad, add=T, lwd=0.5, col=rgb(1, 1, 1, 0.0)) # (White fill and fully transparent)
   
   choropleth(lsoa, lsoa@data$simulated2 / poly.areas(lsoa), shading=agg.shades, lty=0)
-  title("Simulated 2", cex.main=TITLE_SIZE)
+  title("Model B", cex.main=TITLE_SIZE)
   plot(lad, add=T, lwd=0.5, col=rgb(1, 1, 1, 0.0)) # (White fill and fully transparent)
   par(mfrow=c(1,1))
 }
@@ -346,12 +346,12 @@ plot.kde <- function() {
   level.plot(simulated1.kde)
   add.masking(masker)
   plot(lad, add=T, lwd=0.5, col=rgb(1, 1, 1, 0.0)) # (White fill and fully transparent)
-  title("Simulated 1", cex.main=TITLE_SIZE)
+  title("Model A", cex.main=TITLE_SIZE)
   
   level.plot(simulated2.kde)
   add.masking(masker)
   plot(lad, add=T, lwd=0.5, col=rgb(1, 1, 1, 0.0)) # (White fill and fully transparent)
-  title("Simulated 2", cex.main=TITLE_SIZE)
+  title("Model B", cex.main=TITLE_SIZE)
   par(mfrow=c(1,1))
 }
 plot.kde() # For knitr
@@ -386,7 +386,7 @@ axis(2, labels=F)
 title("Ripley's K")
 lines(simulated1.k$border, type='l', col='red')
 lines(simulated2.k$border, type='l', col='blue')
-legend("topleft", legend = c('Observed', 'Simulated 1','Simulated 2'), col=c("black","red","blue"), lty=c(1,1,1))
+legend("topleft", legend = c('Observed', 'Model A','Model B'), col=c("black","red","blue"), lty=c(1,1,1))
 
 # Now for the book
 pdf(file="k_function.pdf", width=WIDTH, height=HEIGHT) 
@@ -396,7 +396,7 @@ axis(2, labels=F)
 title("Ripley's K")
 lines(simulated1.k$border, type='l', col='red')
 lines(simulated2.k$border, type='l', col='blue')
-legend("topleft", legend = c('Observed', 'Simulated 1','Simulated 2'), col=c("black","red","blue"), lty=c(1,1,1))
+legend("topleft", legend = c('Observed', 'Model A','Model B'), col=c("black","red","blue"), lty=c(1,1,1))
 dev.off()
 
 
@@ -405,8 +405,8 @@ dev.off()
 Nearest Neighbour Indices are:
 
  - Observed: `r observed.nni`
- - Simulated1: `r simulated1.nni`
- - Simulated2: `r simulated2.nni`
+ - Model A: `r simulated1.nni`
+ - Model B: `r simulated2.nni`
  
 
 ## LISA Statistics
