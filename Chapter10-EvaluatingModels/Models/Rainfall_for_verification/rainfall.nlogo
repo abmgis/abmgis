@@ -48,13 +48,13 @@ to setup
   ]
 
 
-  if Maptype = "Cone"[
+  if MapType = "Cone"[
     resize-world -71 71 -71 71
     ask patches [set elevation round distance patch 0 0 ]
     show_elevation
   ]
 
-  if Maptype = "Hill"[
+  if MapType = "Hill"[
     resize-world -71 71 -71 71
     ask patches [set elevation 300 - round distance patch 0 0   ]
     show_elevation
@@ -77,12 +77,12 @@ to show_elevation
     ask patches [set pcolor scale-color black elevation min-e max-e]
     ]
 
-  if Maptype = "Cone" or Maptype = "Hill"[
+  if MapType = "Cone" or Maptype = "Hill"[
       set min-e [elevation] of min-one-of patches [elevation]
       set max-e [elevation] of max-one-of patches [elevation]
       ask patches [set pcolor scale-color black elevation min-e max-e]]
 
-  if Maptype = "Flat" [ask patches [set pcolor black] ]
+  if MapType = "Flat" [ask patches [set pcolor black] ]
 
 
 end
