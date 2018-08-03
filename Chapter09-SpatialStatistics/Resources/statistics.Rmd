@@ -23,7 +23,8 @@ fontsize: 10pt
 ```{r initialise, message=FALSE, warning=FALSE}
 # Set the working directory to the directory that contains this script
 # YOU WILL NEED TO CHANGE THIS SO THAT IT IS CORRECT FOR YOUR COMPUTER
-setwd("/Users/nick/research_not_syncd/git_projects/abmgis/abmgis/Chapter09-SpatialStatistics/Resources")
+setwd("/Users/nick/research_not_syncd/git_projects/abmgis/Chapter09-SpatialStatistics/Resources")
+#setwd("/Users/nick/research_not_syncd/git_projects/abmgis/abmgis/Chapter09-SpatialStatistics/Resources")
 
 # Remember the default margins (useful later when they need changing temporarily)
 default.mar <- par("mar")
@@ -693,6 +694,7 @@ map.fuzzy <- function() { # A function so that it can be run once for knitr, and
   
   statistic <- "abs.prop.diff" # The statistic to map
   count <- 1 # Just for the graph labels
+  label <- c("A","B") # Want the models to be called 'A' and 'B' not '1' and '2'
   num.results <- length(r1$results) # The total number of results grids (3 for each resolution, i.r. 3*N)
   
   # Shading. I know that model 1 has the greatest difference, so use that one for shading.
@@ -710,7 +712,7 @@ map.fuzzy <- function() { # A function so that it can be run once for knitr, and
     choropleth(
       last.result, last.result@data$abs.pct.diff,
       shading = shades,
-      main=paste("Fuzzy Absoulte difference in \n proportions (Model ",count,")", sep=""),
+      main=paste("Fuzzy Absoulte difference in \n proportions (Model ",label[count],")", sep=""),
       lty=0,
       cex.main=2.0
       )
