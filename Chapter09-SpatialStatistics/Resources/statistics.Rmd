@@ -418,7 +418,7 @@ These statistics are used to identify clustering at a local (neighbourhood) leve
 
 For this simple implementiont of Dual KDE, we simply take the observed KDE maps away from the simulated maps. The most complicated thing about this bit is getting the shading right.
 
-```{r dual.kde, width=15, height=5}
+```{r dual.kde, width=10, height=5}
 
 # Take one away from the other. Slightly convoluted because there is no overloaded 'minus' operator
 kde.diff.1 <- simulated1.kde
@@ -466,7 +466,7 @@ plot.kde.diff <- function() {
 
 
 plot.kde.diff() # For knitr
-pdf(file="kde-diff.pdf", width=WIDTH, height=HEIGHT+1.5) # For the book
+pdf(file="kde-diff.pdf", width=WIDTH, height=HEIGHT) # For the book
 #png(file="kde-diff..png", width = WIDTH.png, height = HEIGHT.png, units = "px")
 plot.kde.diff() 
 dev.off()
@@ -778,7 +778,7 @@ for (r in list(r1,r2)) {
 
 Finally graph the errors just for Model 2 (the better model).
 
-```{r graph.multiscale.error-final, fig.width=5, fig.height=9}
+```{r graph.multiscale.error-final, fig.width=9, fig.height=5}
 r <- r2
 
 title <- "(Model B)"
