@@ -214,7 +214,7 @@ rss2 <- sum( ( lsoa@data$observed - lsoa@data$simulated2 )^2 )
 
 ```
 
-The RSS for model 1 is `r print(rss1)` and for model 2 is `r print(rss2)`. It appears that model 2 is slightly better.
+The RSS for model A is `r print(rss1)` and for model B is `r print(rss2)`. It appears that model B is slightly better.
 
 Now do **R-Squared**.
 
@@ -244,7 +244,7 @@ Summarise those results in a table:
 
 pander(
   data.frame( 
-    "Model" = c("Model 1", "Model 2"),
+    "Model" = c("Model A", "Model B"),
     "RSS"  = c(rss1, rss2),
     "R-squared" = c(r.squared1, r.squared2),
     "RMSE" = c(rmse1, rmse2)
@@ -269,7 +269,7 @@ WIDTH <- 17
 WIDTH.png <- 1080
 HEIGHT <- 5
 HEIGHT.png <- 420
-TITLE_SIZE <- 3.0
+TITLE_SIZE <- 1.0
 
 
 # Points
@@ -454,13 +454,13 @@ plot.kde.diff <- function() {
   level.plot(kde.diff.1, shades=kde.diff.interval.shades)
   add.masking(masker)
   plot(lad, add=T, lwd=0.5, col=rgb(1, 1, 1, 0.0)) # (White fill and fully transparent)
-  title("KDE Differences (Model 1)", cex.main=TITLE_SIZE)
+  title("KDE Differences (Model A)", cex.main=TITLE_SIZE)
   #choro.legend("topleft", sh=kde.diff.interval.shades, cex=0.7)
   
   level.plot(kde.diff.2, shades=kde.diff.interval.shades)
   add.masking(masker)
   plot(lad, add=T, lwd=0.5, col=rgb(1, 1, 1, 0.0)) # (White fill and fully transparent)
-  title("KDE Differences (Model 2)", cex.main=TITLE_SIZE)
+  title("KDE Differences (Model B)", cex.main=TITLE_SIZE)
 }
 
 
@@ -676,11 +676,11 @@ Now map the difference in the proportions
 par(mfrow=c(2,4))
 for (i in 4:1) {
   index <- round(length(r1$results) / i )
-  choropleth(r1$results[[index]], r1$results[[index]]@data$abs.pct.diff, main=paste("Abs % Diff (Model 1)",i))
+  choropleth(r1$results[[index]], r1$results[[index]]@data$abs.pct.diff, main=paste("Abs % Diff (Model A)",i))
 }
 for (i in 4:1) {
   index <- round(length(r2$results) / i )
-  choropleth(r2$results[[index]], r2$results[[index]]@data$abs.pct.diff, main=paste("Abs % Diff (Model 2)",i))
+  choropleth(r2$results[[index]], r2$results[[index]]@data$abs.pct.diff, main=paste("Abs % Diff (Model B)",i))
 }
 ```
 
@@ -779,7 +779,7 @@ Finally graph the errors just for Model 2 (the better model).
 ```{r graph.multiscale.error-final, fig.width=5, fig.height=9}
 r <- r2
 
-title <- "(Model 2)"
+title <- "(Model B)"
 xlim <- c(5,30)
 xlab <- "Square area of a cell"
 ylab <- "Error"
@@ -799,5 +799,10 @@ for (i in 1:2) { # Do once for knitr, once for the book
 
 ```
 
+Save all the data so we can just reload if we want to
+
+```{r save.final}
+save.image("./statistics_final.RData")
+```
 
 

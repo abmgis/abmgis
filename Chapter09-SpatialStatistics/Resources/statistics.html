@@ -4,7 +4,7 @@
 
 <head>
 
-<meta charset="utf-8">
+<meta charset="utf-8" />
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
 
@@ -21,8 +21,8 @@
 <script src="statistics_files/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="statistics_files/bootstrap-3.3.5/shim/respond.min.js"></script>
 <script src="statistics_files/navigation-1.1/tabsets.js"></script>
-<link href="statistics_files/highlightjs-1.1/default.css" rel="stylesheet" />
-<script src="statistics_files/highlightjs-1.1/highlight.js"></script>
+<link href="statistics_files/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="statistics_files/highlightjs-9.12.0/highlight.js"></script>
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css">
@@ -31,10 +31,12 @@
   }
 </style>
 <script type="text/javascript">
-if (window.hljs && document.readyState && document.readyState === "complete") {
-   window.setTimeout(function() {
-      hljs.initHighlighting();
-   }, 0);
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
 }
 </script>
 
@@ -89,6 +91,9 @@ img {
 .tabbed-pane {
   padding-top: 12px;
 }
+.html-widget {
+  margin-bottom: 20px;
+}
 button.code-folding-btn:focus {
   outline: none;
 }
@@ -118,7 +123,7 @@ $(document).ready(function () {
 
 <h1 class="title toc-ignore">Statistics and Graphs for ABMGIS Book, Chapter 7</h1>
 <h4 class="author"><em>Nick Malleson</em></h4>
-<h4 class="date"><em>26 April, 2017 (06:51)</em></h4>
+<h4 class="date"><em>03 August, 2018 (10:20)</em></h4>
 
 </div>
 
@@ -136,7 +141,8 @@ $(document).ready(function () {
 </div>
 
 <pre class="r"><code># Set the working directory to the directory that contains this script
-setwd(&quot;~/research/writing/ABM_Book/Writing/Chapter7a/resources/&quot;)
+# YOU WILL NEED TO CHANGE THIS SO THAT IT IS CORRECT FOR YOUR COMPUTER
+setwd(&quot;/Users/nick/research_not_syncd/git_projects/abmgis/abmgis/Chapter09-SpatialStatistics/Resources&quot;)
 
 # Remember the default margins (useful later when they need changing temporarily)
 default.mar &lt;- par(&quot;mar&quot;)
@@ -315,7 +321,7 @@ rmse2 &lt;- rmse(lsoa@data$simulated2, lsoa@data$observed)</code></pre>
 <p>Summarise those results in a table:</p>
 <pre class="r"><code>pander(
   data.frame( 
-    &quot;Model&quot; = c(&quot;Simulation 1&quot;, &quot;Simulation 2&quot;),
+    &quot;Model&quot; = c(&quot;Model 1&quot;, &quot;Model 2&quot;),
     &quot;RSS&quot;  = c(rss1, rss2),
     &quot;R-squared&quot; = c(r.squared1, r.squared2),
     &quot;RMSE&quot; = c(rmse1, rmse2)
@@ -323,10 +329,10 @@ rmse2 &lt;- rmse(lsoa@data$simulated2, lsoa@data$observed)</code></pre>
 )</code></pre>
 <table style="width:53%;">
 <colgroup>
-<col width="18%" />
-<col width="9%" />
+<col width="13%" />
+<col width="12%" />
 <col width="16%" />
-<col width="8%" />
+<col width="9%" />
 </colgroup>
 <thead>
 <tr class="header">
@@ -338,13 +344,13 @@ rmse2 &lt;- rmse(lsoa@data$simulated2, lsoa@data$observed)</code></pre>
 </thead>
 <tbody>
 <tr class="odd">
-<td align="center">Simulation 1</td>
+<td align="center">Model 1</td>
 <td align="center">107929</td>
 <td align="center">0.8011</td>
 <td align="center">8.818</td>
 </tr>
 <tr class="even">
-<td align="center">Simulation 2</td>
+<td align="center">Model 2</td>
 <td align="center">85758</td>
 <td align="center">0.855</td>
 <td align="center">7.86</td>
@@ -376,10 +382,10 @@ plot.points &lt;- function() {
   title(&quot;Observed Data&quot;, cex.main=TITLE_SIZE)
   plot(lad, lwd=0.5)
   plot(simulated1, add=T, pch=1, cex=0.35)
-  title(&quot;Simulated 1&quot;, cex.main=TITLE_SIZE)
+  title(&quot;Model A&quot;, cex.main=TITLE_SIZE)
   plot(lad, lwd=0.5)
   plot(simulated2, add=T, pch=1, cex=0.35)
-  title(&quot;Simulated 2&quot;, cex.main=TITLE_SIZE)
+  title(&quot;Model B&quot;, cex.main=TITLE_SIZE)
   par(mfrow=c(1,1))
 }
 
@@ -404,11 +410,11 @@ plot.aggregate &lt;- function() {
   plot(lad, add=T, lwd=0.5, col=rgb(1, 1, 1, 0.0)) # (White fill and fully transparent)
   
   choropleth(lsoa, lsoa@data$simulated1 / poly.areas(lsoa), shading=agg.shades, lty=0)
-  title(&quot;Simulated1&quot;, cex.main=TITLE_SIZE)
+  title(&quot;Model A&quot;, cex.main=TITLE_SIZE)
   plot(lad, add=T, lwd=0.5, col=rgb(1, 1, 1, 0.0)) # (White fill and fully transparent)
   
   choropleth(lsoa, lsoa@data$simulated2 / poly.areas(lsoa), shading=agg.shades, lty=0)
-  title(&quot;Simulated 2&quot;, cex.main=TITLE_SIZE)
+  title(&quot;Model B&quot;, cex.main=TITLE_SIZE)
   plot(lad, add=T, lwd=0.5, col=rgb(1, 1, 1, 0.0)) # (White fill and fully transparent)
   par(mfrow=c(1,1))
 }
@@ -443,12 +449,12 @@ plot.kde &lt;- function() {
   level.plot(simulated1.kde)
   add.masking(masker)
   plot(lad, add=T, lwd=0.5, col=rgb(1, 1, 1, 0.0)) # (White fill and fully transparent)
-  title(&quot;Simulated 1&quot;, cex.main=TITLE_SIZE)
+  title(&quot;Model A&quot;, cex.main=TITLE_SIZE)
   
   level.plot(simulated2.kde)
   add.masking(masker)
   plot(lad, add=T, lwd=0.5, col=rgb(1, 1, 1, 0.0)) # (White fill and fully transparent)
-  title(&quot;Simulated 2&quot;, cex.main=TITLE_SIZE)
+  title(&quot;Model B&quot;, cex.main=TITLE_SIZE)
   par(mfrow=c(1,1))
 }
 plot.kde() # For knitr</code></pre>
@@ -489,7 +495,7 @@ axis(2, labels=F)
 title(&quot;Ripley&#39;s K&quot;)
 lines(simulated1.k$border, type=&#39;l&#39;, col=&#39;red&#39;)
 lines(simulated2.k$border, type=&#39;l&#39;, col=&#39;blue&#39;)
-legend(&quot;topleft&quot;, legend = c(&#39;Observed&#39;, &#39;Simulated 1&#39;,&#39;Simulated 2&#39;), col=c(&quot;black&quot;,&quot;red&quot;,&quot;blue&quot;), lty=c(1,1,1))</code></pre>
+legend(&quot;topleft&quot;, legend = c(&#39;Observed&#39;, &#39;Model A&#39;,&#39;Model B&#39;), col=c(&quot;black&quot;,&quot;red&quot;,&quot;blue&quot;), lty=c(1,1,1))</code></pre>
 <p><img src="statistics_files/figure-html/spatial.description-1.png" width="672" /></p>
 <pre class="r"><code># Now for the book
 pdf(file=&quot;k_function.pdf&quot;, width=WIDTH, height=HEIGHT) 
@@ -499,15 +505,15 @@ axis(2, labels=F)
 title(&quot;Ripley&#39;s K&quot;)
 lines(simulated1.k$border, type=&#39;l&#39;, col=&#39;red&#39;)
 lines(simulated2.k$border, type=&#39;l&#39;, col=&#39;blue&#39;)
-legend(&quot;topleft&quot;, legend = c(&#39;Observed&#39;, &#39;Simulated 1&#39;,&#39;Simulated 2&#39;), col=c(&quot;black&quot;,&quot;red&quot;,&quot;blue&quot;), lty=c(1,1,1))
+legend(&quot;topleft&quot;, legend = c(&#39;Observed&#39;, &#39;Model A&#39;,&#39;Model B&#39;), col=c(&quot;black&quot;,&quot;red&quot;,&quot;blue&quot;), lty=c(1,1,1))
 dev.off()</code></pre>
 <pre><code>## quartz_off_screen 
 ##                 2</code></pre>
 <p>Nearest Neighbour Indices are:</p>
 <ul>
 <li>Observed: 0.2530316, -203.3406287, 0, 183.9911817, 46.5555884</li>
-<li>Simulated1: 0.5326359, -130.2044582, 0, 179.45352, 95.5833864</li>
-<li>Simulated2: 0.2371359, -218.5905778, 0, 175.2310725, 41.553572</li>
+<li>Model A: 0.5326359, -130.2044582, 0, 179.45352, 95.5833864</li>
+<li>Model B: 0.2371359, -218.5905778, 0, 175.2310725, 41.553572</li>
 </ul>
 </div>
 <div id="lisa-statistics" class="section level2">
@@ -886,7 +892,7 @@ $(document).ready(function () {
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
     document.getElementsByTagName("head")[0].appendChild(script);
   })();
 </script>
