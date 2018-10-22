@@ -1,6 +1,6 @@
 # YouTube Movies of Models
 
-This file includes the accompanying resources for the chatper. For full book details, see: [http://www.abmgis.org/](http://www.abmgis.org/).
+This file includes the accompanying resources for the chatpers. For full book details, see: [http://www.abmgis.org/](http://www.abmgis.org/).
 
 ## Introduction
 
