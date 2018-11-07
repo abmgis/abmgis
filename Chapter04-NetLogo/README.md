@@ -14,6 +14,11 @@ There are two models available in the [Models](./Models) directory:
 
 <img src="./Models/advanced_model_figure.png" alt="A picture of the advanced model" />
 
+## Tutorial / Lecture Slides
 
-For full book details, see: [http://www.abmgis.org/](http://www.abmgis.org/).
+There are lecture slides available for this chapter: [Chapter4 Lecture Slides](./Chapter4.pptx).
+
+As this chapter is largely a tutorial, there are not _separate_ tutorial slides. Instead, just start at the beginning of Chapter 4 and work your way through the tutorial there.
+
+For full details about the book, see: [http://www.abmgis.org/](http://www.abmgis.org/).
 
