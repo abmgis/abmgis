@@ -16,7 +16,7 @@ There are two models available in the [Models](./Models) directory:
 
 ## Tutorial / Lecture Slides
 
-There are lecture slides available for this chapter: [Chapter4 Lecture Slides](./Chapter4.pptx).
+There are lecture slides available for this chapter: [Chapter4 Lecture Slides](./Chapter4-LectureAndTutorial.pptx).
 
 As this chapter is largely a tutorial, there are not _separate_ tutorial slides. Instead, just start at the beginning of Chapter 4 and work your way through the tutorial there.
 
