@@ -16,9 +16,9 @@ There are two models available in the [Models](./Models) directory:
 
 ## Tutorial / Lecture Slides
 
-There are lecture slides available for this chapter: [Chapter4 Lecture Slides](./Chapter4-LectureAndTutorial.pptx).
+The lecture slides for this chapter are available: [Chapter4 Lecture Slides](./Chapter4-Lecture.pptx).
 
-As this chapter is largely a tutorial, there are not _separate_ tutorial slides. Instead, just start at the beginning of Chapter 4 and work your way through the tutorial there.
+The tutorial is available, in full, in Chapter 4 of the book.
 
 For full details about the book, see: [http://www.abmgis.org/](http://www.abmgis.org/).
 
