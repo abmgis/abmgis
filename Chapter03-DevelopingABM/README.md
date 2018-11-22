@@ -14,7 +14,7 @@ The lecture slides for this chapter are available: [Chapter3 Lecture Slides](./C
 
 A tutorial for this chapter, where we apply the design process outlined fully in the book, can be found here: [Chapter3 Tutorial](./Chapter3_Tutorial.pptx). This tutorial involves the development of the [Segregation Model](Models/Segregation.nlogo), shown below.
 
-<img src="./Models/Segregation_screenshot.png" alt="Segregation ABM" />
+<img src="./Models/Segregation_screenshot" alt="Segregation ABM" />
 
 For full details about the book, see: [http://www.abmgis.org/](http://www.abmgis.org/).
 
