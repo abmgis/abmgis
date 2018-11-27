@@ -177,7 +177,7 @@ dev.off()
 
 And also do a map
 
-```{r mapData, fig.width=11, fig.height=5}
+```{r mapData, fig.width=11, fig.height=6}
 
 doplot <- function() {
 
