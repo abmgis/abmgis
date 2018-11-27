@@ -127,7 +127,7 @@ if (file.exists("./statistics.RData")) {
 
 Do a graph to show the differences between the two data sets
 
-```{r plotData, fig.width=9, fig.height=5}
+```{r plotData, fig.width=11, fig.height=6}
 # Some x values
 x <- lsoa@data$observed
 # Identical y values so that the linear model (line of best fit) is a straight line through the origin
@@ -177,7 +177,7 @@ dev.off()
 
 And also do a map
 
-```{r mapData, fig.width=9, fig.height=5}
+```{r mapData, fig.width=11, fig.height=5}
 
 doplot <- function() {
 
@@ -198,7 +198,7 @@ choropleth(lsoa, lsoa$simulated2, border=NA)
 doplot()
 
 # And a pgn for the book:
-png(file="figures/hypothetical_data.png", width = 1080, height = 720, units = "px")
+png(file="figures/hypothetical_data.png", width = 1080, height = 600, units = "px")
 doplot()
 dev.off()
 
