@@ -169,7 +169,7 @@ doplot <- function () {
 doplot()
 
 # And a pdf for the book:
-pdf(file="regression_graph.pdf", width=9, height=5)
+pdf(file="figures/regression_graph.pdf", width=9, height=5)
 doplot()
 dev.off()
 
