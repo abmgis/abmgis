@@ -1,5 +1,5 @@
 ---
-title: "Statistics and Graphs for ABMGIS Book, Chapter 7"
+title: "Statistics and Graphs for ABMGIS Book, Chapter 9"
 author: "Nick Malleson"
 date: '`r format(Sys.time(), "%d %B, %Y (%H:%M)")`'
 output:
@@ -19,6 +19,10 @@ output:
     number_sections: yes
 fontsize: 10pt
 ---
+
+# Statistics and Graphs for ABMGIS Book, Chapter 9
+
+Initialise the required R libraries.
 
 ```{r initialise, message=FALSE, warning=FALSE}
 # Set the working directory to the directory that contains this script
@@ -194,7 +198,7 @@ choropleth(lsoa, lsoa$simulated2, border=NA)
 doplot()
 
 # And a pgn for the book:
-png(file="hypothetical_data.png", width = 1080, height = 720, units = "px")
+png(file="figures/hypothetical_data.png", width = 1080, height = 720, units = "px")
 doplot()
 dev.off()
 
@@ -290,7 +294,7 @@ plot.points <- function() {
 }
 
 plot.points() # For knitr
-pdf(file="visual-points.pdf", width=WIDTH, height=HEIGHT) # For the book
+pdf(file="figures/visual-points.pdf", width=WIDTH, height=HEIGHT) # For the book
 plot.points()
 dev.off()
 
@@ -319,8 +323,8 @@ plot.aggregate <- function() {
 }
 plot.aggregate() # For knitr
 
-#pdf(file="visual-aggregate.pdf", width=WIDTH, height=HEIGHT) # For the book
-png(file="visual-aggregate.png", width = WIDTH.png, height = HEIGHT.png, units = "px")
+#pdf(file="figures/visual-aggregate.pdf", width=WIDTH, height=HEIGHT) # For the book
+png(file="figures/visual-aggregate.png", width = WIDTH.png, height = HEIGHT.png, units = "px")
 plot.aggregate() # For knitr
 dev.off()
 
@@ -356,8 +360,8 @@ plot.kde <- function() {
   par(mfrow=c(1,1))
 }
 plot.kde() # For knitr
-pdf(file="visual-kde.pdf", width=WIDTH, height=HEIGHT) # For the book
-#png(file="visual-kde.png", width = WIDTH.png, height = HEIGHT.png, units = "px")
+pdf(file="figures/visual-kde.pdf", width=WIDTH, height=HEIGHT) # For the book
+#png(file="figures/visual-kde.png", width = WIDTH.png, height = HEIGHT.png, units = "px")
 plot.kde() 
 dev.off()
 
@@ -390,7 +394,7 @@ lines(simulated2.k$border, type='l', col='blue')
 legend("topleft", legend = c('Observed', 'Model A','Model B'), col=c("black","red","blue"), lty=c(1,1,1))
 
 # Now for the book
-pdf(file="k_function.pdf", width=WIDTH, height=HEIGHT) 
+pdf(file="figures/k_function.pdf", width=WIDTH, height=HEIGHT) 
 plot(observed.k$border, type='l', xlab="d", ylab="K(d)", axes=F)
 axis(1, labels=F)
 axis(2, labels=F)
@@ -466,8 +470,8 @@ plot.kde.diff <- function() {
 
 
 plot.kde.diff() # For knitr
-pdf(file="kde-diff.pdf", width=WIDTH, height=HEIGHT) # For the book
-#png(file="kde-diff..png", width = WIDTH.png, height = HEIGHT.png, units = "px")
+pdf(file="figures/kde-diff.pdf", width=WIDTH, height=HEIGHT) # For the book
+#png(file="figures/kde-diff..png", width = WIDTH.png, height = HEIGHT.png, units = "px")
 plot.kde.diff() 
 dev.off()
 
@@ -736,7 +740,7 @@ map.fuzzy <- function() { # A function so that it can be run once for knitr, and
 # Make the figures
 
 map.fuzzy() # For knitr
-png(filename = "map-fuzzy.png", width=1080, height=500) # For the book
+png(filename = "figures/map-fuzzy.png", width=1080, height=500) # For the book
 map.fuzzy()
 dev.off()
 
@@ -789,7 +793,7 @@ ylab <- "Error"
 options("scipen"=100, "digits"=4) # Encourage standard (rather than scientific) notation
 for (i in 1:2) { # Do once for knitr, once for the book
   
-  if (i==2) pdf(file = "graph_multiscale_error-final.pdf",  width=9, height=5 ) # For the book
+  if (i==2) pdf(file = "figures/graph_multiscale_error-final.pdf",  width=9, height=5 ) # For the book
   
   par(mfrow=c(1,2))
   plot(x=rev(r$cell.areas/1000000), y=r$rss,       type='p', main=paste("RSS",title), xlab=xlab, xlim=xlim, ylab=ylab)
