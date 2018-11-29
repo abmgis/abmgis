@@ -8,3 +8,10 @@
 # Vim swap files
 *.swp
 
+# Temporary pptx files
+**$Chapter*.pptx
+
+# R cache files
+cache/
+
+
