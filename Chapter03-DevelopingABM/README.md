@@ -10,7 +10,7 @@ This chapter will introduce the core concepts and frameworks that can be used to
 
 ## Tutorial / Lecture Slides
 
-The lecture slides for this chapter are available: [Chapter3 Lecture Slides](./Chapter3.pptx).
+The lecture slides for this chapter are available here: [Chapter3 Lecture Slides](./Chapter3.pptx).
 
 A tutorial for this chapter, where we apply the design process outlined fully in the book, can be found here: [Chapter3 Tutorial](./Chapter3_Tutorial.pptx). This tutorial involves the development of the [Segregation Model](Models/Segregation.nlogo), shown below.
 
