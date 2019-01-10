@@ -22,33 +22,46 @@ fontsize: 10pt
 
 # Statistics and Graphs for ABMGIS Book, Chapter 9
 
-Initialise the required R libraries.
+<a href="www.abmgis.org"><img src="https://www.abmgis.org/img/BookCover.png" alt="book cover" style="float:right; width:30%;" /></a>
+
+This R Markdown file shows how to do all of the spatial analysis for [Chapter 9](https://www.abmgis.org/Chapter9) of the book *Agent-Based Modelling and Geographical Information Systems: A Practical Primer'* ([www.abmgis.org](https://www.abmgis.org)). The chapter presented a range of statistics and algorithms that can be used to compare two spatial data sets. These are important for modelling because, at some point, it will be necessary to compare a model outcome to some real-world data in order to assess how reliable the model is. This script shows how to calculate most of the statistics themselves, before [Chapter 10](https://www.abmgis.org/Chapter10) elaborates on how to evaluate the success of a model more broadly, part of which includes making use of the methods discussed here.
+
+# How to run this script
+
+This script can be loaded into [R Studio](https://www.rstudio.com/products/RStudio/) and then either used to build a pdf or html file using the _Knit_ button, or each code chunk can be run interactively. The only setting that needs to be changed is the `setwd` line in the code chunk below. That link needs to point to the `Resources` folder which contains this script. For example, if your username is `Sarah` and you have downloaded the [entire book from github](https://github.com/abmgis/abmgis) and put it in your `My Documents` folder, then the location would be something like: 
+
+ - `C:\Users\Sarah\My Documents\abmgis\Chapter09-SpatialStatistics\Resources'`.
+
+```{r configureDirectory }
+
+setwd("/Users/nick/research_not_syncd/git_projects/abmgis/Chapter09-SpatialStatistics/Resources")
+
+```
+
+# Initialisation
+
+Initialise the required R libraries. If R complains that any of these are not available, you can install them with `install.packages("PackageName")`.
 
 ```{r initialise, message=FALSE, warning=FALSE}
-# Set the working directory to the directory that contains this script
-# YOU WILL NEED TO CHANGE THIS SO THAT IT IS CORRECT FOR YOUR COMPUTER
-setwd("/Users/nick/research_not_syncd/git_projects/abmgis/Chapter09-SpatialStatistics/Resources")
-#setwd("/Users/nick/research_not_syncd/git_projects/abmgis/abmgis/Chapter09-SpatialStatistics/Resources")
-
 # Remember the default margins (useful later when they need changing temporarily)
 default.mar <- par("mar")
 
 library(GISTools)   # A great GIS package; lots of other useful dependencies loaded as well
 library(rgdal)      # For reading shapefiles
 library(hydroGOF)   # Has an rmse() function
-library(pander)     # For printing tables nicely
 library(classInt)   # Jenks natural breaks
 library(spatstat)   # For Ripley's K and others
 library(spatialEco) # For Nearest Neighbour Indea
 library(raster)     # For generating raster grids
 library(parallel)   # For doing more than one thing at a time (quicker when you have a multi-core CPU)
 library(spdep)      # For GI*
-
+library(xtable)     # For making latex/html tables
 ```
 
-This document runs the examples of different statistics that can be used to calculate the error between two data sets (i.e. a model output and 'real' observed data).
 
 # Download Example Data - Crime in West Yorkshire
+
+This document runs the examples of different statistics that can be used to calculate the error between two data sets (i.e. a model output and 'real' observed data).
 
 The examples here will make use of three example datasets that are similar, but not identical. These are all the crimes that occurred in West Yorkshire in May 2013, May 2014 and May 2015. They are available to download from [data.police.uk](https://data.police.uk/). 
 
@@ -177,7 +190,7 @@ dev.off()
 
 And also do a map
 
-```{r mapData, fig.width=11, fig.height=6}
+```{r mapData, fig.width=11, fig.height=6, cache=TRUE}
 
 doplot <- function() {
 
@@ -245,16 +258,14 @@ The R-squared values are `r print(rmse1)` and `r print(rmse)`.
 
 Summarise those results in a table:
 
-```{r aspatial.summary}
+```{r aspatial.summary, results="asis"}
 
-pander(
-  data.frame( 
+print(xtable(data.frame( 
     "Model" = c("Model A", "Model B"),
     "RSS"  = c(rss1, rss2),
     "R-squared" = c(r.squared1, r.squared2),
     "RMSE" = c(rmse1, rmse2)
-  )
-)
+  )))
 
 ```
 
@@ -340,7 +351,6 @@ kde.shades <- shading(kde.interval, cols=COLOURS)
 # Plot KDE
 plot.kde <- function() {
   par(mfrow=c(1,3))
-  # XXXX FIND OUT WHY SHADING DOESN'T WORK
   masker = poly.outer(simulated1.kde,lad,extend=100)
   
   level.plot(observed.kde)
@@ -495,7 +505,7 @@ writeOGR(lsoa, dsn = "gi_star", layer = "lsoa", driver = "ESRI Shapefile", overw
 
 This is the R implementation of the Multiscale Spatial Error Assessment method (aka [Multiscale Validation](http://www.geog.leeds.ac.uk/courses/other/programming/practicals/general/modelling/validation/multiscale-code/2.html)). 
 
-It is based on the R code that is being developed as part of the [spatialtest](https://github.com/nickmalleson/spatialtest) project. For the most up to date version, see: https://github.com/nickmalleson/spatialtest/blob/master/r/expanding_cell.Rmd
+It is based on the R code that is being developed as part of the [Multi Scale Error Analysis](https://github.com/nickmalleson/Multi-Scale-Error-Analysis) repository that has been produced as part of an academic paper (currently in review) that uses the method in earnest.
 
 The aim of the method is to take two point-patterns, iteratively aggregate the points to cells of increasing size, and calculate the error between the two data sets at the different grid resoultions. See the right images for an example (from  [here](http://www.geog.leeds.ac.uk/courses/other/programming/practicals/general/modelling/validation/multiscale-code/2.html)).
 
@@ -505,7 +515,7 @@ Brunsdon, C and Comber, L (2015) _An Introduction to R for Spatial Anaysis and M
 
 ### Define the Error Assessment Method
 
-The following funtion defines the method. See XX for the original code, comments, and documentation. This is a very cut-down version of the function.
+The following funtion defines the method. See the [Multi Scale Error Analysis](https://github.com/nickmalleson/Multi-Scale-Error-Analysis) repository for the full code, comments, and documentation.
 
 ```{r defineMSEA}
 msea <- function(points1, points2, N=20, the.box=NULL) {
@@ -614,18 +624,6 @@ N <- 20
 box <- bbox(observed+simulated1+simulated2) # Calculate once now to save re-calculating again later
 r1 <- msea(observed, simulated1, N, the.box = box)
 r2 <- msea(observed, simulated2, N, the.box = box)
-
-# Do the above in parallel ? (I'm not sure that the arguments will be passed)
-#library(parallel)
-#no_cores <- detectCores() - 1 # Calculate the number of cores
-#cl <- makeCluster(no_cores) # Initiate cluster
-#msea.results <- parLapply(
-#  cl, 
-#  list(c(observed, simulated1),c(observed,simulated2)),
-#  msea(a,b)
-#  )
-#r1 <- msea.results[[1]]
-#r2 <- msea.results[[2]]
 
 ```
 
