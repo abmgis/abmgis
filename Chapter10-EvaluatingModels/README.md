@@ -10,6 +10,8 @@ Model evaluation is one of the central challenges associated with agent-based mo
 
 The lecture slides for this chapter are available here: [Chapter10 Lecture Slides](./Chapter10.pptx).
 
+The accompanying tutorial is available here: [Chapter 10 Tutorial](./Chapter10_Tutorial.pptx)
+
 ## Models
 
 * **[BehaviorSpace](Models/BehaviorSpace)**: Simple example taking [NetLogo's Segregation model](http://ccl.northwestern.edu/netlogo/models/Segregation) and adding a BehaviorSpace experiemtnation to it to explore the parameter space.
