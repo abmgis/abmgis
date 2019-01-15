@@ -8,6 +8,10 @@ Agent-based modelling is one of the most popular approaches used in social and s
 
 This chapter presents an overview of these other approaches giving simple examples on how they can be used and summarising the main differences between them.  To compare these models, they are applied to the same issue, the spread of a disease using a Susceptible-Infected-Recovered (SIR) epidemic model.  This shows that while the same general patterns emerge, the reasons for this are very different.
 
+## Lecture Slides
+
+The lecture slides for this chapter are available here: [Chapter 11 Lecture Slides](./Chapter11.pptx). These act as a teaching aid for the chapter (with links to other resources).
+
 ## This Directory
 
 You will find 3 example models of for CA, SD and DES. 
