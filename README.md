@@ -1,8 +1,8 @@
 # Agent-Based Modelling and Geographical Information Systems: A Practical Primer
 
-This repisitory contains the accompanying resources for the ABM & GIS book. The book's website is: [http://abmgis.org/](http://abmgis.org/).
+This repisitory contains the accompanying resources for the ABM & GIS book. The book's website is: [http://www.abmgis.org/](http://www.abmgis.org/).
 
-The repisitory is organised around the format of the book. Whereby in each subdirectory you can find material used in that chapter (including models, data and other material)
+The repisitory is organised around the format of the book. In each subdirectory you can find material used in that chapter (including models, data and other material)
 
 * **Chapter 1**: [Agent-based Modelling and Geographical Information Systems](Chapter01-ABMGIS)
 * **Chapter 2**: [Introduction to Agent-Based Modelling](Chapter02-IntroToABM)
@@ -23,12 +23,16 @@ In addtion we provide:
 * [Links to Movies of models used and discussed in the book](YouTube_Movies.md) 
 * [Links to other resources (e.g. journals, conferences, blogs, etc.) for ABM and GIS](Links.md). 
 
+## How to use these resources
+
+Most of the resources, such as presentations and documents, can be downloaded individually through this website. The NetLogo models, however, often need some accompanying data. The easiest way to run the models is to **[download this whole repository](https://github.com/abmgis/abmgis/archive/master.zip)** and extract the zip file. Then the models can be run by loading them into NetLogo.
+
 To get full use of the book and what is provided here we suggest you download and install:
 
 * **NetLogo** (Verson 6.0.4) <https://ccl.northwestern.edu/netlogo/download.shtml>
 * **QGIS** <https://qgis.org/en/site/forusers/download.html>
 
-If you have any questions, suggestions or want to contribute a model feel free to drop us a line.
+If you have any questions, suggestions or want to contribute a model feel free to [drop us a line](https://www.abmgis.org/#authors).
 
 <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative Commons
 License" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" /></a><br
