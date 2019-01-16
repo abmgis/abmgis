@@ -1,4 +1,4 @@
-#Verification: Rainfall Example
+# Verification: Rainfall Example
 
 
 ## Introduction
@@ -9,7 +9,7 @@ An example of this form of verification can be found in the Rainfall model. Whil
 
 We also allow abstract spaces. These include **flat** **plane**, a **cone** **shape**, and a **simple hill** as shown in the figure below
 
-![GUI logo](Rainfall_verification.png)
+![GUI logo](Rainfall.png)
 
 
 These "*simplified*" environments allow the movement of agents to be easily seen, and performance judged accordingly. 
