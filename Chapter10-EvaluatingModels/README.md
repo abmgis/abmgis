@@ -15,7 +15,7 @@ The accompanying tutorial is available here: [Chapter 10 Tutorial](./Chapter10_T
 ## Models
 
 * **[BehaviorSpace](Models/BehaviorSpace)**: Simple example taking [NetLogo's Segregation model](http://ccl.northwestern.edu/netlogo/models/Segregation) and adding a BehaviorSpace experiemtnation to it to explore the parameter space.
-* **[Rainfall for verification](Models/Rainfall_for_verification)**: Demonstrates how verification can be carred out.
+* **[Rainfall for verification](Models/Rainfall)**: Demonstrates how verification can be carred out.
 * **[WalkThisWay](Models/WalkThisWay)**: Provides an example of quantitative calibration using a model reimplimented NetLogo ([See Appendix A7 for the orignal MASON model](../AppendixA/Walk))
 
 For full details about the book, see: [http://www.abmgis.org/](http://www.abmgis.org/).
