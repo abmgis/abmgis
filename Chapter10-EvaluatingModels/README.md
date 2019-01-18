@@ -8,14 +8,13 @@ Model evaluation is one of the central challenges associated with agent-based mo
 
 ## Tutorial / Lecture Slides
 
-The lecture slides for this chapter are available here: [Chapter10 Lecture Slides](./Chapter10.pptx).
-
-The accompanying tutorial is available here: [Chapter 10 Tutorial](./Chapter10_Tutorial.pptx)
+The lecture slides for this chapter are available here: [Chapter10 Lecture Slides](./Chapter10.pptx)
+An accompanying tutorial is available here: [Chapter 10 Tutorial](./Chapter10_Tutorial.pptx)
 
 ## Models
 
-* **[BehaviorSpace](Models/BehaviorSpace)**: Simple example taking [NetLogo's Segregation model](http://ccl.northwestern.edu/netlogo/models/Segregation) and adding a BehaviorSpace experiemtnation to it to explore the parameter space.
+* **[BehaviorSpace](Models/BehaviorSpace)**: Simple example taking [NetLogo's Traffic Grid model](http://ccl.northwestern.edu/netlogo/models/TrafficGrid) and adding a BehaviorSpace experimentation to it to explore the parameter space.
 * **[Rainfall for verification](Models/Rainfall)**: Demonstrates how verification can be carred out.
-* **[WalkThisWay](Models/WalkThisWay)**: Provides an example of quantitative calibration using a model reimplimented NetLogo ([See Appendix A7 for the orignal MASON model](../AppendixA/Walk))
+* **[WalkThisWay](Models/WalkThisWay)**: Provides an example of quantitative calibration using a model reimplimented NetLogo ([See Appendix A7 for the original MASON model](../AppendixA/Walk))
 
 For full details about the book, see: [http://www.abmgis.org/](http://www.abmgis.org/).
