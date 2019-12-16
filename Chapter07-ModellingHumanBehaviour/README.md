@@ -10,7 +10,7 @@ This chapter explores the most common approaches by which researchers incorporat
 
 * [**NetLogo's (Wilensky, 1997) Segregation Model**](../Chapter03-DevelopingABM/Models/Segregation.nlogo)
 * **Case Study: Simulating Behaviour in Riots using a Cognitive Model** (see [Appendix A3 - Modelling the Emergence of Riots](../AppendixA/Riots))
-* **Case-study: Simulating Consumer Behaviour using Probabilistic Rules** (see [Store_choice_model.nlogo](Models/ConsumerBehaviour))
+* **Case-study: Simulating Consumer Behaviour using Probabilistic Rules** (see [Store_choice_model.nlogo](Models/Store_choice_model))
 * For an example of Fast and Frugal decsion making see the RiftLnad model (Kennedy *et al*., 2014 in [Appendix A14](../AppendixA/RiftLand))  
 ## Visuals
 
