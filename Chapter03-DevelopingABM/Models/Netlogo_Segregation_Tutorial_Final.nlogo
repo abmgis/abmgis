@@ -1,84 +1,90 @@
-; We need to define some variables in our turtles and patches to record
-; when they last ate (or were eaten)
-turtles-own[
-  energy
+globals [     ;; this is for global variable declaration
+  percent-similar          ;; on the average, what percent of a turtle's neighbors
+                           ;; are the same color as that turtle?
+  percent-unhappy          ;; what percent of the turtles are unhappy?
+  ;;density
+  ;;percent-similar-wanted
+
 ]
 
-patches-own[
-  time-since-eaten
+turtles-own [ ;; this is for declaring variables that belong to turtles
+  happy?           ;; for each turtle, indicates whether at least %-similar-wanted percent of
+                   ;;   that turtle's neighbors are the same color as the turtle
+  similar-nearby   ;; how many neighboring patches have a turtle with my color?
+  other-nearby     ;; how many have a turtle of another color?
+  total-nearby     ;; sum of previous two variables
 ]
+patches-own [] ;; this is for declaring variables that belong to patches
 
-; Function to set up the model
-to setup
-  clear-all
-  print "Setting up model."
-  setup-patches
-  setup-turtles
-  reset-ticks
-end
-
-to setup-patches
-  ask patches [ set pcolor green]
-end
-
-to setup-turtles
-  create-turtles initial-number-of-turtles[
-   set energy 5
-    set shape "turtle"
-    setxy (random 20) (random 20)
-    set color white
-  ]
-end
-
-to go
-  ask turtles[
-
-    ; Take away some energy
-    set energy ( energy - 1 )
-
-    ; If the turtle has no energy, then die
-    if energy <= 0 [ die ]
-
-    ; Move one step in a random direction
-    rt random 360
-    fd 1
-
-    ; See if the current patch is good to eat
-    if pcolor = green [
-      set pcolor brown
-      set energy (energy  + 5 )
-      set time-since-eaten 0
-    ]
-
-    ; If this turtle is healthy enough, it can give birth
-    if energy > 50 [
-      set energy 10 ; giving birth takes a lot of energy
-      hatch 1
-    ]
-  ]
-
-  ; See if any of the patches have re-grown
+to setup ;; this is where you stick initialization code
+  ca ;; that clears everything out so you have a blank slate on which to start
   ask patches[
-    if pcolor = brown [
-      ; Increment the time since the patch was eaten
-      set time-since-eaten time-since-eaten + 1
-      ; If enough time has passed, make the grass green again
-      if time-since-eaten > grass-regrow-time [
-        set pcolor green
+    ;;set density 90
+    if random 100 < density[
+      sprout 1[
+        set color one-of [red green]
       ]
     ]
   ]
-  tick
+  update-turtles
+  update-globals
+  reset-ticks
+end
+
+to update-turtles
+  ask turtles [
+    set similar-nearby count (turtles-on neighbors)  with [ color = [ color ] of myself ]
+    set other-nearby count (turtles-on neighbors) with [ color != [ color ] of myself ]
+    set total-nearby similar-nearby + other-nearby
+    set happy? similar-nearby >= (percent-similar-wanted * total-nearby / 100)
+
+    ifelse happy? [ set shape "square" ] [ set shape "box" ]
+
+  ]
+end
+
+;;What happens each tick/step.
+to go
+  if all? turtles [ happy? ] [ stop ];;if all turtles (agents) are happy stop the model
+  move-unhappy-turtles ;;call a procedure
+  update-turtles
+  update-globals
+  tick ;;update the tick/ time step
+end
+
+
+;; unhappy turtles try a new spot
+to move-unhappy-turtles
+  ask turtles with [ not happy? ]
+    [ find-new-spot ]
+end
+
+;; move until we find an unoccupied spot
+to find-new-spot
+  rt random-float 360
+  fd random-float 10
+  if any? other turtles-here [
+    find-new-spot  ;; keep going until we find an unoccupied patch
+  ]
+  move-to patch-here  ;; move to center of patch
+end
+
+;;Update global variables
+to update-globals
+  let similar-neighbors sum [ similar-nearby ] of turtles
+  let total-neighbors sum [ total-nearby ] of turtles
+  set percent-similar (similar-neighbors / total-neighbors) * 100
+  set percent-unhappy (count turtles with [ not happy? ]) / (count turtles) * 100
 end
 @#$#@#$#@
 GRAPHICS-WINDOW
-274
-10
-630
-367
+389
+18
+931
+561
 -1
 -1
-16.6
+16.2
 1
 10
 1
@@ -88,10 +94,10 @@ GRAPHICS-WINDOW
 1
 1
 1
-0
-20
-0
-20
+-16
+16
+-16
+16
 0
 0
 1
@@ -99,11 +105,11 @@ ticks
 30.0
 
 BUTTON
-31
-22
-131
 55
-Setup Model
+105
+118
+138
+setup
 setup
 NIL
 1
@@ -115,27 +121,59 @@ NIL
 NIL
 1
 
+BUTTON
+261
+105
+324
+138
+NIL
+go
+NIL
+1
+T
+OBSERVER
+NIL
+NIL
+NIL
+NIL
+1
+
 SLIDER
-33
-103
-213
-136
-initial-number-of-turtles
-initial-number-of-turtles
+52
+153
+229
+186
+percent-similar-wanted
+percent-similar-wanted
 0
 100
-25.0
+50.0
 1
 1
 NIL
 HORIZONTAL
 
+SLIDER
+51
+40
+223
+73
+density
+density
+0
+100
+79.0
+1
+1
+%
+HORIZONTAL
+
 BUTTON
-32
-62
-121
-95
-Run Model
+145
+106
+235
+139
+go forever
 go
 T
 1
@@ -148,96 +186,110 @@ NIL
 1
 
 PLOT
-33
-229
-233
-379
-Total Number of Alive Turtles
-time
-count
+53
+225
+253
+375
+Percent-similar
+NIL
+NIL
 0.0
 10.0
 0.0
-10.0
+100.0
 true
 false
 "" ""
 PENS
-"turtles-alive" 1.0 0 -817084 true "" "plot count turtles"
+"default" 1.0 0 -16777216 true "" "plot percent-similar"
 
-SLIDER
-39
-149
-211
-182
-grass-regrow-time
-grass-regrow-time
-0
-100
-4.0
-1
-1
+PLOT
+53
+434
+253
+584
+Number of unhappy
 NIL
-HORIZONTAL
+NIL
+0.0
+10.0
+0.0
+100.0
+true
+false
+"" ""
+PENS
+"default" 1.0 0 -16777216 true "" "plot count turtles with [ not happy?]"
 
 MONITOR
-33
-396
-164
-445
-Number of turtles
+264
+320
+387
+365
+Number of unhappy
+count turtles with [not happy?]
+2
+1
+11
+
+MONITOR
+261
+435
+339
+480
+% unhappy
+percent-unhappy
+2
+1
+11
+
+MONITOR
+263
+252
+375
+297
+Number of Turtles
 count turtles
-0
+2
 1
-12
-
-MONITOR
-34
-455
-218
-504
-Number of green patches
-count patches with [ pcolor = green ]
-0
-1
-12
+11
 
 @#$#@#$#@
 ## WHAT IS IT?
 
-This section could give a general understanding of what the model is trying to show or explain.
+(a general understanding of what the model is trying to show or explain)
 
 ## HOW IT WORKS
 
-This section could explain what rules the agents use to create the overall behavior of the model.
+(what rules the agents use to create the overall behavior of the model)
 
 ## HOW TO USE IT
 
-This section could explain how to use the model, including a description of each of the items in the interface tab.
+(how to use the model, including a description of each of the items in the Interface tab)
 
 ## THINGS TO NOTICE
 
-This section could give some ideas of things for the user to notice while running the model.
+(suggested things for the user to notice while running the model)
 
 ## THINGS TO TRY
 
-This section could give some ideas of things for the user to try to do (move sliders, switches, etc.) with the model.
+(suggested things for the user to try to do (move sliders, switches, etc.) with the model)
 
 ## EXTENDING THE MODEL
 
-This section could give some ideas of things to add or change in the procedures tab to make the model more complicated, detailed, accurate, etc.
+(suggested things to add or change in the Code tab to make the model more complicated, detailed, accurate, etc.)
 
 ## NETLOGO FEATURES
 
-This section could point out any especially interesting or unusual features of NetLogo that the model makes use of, particularly in the Procedures tab.  It might also point out places where workarounds were needed because of missing features.
+(interesting or unusual features of NetLogo that the model uses, particularly in the Code tab; or where workarounds were needed for missing features)
 
 ## RELATED MODELS
 
-This section could give the names of models in the NetLogo Models Library or elsewhere which are of related interest.
+(models in the NetLogo Models Library and elsewhere which are of related interest)
 
 ## CREDITS AND REFERENCES
 
-This section could contain a reference to the model's URL on the web if it has one, as well as any other necessary credits or references.
+(a reference to the model's URL on the web if it has one, as well as any other necessary credits, citations, and links)
 @#$#@#$#@
 default
 true
@@ -431,18 +483,21 @@ Polygon -7500403 true true 135 105 90 60 45 45 75 105 135 135
 Polygon -7500403 true true 165 105 165 135 225 105 255 45 210 60
 Polygon -7500403 true true 135 90 120 45 150 15 180 45 165 90
 
-sheep 2
+sheep
 false
-0
-Polygon -7500403 true true 209 183 194 198 179 198 164 183 164 174 149 183 89 183 74 168 59 198 44 198 29 185 43 151 28 121 44 91 59 80 89 80 164 95 194 80 254 65 269 80 284 125 269 140 239 125 224 153 209 168
-Rectangle -7500403 true true 180 195 195 225
-Rectangle -7500403 true true 45 195 60 225
-Rectangle -16777216 true false 180 225 195 240
-Rectangle -16777216 true false 45 225 60 240
-Polygon -7500403 true true 245 60 250 72 240 78 225 63 230 51
-Polygon -7500403 true true 25 72 40 80 42 98 22 91
-Line -16777216 false 270 137 251 122
-Line -16777216 false 266 90 254 90
+15
+Circle -1 true true 203 65 88
+Circle -1 true true 70 65 162
+Circle -1 true true 150 105 120
+Polygon -7500403 true false 218 120 240 165 255 165 278 120
+Circle -7500403 true false 214 72 67
+Rectangle -1 true true 164 223 179 298
+Polygon -1 true true 45 285 30 285 30 240 15 195 45 210
+Circle -1 true true 3 83 150
+Rectangle -1 true true 65 221 80 296
+Polygon -1 true true 195 285 210 285 210 240 240 210 195 210
+Polygon -7500403 true false 276 85 285 105 302 99 294 83
+Polygon -7500403 true false 219 85 210 105 193 99 201 83
 
 square
 false
@@ -527,6 +582,13 @@ Line -7500403 true 216 40 79 269
 Line -7500403 true 40 84 269 221
 Line -7500403 true 40 216 269 79
 Line -7500403 true 84 40 221 269
+
+wolf
+false
+0
+Polygon -16777216 true false 253 133 245 131 245 133
+Polygon -7500403 true true 2 194 13 197 30 191 38 193 38 205 20 226 20 257 27 265 38 266 40 260 31 253 31 230 60 206 68 198 75 209 66 228 65 243 82 261 84 268 100 267 103 261 77 239 79 231 100 207 98 196 119 201 143 202 160 195 166 210 172 213 173 238 167 251 160 248 154 265 169 264 178 247 186 240 198 260 200 271 217 271 219 262 207 258 195 230 192 198 210 184 227 164 242 144 259 145 284 151 277 141 293 140 299 134 297 127 273 119 270 105
+Polygon -7500403 true true -1 195 14 180 36 166 40 153 53 140 82 131 134 133 159 126 188 115 227 108 236 102 238 98 268 86 269 92 281 87 269 103 269 113
 
 x
 false
