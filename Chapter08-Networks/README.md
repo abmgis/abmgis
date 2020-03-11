@@ -14,7 +14,7 @@ Networks play a critical role in our lives in terms of physical networks we use 
 * Networks in NetLogo:
 * **[Preferential Attachment](Models)**: Demostrates how networks can grow where new nodes have a greter chance to be connected to nodes which have a high degree (i.e. number of conncetions
 * **[GMU-Roads](Models/GMU-Roads)**: Demonstrates how to use the A-star algorithm, implemented in NetLogo to move agents along a vector road network.
-* **[GMU-Social](Models/GMU-Social])**: Extends the GMU-Roads model to show how one can link social and physical networks 
+* **[GMU-Social](Models/GMU-Social)**: Extends the GMU-Roads model to show how one can link social and physical networks 
 * **[From Cyber Space Opinion Leaders and the Spread of Anti-Vaccine Extremism to Physical Space Disease Vulnerable Clusters](Models)**: Model explores how does ones online social (i.e. cyber) network influences a persons willingness to be vaccinated, and how does this choice impact the spread of a disease in the physical environment.
 
 ## References
