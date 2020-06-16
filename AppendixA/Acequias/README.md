@@ -11,7 +11,7 @@ Wise and Crooks (2012) developed an agent-based model in MASON to explore the co
 ![GUI logo](FigureA11.jpg)
 Graphical user interface of the Acequia-based agriculture model showing the spatial environment including land-use and charts recording the number of farmers (parciantes) and urban versus agricultural percentages during a representative model run.
 
-**Model Available at:** <http://www.css.gmu.edu/Acequias>Alternatively for a more upto date version of the model see: <https://github.com/eclab/mason/tree/master/contrib/geomason/sim/app/geo>.
+**Model Available at:** <http://www.css.gmu.edu/Acequias>. Alternatively for a more upto date version of the model see: <https://github.com/eclab/mason/tree/master/contrib/geomason/sim/app/geo>.
 
 **Reference:**
 

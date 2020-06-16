@@ -10,7 +10,8 @@ Swartz (2015) developed an spatially explicit agent-based model in NetLogo as sh
 ![GUI logo](FigureA10.png)
 Graphical user interface of the Reston commuter model, from left to right: Input parameters, visual display and model outputs during a representative model run.
 
-**Model Available at:** Here.
+**Model Available at:** [Here.](/Reston_NetLogo_Model_and_Data.zip)
+
 
 **Reference:**
 Swartz, M. (2015), *Evaluating Impacts Of Future Development On Commuters: A Modelof Transportation and Development for Reston, VA*, Master Project, Master of Arts in InterdisciplinaryStudies with a Concentration in Computational Social Science, George MasonUniversity, Fairfax, VA.
