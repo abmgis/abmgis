@@ -16,6 +16,7 @@ In the folder you will find:
 * [**Pedestrians_Exiting_Building**](Models/Pedestrians_Exiting_Building): Simple pedestrian evacauion model based on a CAD file.
 * [**Segregation_DC_1**](Models/Segregation_DC_1): Segregation model where each vector polygon is an agent.
 * [**Segregation_DC_2**](Models/Segregation_DC_2): Builds on Segregation_DC_1 but has multiple agents per polygon.
+* [**SegregationTutorial**](Models/SegregationTutorial: Tutorial on how to build Segregation_DC_1  (includes both a powerpoint and pdf).
 
 
 ## Links
