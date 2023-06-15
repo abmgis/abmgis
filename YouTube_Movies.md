@@ -255,4 +255,5 @@ Note this is the orignal model (SLEUTH: Urban Growth Model) built using MASON an
 * More details: [A.12](AppendixA/Diamonds)
 * YouTube URL: <https://youtu.be/fgEdHlNglQQ>
 
-[![Blood Diamonds](http://img.youtube.com/vi/fgEdHlNglQQ/0.jpg)](http://www.youtube.com/watch?v=fgEdHlNglQQ "Blood Diamonds")
+
+[![BloodDiamonds](http://img.youtube.com/vi/fgEdHlNglQQ/0.jpg)](http://www.youtube.com/watch?v=fgEdHlNglQQ "BloodDiamonds")
